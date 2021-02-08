@@ -8,7 +8,7 @@ Create a new folder and open your git terminal. Travel to the newly created dire
 to create a copy of the git repository onto your computer.
 
 ### Next, change directory with `cd runtime-terror` to access the repository
-### Now you must install React itself. Type `npm i create-react-app` to install React to your computer.
+### Now you must install React itself. Type `npm install` to install React and the other modules to your computer.
 
 #### Warning, without this step the web app will fail to run.
 
@@ -23,3 +23,6 @@ When wanting to test your build, go to a terminal and...
 
 Press `Ctrl-C` to stop the server.
 
+## Testing with Jest/CircleCI
+### Travel to the `runtime-terror` folder
+### Type `npm test`, and Jest will take over. Press `a` to run all tests.
