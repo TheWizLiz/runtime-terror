@@ -10,7 +10,6 @@ jobs:
     steps:
       - checkout
       - run: dir
-      - run: cd ~/runtime-terror
       - run: cd client
       - run: npm install
       - run: npm test
