@@ -9,7 +9,9 @@ jobs:
       size: "medium"
     steps:
       - checkout
-      - run: cd ~/runtime-terror/client
+      - run: dir
+      - run: cd ~/runtime-terror
+      - run: cd client
       - run: npm install
       - run: npm test
 
