@@ -10,7 +10,8 @@ to create a copy of the git repository onto your computer.
 ### Installing Dependencies & Environment Setup
 Enter the repository by typing `cd runtime-terror` into the terminal.
   Then, `cd` into both the /client and /server directories **seperately** and type `npm install` to install all dependencies for the project.
-  Note: the only files inside of /runtime-terror should be /client, /server, and .gitignore. If you installed node_modules in the wrong place, you may need to restart.
+  Note: the only files inside of /runtime-terror should be /client, /server, and .gitignore.
+  If you installed node_modules in the wrong place, you may need to restart.
   
   Create a file called .env inside of /server. (This file is used to hide sensitive login information).
   Inside of the .env, copy and paste `CONNECTION_URL = "mongodb+srv://<username>:<password>@cluster0.dw5eb.mongodb.net/<dbname>?retryWrites=true&w=majority"`
@@ -23,7 +24,7 @@ Enter the repository by typing `cd runtime-terror` into the terminal.
 When wanting to test your build, go to a terminal and travel to the *runtime-terror/server* folder.
 
 #### Type `npm start` to launch a local server.
-Check the terminal to see where the server is running. by default it should be port 5000.
+Check the terminal to see where the server is running. By default it should be port 5000.
 Open up a web browser and type `localhost:5000` and view the application.
 
 #### Press `Ctrl-C` in VSCode to stop the server.
