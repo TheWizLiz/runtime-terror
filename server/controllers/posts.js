@@ -1,4 +1,5 @@
-// Add Route functions for Routes.js here to keep code clean.
+// Add Route functions for routes/posts.js here to keep code clean.
+// (req, res) 
 // HTTP Status Codes: https://www.restapitutorial.com/httpstatuscodes.html
 import SignUp from '../models/signUp.js'
 

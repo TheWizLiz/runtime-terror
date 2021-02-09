@@ -1,7 +1,15 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
+jobs:
+  front-end:
+    working_directory: ~/runtime-terror/client
+    steps:
+      - node/test
+
 workflows:
   circle-ci-tests:
     jobs:
-      - node/test
+      - front-end
+
+      
