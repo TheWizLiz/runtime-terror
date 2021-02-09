@@ -1,11 +1,17 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
+  win: circleci/windows@2.2.0
 jobs:
   front-end:
-    working_directory: ~/runtime-terror/client
+    executor:
+      name: win/default
+      size: "medium"
     steps:
-      - node/test
+      - checkout
+      - run: cd ~/runtime-terror/client
+      - run: npm install
+      - run: npm test
 
 workflows:
   circle-ci-tests:
