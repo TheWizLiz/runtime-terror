@@ -7,6 +7,7 @@ Create a new folder and open your git terminal. Travel to the newly created dire
 ## git clone https://github.com/liamkyoung/runtime-terror.git
 to create a copy of the git repository onto your computer.
 
+### Installing Dependencies & Environment Setup
 Enter the repository by typing `cd runtime-terror` into the terminal.
   Then, `cd` into both the /client and /server directories **seperately** and type `npm install` to install all dependencies for the project.
   
