@@ -12,6 +12,7 @@ jobs:
       - run: dir
       - run: cd client
       - run: npm install
+      - run: dir
       - run: npm test
 
 workflows:
