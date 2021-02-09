@@ -10,8 +10,8 @@ to create a copy of the git repository onto your computer.
 ### Installing Dependencies & Environment Setup
 Enter the repository by typing `cd runtime-terror` into the terminal.
   Then, `cd` into both the /client and /server directories **seperately** and type `npm install` to install all dependencies for the project.
-  Note: the only files inside of /runtime-terror should be /client, /server, and .gitignore.
-  If you installed node_modules in the wrong place, you may need to restart.
+  Note: the only files inside of /runtime-terror should be /client, /server, .gitignore, and the README.
+  If you installed node_modules in the wrong place, you may need to restart the setup.
   
   Create a file called .env inside of /server. (This file is used to hide sensitive login information).
   Inside of the .env, copy and paste `CONNECTION_URL = "mongodb+srv://<username>:<password>@cluster0.dw5eb.mongodb.net/<dbname>?retryWrites=true&w=majority"`
