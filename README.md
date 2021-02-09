@@ -21,9 +21,15 @@ Enter the repository by typing `cd runtime-terror` into the terminal.
 
 ### Running a local server using node
 
-When wanting to test your build, go to a terminal and travel to the *runtime-terror/server* folder.
+#### As you see, there is a client folder and a server folder.
+##### For testing your React app, travel to the `runtime-terror/client` folder.
+##### For testing MongoDB/Express (the back-end), travel to the `runtime-terror/server` folder.
 
-#### Type `npm start` to launch a local server.
+### Type `npm start` to launch a local server (Depending on what you are attempting to do.)
+
+For testing React, the server should launch automatically in the browser.
+
+For testing the back-end,
 Check the terminal to see where the server is running. By default it should be port 5000.
 Open up a web browser and type `localhost:5000` and view the application.
 
