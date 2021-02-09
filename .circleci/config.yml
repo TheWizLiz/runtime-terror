@@ -11,8 +11,10 @@ jobs:
       - checkout
       - run: dir
       - run: cd client
+      - run: dir
       - run: npm install
       - run: dir
+      - run: cd client
       - run: npm test
 
 workflows:
