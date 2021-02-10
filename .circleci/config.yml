@@ -1,0 +1,19 @@
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
+  win: circleci/windows@2.2.0
+jobs:
+  front-end:
+    executor:
+      name: win/default
+      size: "medium"
+    steps:
+      - checkout
+      - run: dir
+
+workflows:
+  circle-ci-tests:
+    jobs:
+      - front-end
+
+      
