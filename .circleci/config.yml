@@ -8,7 +8,8 @@ jobs:
     steps:
       - checkout
       - run: node -v
-      - run: cd client && npm install && ls && npm start
+      - run: cd client && npm install
+      - run: cd client && npm test
 
 workflows:
   circle-ci-tests:
