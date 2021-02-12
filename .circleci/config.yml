@@ -1,23 +1,17 @@
 version: 2.1
 orbs:
-  node: circleci/node@3.0.0
+  docker: circleci/docker@1.5.0
 jobs:
   front-end:
-    working-directory: ~/runtime-terror
     docker:
-      -image: circleci/node:current
-      auth:
-        username: liamkyoung
-        password: $DOCKERHUB_PASSWORD
+    - image: circleci/node:latest
     steps:
       - checkout
-      - run: |
-        node -v
-        cd client
-        npm install
-      - run: |
-        ls
-        npm start
+      - run: node -v
+      - run: cd client
+      - run: npm install
+      - run: ls
+      - run: npm start
 
 workflows:
   circle-ci-tests:
