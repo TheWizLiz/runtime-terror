@@ -1,15 +1,15 @@
 version: 2.1
 orbs:
-  node: circleci/node@3.0.0
-  win: circleci/windows@2.2.0
+  docker: circleci/docker@1.5.0
 jobs:
   front-end:
-    executor:
-      name: win/default
-      size: "medium"
+    docker:
+    - image: circleci/node:latest
     steps:
       - checkout
-      - run: dir
+      - run: node -v
+      - run: cd client && npm install
+      - run: cd client && npm test
 
 workflows:
   circle-ci-tests:

@@ -1,6 +1,7 @@
 /*
-  Not implemented yet.
-  Mongoose is used to model MongoDB objects by using Javascript Promises.
+  Models are a way of structuring our MongoDB objects.
+  Mongoose is an npm package which models MongoDB objects by using Javascript Promises.
+  Not implemented yet. Below is an example schema.
 */
 
 import mongoose from 'mongoose'
@@ -11,6 +12,6 @@ const postSchema = mongoose.Schema({
   password: String
 })
 
-const signUpInfo = mongoose.model('SignUp', postSchema)
+const SignUp = mongoose.model('SignUp', postSchema)
 
-export default signUpInfo
+export default SignUp
