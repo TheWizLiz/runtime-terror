@@ -1,10 +1,10 @@
 // Add Route functions for routes/posts.js here to keep code clean.
-// (req, res)
+// (req, res, next)
 // HTTP Status Codes: https://www.restapitutorial.com/httpstatuscodes.html
 import User from '../models/User.js'
 import UserSession from '../models/UserSession.js'
 
-// Retrieve all users
+// Retrieve all users from MongoDB
 export const getUsers = async (req, res) => {
   try {
     // Find all users
@@ -45,7 +45,8 @@ export const createUser = async (req, res) => {
 
   email = email.toLowerCase()
 
-  // Need to extend verification to usernames as well.
+  // Need to extend form verification to usernames as well.
+  // Also need to learn about sanitizing inputs
   User.find({ email: email }, (err, previousUsers) => {
     if (err) {
       return res.send({
@@ -165,7 +166,7 @@ export const verifyUser = async (req, res) => {
       })
     }
 
-    console.log(sessions.length)
+    // console.log(sessions.length)
     // .length of an object allowed???
     if (sessions.length !== 1) {
       return res.send({
@@ -181,13 +182,16 @@ export const verifyUser = async (req, res) => {
   })
 }
 
+// Logging out users, uses token to affirm logout
 export const logoutUser = async (req, res) => {
   // Get token
   const { query } = req
   const { token } = query
- //  console.log(token)
+  //  console.log(token)
 
   // Verify token is one of a kind and not deleted
+
+  // ISSUE: When attempting to logout with an invalid token, unhandled errors.
   UserSession.findOneAndUpdate({ _id: token, isDeleted: false }, { $set: { isDeleted: true } }, (err, sessions) => {
     if (err) {
       console.log(err)
@@ -199,8 +203,8 @@ export const logoutUser = async (req, res) => {
     }
 
     console.log(sessions)
-    console.log(sessions.length)
-    if (sessions !== null) {
+    // console.log(sessions.length)
+    if (sessions) {
       return res.send({
         success: true,
         message: 'User Logged Out'

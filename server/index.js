@@ -16,7 +16,7 @@ const CONNECTION_URL = process.env.CONNECTION_URL
 
 // Used for post route to be reached by ex: localhost:5000/posts, not localhost:5000
 
-app.use(express.json({ limit: '30mb', extended: true }))
+app.use(express.json({ limit: '30mb', extended: true }), cors())
 
 app.use('/api/account', userRoutes)
 
