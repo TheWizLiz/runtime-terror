@@ -4,7 +4,9 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import postRoutes from './routes/posts.js'
+
+// Imports for Routes
+import userRoutes from './routes/api/signin.js'
 
 // Setup of Express and environmental variables
 dotenv.config()
@@ -13,9 +15,10 @@ const PORT = process.env.PORT || 5000
 const CONNECTION_URL = process.env.CONNECTION_URL
 
 // Used for post route to be reached by ex: localhost:5000/posts, not localhost:5000
-app.use('/posts', postRoutes)
 
-app.use(bodyParser.json({ limit: '30mb', extended: true }))
+app.use(express.json({ limit: '30mb', extended: true }))
+
+app.use('/api/account', userRoutes)
 
 // Mongoose connection to MongoDB database
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
