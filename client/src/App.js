@@ -1,4 +1,3 @@
-
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Navigation, Footer, Home, About, Games, Rules, Updates, Leaderboard, Contact, LogIn} from "./components";

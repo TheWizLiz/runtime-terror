@@ -15,5 +15,3 @@ workflows:
   circle-ci-tests:
     jobs:
       - front-end
-
-      
