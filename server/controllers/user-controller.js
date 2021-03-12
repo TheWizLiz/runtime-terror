@@ -19,8 +19,22 @@ export const getUsers = async (req, res) => {
 // Signing Up
 export const createUser = async (req, res) => {
   const { body } = req
-  const { username, password } = body
+  const { firstname, lastname, username, password } = body
   let { email } = body
+
+  if (!firstname) {
+    return res.send({
+      success: false,
+      message: 'First name cannot be blank'
+    })
+  }
+
+  if (!lastname) {
+    return res.send({
+      success: false,
+      message: 'Last name cannot be blank'
+    })
+  }
 
   if (!username) {
     return res.send({
@@ -62,6 +76,8 @@ export const createUser = async (req, res) => {
 
     const newUser = new User()
 
+    newUser.firstname = firstname
+    newUser.lastname = lastname
     newUser.email = email
     newUser.username = username
     newUser.password = newUser.generateHash(password)

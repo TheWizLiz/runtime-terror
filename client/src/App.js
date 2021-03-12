@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginForm from './components/LoginForm.js'
+import Home from './components/Home/Home.js'
 import './App.css'
 
 function App () {
@@ -8,7 +8,7 @@ function App () {
       <h1>Learn React</h1>
       <p>xx</p>
       <p>yy</p>
-      <LoginForm />
+      <Home />
     </div>
   )
 }
