@@ -1,5 +1,5 @@
 import React from 'react'
-import { getFromStorage, setInStorage } from './utils/storage'
+import { getFromStorage, setInStorage } from '../utils/storage.js'
 
 class LoginForm extends React.Component {
   constructor (props) {
