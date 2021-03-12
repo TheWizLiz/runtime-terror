@@ -92,7 +92,6 @@ class LoginForm extends React.Component {
           console.log('logout json', json)
           if (json.success) {
             this.setState({ token: '', isLoading: false })
-            // Storage.removeItem('the_main_app')
           } else {
             // Server Error... Token is not valid
             this.setState({ isLoading: false })
