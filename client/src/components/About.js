@@ -16,6 +16,8 @@ function About() {
              your friends, make new ones, relieve stress, exercise, and most importantly, have fun! Will you complete the mission? Will your 
              group make it on to the leaderboard? Only time will tell.
             </p>
+            <h2 class="font-weight-light">E-Board and SOD</h2>
+            
           </div>
         </div>
       </div>
