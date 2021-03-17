@@ -240,3 +240,39 @@ export const deleteUser = async (req, res) => {
     .then(user => user.remove.then(() => res.json({ success: true })))
     .catch(error => res.status(404).json({ message: error.message }))
 }
+
+export const getUser = async (req, res) => {
+  try {
+
+    // If the browswer returns a correct token in the localStorage
+    // localStorage pasted in browser request
+    // Make sure Usersession is logged in and that the correct token is returned
+    // Connect UserSession to User
+    const { query } = req
+    const { acct } = query
+    UserSession.findOne({ userId: acct, isDeleted: false }, (err, session) => {
+      if (err) {
+        return res.send({
+          success: false,
+          message: 'Error: server error (101)'
+        })
+      }
+
+      if (sessions.length !== 1) {
+        return res.send({
+          success: true,
+          message: 'Error: Incorrect Token'
+        })
+      } else {
+        return res.send({
+          success: true,
+          message: 'Account Information Accessable'
+        })
+      }
+    })
+    console.log(User)
+    res.status(200).json(User)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
