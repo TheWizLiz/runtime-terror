@@ -15,8 +15,9 @@ class AccountDisplay extends React.Component {
   componentDidMount () {
     const storage = getFromStorage('the_main_app')
     const { token } = storage
+    console.log(token)
     if (storage && storage.token) {
-      fetch('http://localhost:5000/api/account/getUser/?acct=' + token)
+      fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
         .then(res => res.json())
         .then(json => this.setState({
           username: json.username,
@@ -24,7 +25,7 @@ class AccountDisplay extends React.Component {
           acctType: json.acctType,
           createdAt: json.createdAt
         }))
-        .catch(() => console.log('Something went wrong...'))
+        .catch((err) => console.log('Something went wrong...', err))
     }
   }
 

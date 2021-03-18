@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUsers, createUser, deleteUser, loginUser, verifyUser, logoutUser } from '../../controllers/user-controller.js'
+import { getUsers, getUser, getAcct, createUser, deleteUser, loginUser, verifyUser, logoutUser } from '../../controllers/user-controller.js'
 
 const router = express.Router()
 
@@ -11,5 +11,6 @@ router.post('/login', loginUser)
 router.get('/verify', verifyUser)
 router.get('/logout', logoutUser)
 router.delete('/', deleteUser)
+router.get('/getAcct', getAcct, getUser)
 
 export default router

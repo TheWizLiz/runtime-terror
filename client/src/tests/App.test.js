@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import TestRenderer from 'react-test-renderer'
 import App from '../App.js';
-import Login from '../components/Login/Login.js'
+import Login from '../components/account/Login.js'
 
 // NOT A VERY GOOD TEST...
 test('Checking for Login Screen Rendering...', () => {

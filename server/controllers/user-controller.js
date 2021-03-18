@@ -241,7 +241,7 @@ export const deleteUser = async (req, res) => {
     .catch(error => res.status(404).json({ message: error.message }))
 }
 
-export const getUser = async (req, res) => {
+export const getAcct = async (req, res, next) => {
   try {
 
     // If the browswer returns a correct token in the localStorage
@@ -250,7 +250,8 @@ export const getUser = async (req, res) => {
     // Connect UserSession to User
     const { query } = req
     const { acct } = query
-    UserSession.findOne({ userId: acct, isDeleted: false }, (err, session) => {
+    console.log('request', acct)
+    UserSession.findOne({ _id: acct, isDeleted: false }, (err, sessions) => {
       if (err) {
         return res.send({
           success: false,
@@ -258,21 +259,43 @@ export const getUser = async (req, res) => {
         })
       }
 
-      if (sessions.length !== 1) {
+      if (!sessions) {
         return res.send({
-          success: true,
-          message: 'Error: Incorrect Token'
+          success: false,
+          message: 'Error: User not found???'
         })
       } else {
-        return res.send({
-          success: true,
-          message: 'Account Information Accessable'
-        })
+        req.user = sessions
+        next()
       }
     })
-    console.log(User)
-    res.status(200).json(User)
+    
   } catch (error) {
     res.status(404).json({ message: error.message })
   }
+}
+
+export const getUser = async (req, res) => {
+  const { user } = req
+  const { userId } = user
+
+  if (user) {
+    console.log('USERID', userId)
+    User.findOne({ _id: userId }, (err, user) => {
+      if (err) {
+        return res.send({
+          success: false,
+          message: 'Found session but not user. Strange...'
+        })
+      } else {
+        res.send(JSON.stringify(user))
+      }
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'user object not found'
+    })
+  }
+ 
 }
