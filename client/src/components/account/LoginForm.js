@@ -111,7 +111,7 @@ class LoginForm extends React.Component {
             />
           </div>
         </form>
-        <LogoutButton isLogged={this.props.isLoading}/>
+        <LogoutButton />
       </div>
     )
   }
