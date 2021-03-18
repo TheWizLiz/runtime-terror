@@ -17,19 +17,20 @@ class Home extends React.Component {
       return (
         <div>
           <p>Sign Up</p>
-          <SignUpForm />
+          <SignUpForm isLoading={this.state.isLoading}/>
           <p>Sign In</p>
-          <LoginForm />
+          <LoginForm isLoading={this.state.isLoading}/>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <p>Account (Verified)</p>
         </div>
       )
     }
     // Should re-direct to Home Screen or Account Details when returned Login token
     // TODO: Add Logout Button.
-    return (
-      <div>
-        <p>Account (Verified)</p>
-      </div>
-    )
   }
 }
 

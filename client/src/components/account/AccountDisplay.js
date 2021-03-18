@@ -1,5 +1,5 @@
 import React from 'react'
-import { getFromStorage, setInStorage } from '../utils/storage.js'
+import { getFromStorage } from '../utils/storage.js'
 
 class AccountDisplay extends React.Component {
   constructor (props) {
