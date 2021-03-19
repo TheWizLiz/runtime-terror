@@ -1,5 +1,10 @@
 
 import React from "react";
+import Gabe_Pic from '../images/gabe_t_pic.jpg';
+import Ethan_Pic from '../images/ethan_s_pic.jpg';
+import Alejandro_Pic from '../images/alejandro_k_pic.jpg';
+import Ava_Pic from '../images/ava_m_pic.jpg';
+import Zoe_Pic from '../images/zoe_n_pic.jpg';
 
 function About() {
   return (
@@ -21,7 +26,7 @@ function About() {
                <div class="col-lg-3">
                   <img
                     class="img-fluid mb-4 mb-lg-4"
-                    src="https://i1.wp.com/gatorhvz.com/wp-content/uploads/2020/10/Gabe.jpg?w=1467&ssl=1"
+                    src={Gabe_Pic}
                     alt="Gabe_pic"
                   />
                 </div>
@@ -32,7 +37,7 @@ function About() {
                 <div class="col-lg-3">
                   <img
                     class="img-fluid mb-4 mb-lg-4"
-                    src="https://i0.wp.com/gatorhvz.com/wp-content/uploads/2020/10/Ale.jpg?w=1740&ssl=1"
+                    src={Alejandro_Pic}
                     alt="Alejandro_pic"
                   />
                 </div>
@@ -43,7 +48,7 @@ function About() {
                 <div class="col-lg-3">
                   <img
                     class="img-fluid mb-4 mb-lg-4"
-                    src="https://i2.wp.com/gatorhvz.com/wp-content/uploads/2021/01/IMG_E1947-1-e1611704243842.jpg?w=1241&ssl=1"
+                    src={Ethan_Pic}
                     alt="Ethan_pic"
                 />
                 </div>
@@ -54,7 +59,7 @@ function About() {
                 <div class="col-lg-3">
                   <img
                     class="img-fluid mb-4 mb-lg-4"
-                    src="https://i1.wp.com/gatorhvz.com/wp-content/uploads/2020/10/Ava.jpg?w=1740&ssl=1"
+                    src={Ava_Pic}
                     alt="Ava_pic"
                   />
                 </div>
@@ -65,7 +70,7 @@ function About() {
                 <div class="col-lg-3">
                   <img
                     class="img-fluid mb-4 mb-lg-4"
-                    src="https://i2.wp.com/gatorhvz.com/wp-content/uploads/2020/10/Zoe.jpg?w=748&ssl=1"
+                    src={Zoe_Pic}
                     alt="Zoe_pic"
                   />
                 </div>
