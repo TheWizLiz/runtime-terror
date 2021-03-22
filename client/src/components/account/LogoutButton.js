@@ -5,7 +5,7 @@ class LogoutButton extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      visible: false
+      visible: true
     }
     this.handleLogout = this.handleLogout.bind(this)
   }
@@ -13,7 +13,6 @@ class LogoutButton extends React.Component {
   // Add removing item from storage so the token is no longer saved
   // Only set visible when user is logged in
   handleLogout () {
-    this.setState({ visible: true })
     // Make 'the_main_app' unique. Sets initial status for website.
     const storage = getFromStorage('the_main_app')
     if (storage && storage.token) {
@@ -25,22 +24,29 @@ class LogoutButton extends React.Component {
         .then(json => {
           console.log('logout json', json)
           if (json.success) {
-            this.setState({ token: '', isLoading: false })
+            this.setState({ token: '' })
             removeFromStorage('the_main_app')
+            this.props.handler()
           } else {
             // Server Error... Token is not valid
-            this.setState({ isLoading: false })
           }
         })
     } else {
-      this.setState({ isLoading: false })
+      // Storage Token is not defined... Therefore cannot even log out
+      this.setState({ visible: false })
     }
   }
 
   render () {
-    return (
-      <button onClick={this.handleLogout}>Logout</button>
-    )
+    if (this.state.visible) {
+      return (
+        <button onClick={this.handleLogout}>Logout</button>
+      )
+    } else {
+      return (
+        <p>Invisible Button</p>
+      )
+    }
   }
 }
 

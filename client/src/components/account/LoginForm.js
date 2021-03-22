@@ -62,6 +62,7 @@ class LoginForm extends React.Component {
             password: '',
             token: json.token
           })
+          this.props.handler()
         } else {
           this.setState({
             logInError: json.message,

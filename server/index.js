@@ -7,6 +7,7 @@ import dotenv from 'dotenv'
 
 // Imports for Routes
 import userRoutes from './routes/api/signin.js'
+import inGameData from './routes/api/playerdata.js'
 
 // Setup of Express and environmental variables
 dotenv.config()
@@ -19,6 +20,7 @@ const CONNECTION_URL = process.env.CONNECTION_URL
 app.use(express.json({ limit: '30mb', extended: true }), cors())
 
 app.use('/api/account', userRoutes)
+app.use('/api/games', inGameData)
 
 // Mongoose connection to MongoDB database
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
