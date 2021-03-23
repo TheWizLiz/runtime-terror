@@ -112,7 +112,6 @@ class LoginForm extends React.Component {
             />
           </div>
         </form>
-        <LogoutButton />
       </div>
     )
   }
