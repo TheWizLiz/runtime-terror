@@ -4,8 +4,8 @@ class RecoverForm extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      email: '',
-      password: ''
+      password: '',
+      resetPassError: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
@@ -13,11 +13,12 @@ class RecoverForm extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault()
+    console.log(this.props.user)
     fetch('http://localhost:5000/api/account/resetPassword', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email: this.state.email,
+        userId: this.props.user,
         password: this.state.password
       })
     })
@@ -28,15 +29,9 @@ class RecoverForm extends React.Component {
             isLoading: false,
             resetPassError: json.message,
             // Redirect or clear state after
-            email: '',
             password: ''
           })
         }
-        /*console.log('json', json)
-        this.setState({
-          logInError: json.message,
-          isLoading: false
-        }) */
       })
       .catch(err => console.error(err))
   }
@@ -54,16 +49,6 @@ class RecoverForm extends React.Component {
         <p>{this.state.forgotPassError}</p>
         <form onSubmit={this.handleSubmit}>
           <div className='textForm'>
-            <label>Email:
-              <input
-                type='email'
-                name='email'
-                value={this.state.email}
-                onChange={this.handleInputChange}
-                placeholder='Email'
-              />
-            </label>
-            <br />
             <label>Password:
               <input
                 type='password'

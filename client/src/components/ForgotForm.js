@@ -29,11 +29,6 @@ class ForgotForm extends React.Component {
             email: ''
           })
         }
-        /*console.log('json', json)
-        this.setState({
-          logInError: json.message,
-          isLoading: false
-        }) */
       })
       .catch(err => console.error(err))
   }
