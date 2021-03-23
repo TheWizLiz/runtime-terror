@@ -59,3 +59,59 @@ export const sendEmail = async (req, res) => {
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
       // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 }
+
+export const resetPassword = async (req, res) => {
+  let { email, password1 } = body
+
+  if (!email) {
+    return res.send({
+      success: false,
+      message: 'Email cannot be blank'
+    })
+  }
+
+  if (!password) {
+    return res.send({
+      success: false,
+      message: 'Password cannot be blank'
+    })
+  }
+
+  email = email.toLowerCase()
+
+  User.find({email : email}, (err, user) => {
+    if (err) {
+        return res.send({
+          success: false,
+          message: 'Error: server error. (1e)'
+        })
+     } else if (user.length > 0) {
+            return res.send({
+              success: true,
+              message: 'Account verified.'
+            })
+      } else {
+        return res.send({
+            success: false,
+            message: 'Got here.'
+          })
+      }
+
+  })
+  user.password = user.generateHash(password1)
+
+  // console.log(newUser)
+  user.save((err, user) => {
+    if (err) {
+      console.log(err)
+      return res.send({
+        success: false,
+        message: 'Error: server error. (2)'
+      })
+    }
+    return res.send({
+      success: true,
+      message: 'Signed Up Successfully.'
+    })
+  })
+}

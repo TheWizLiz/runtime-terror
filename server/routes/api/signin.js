@@ -14,5 +14,6 @@ router.get('/logout', logoutUser)
 router.delete('/', deleteUser)
 router.get('/email', getEmail)
 router.post('/sendEmail', sendEmail)
+router.post('/resetPassword', resetPassword)
 
 export default router
