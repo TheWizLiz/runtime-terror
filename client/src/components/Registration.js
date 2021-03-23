@@ -1,6 +1,7 @@
 import React from "react";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import Button from "react-bootstrap/Button";
 
 function Registration(){
     return(
@@ -24,6 +25,11 @@ function Registration(){
                         <ToggleButton value={1}>Yes</ToggleButton>
                         <ToggleButton value={2}>No</ToggleButton>
                     </ToggleButtonGroup>
+
+                <br/>
+                <br/>
+
+                <Button variant="primary">Submit</Button>{' '}
                     
             </div>
         </div>
