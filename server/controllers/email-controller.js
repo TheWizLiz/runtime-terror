@@ -46,9 +46,10 @@ export const sendEmail = async (req, res) => {
       let info = await transporter.sendMail({
         from: `${process.env.EMAIL_USER}`, // sender address
         to: `${email}`, // list of receivers
-        subject: "Hello ✔", // Subject line
-        text: "Hello world?", // plain text body
-        html: "<b>Hello world?</b>", // html body
+        subject: "Gator HvZ Password Recovery", // Subject line
+        text: "Please click on the link to reset your password in the Gator Humans vs. Zombies website. By clicking this link, you will be redirected to a new page.", // plain text body
+        html: '<p>Please click on the link to reset your password in the Gator Humans vs. Zombies website. By clicking this link, you will be redirected to a new page.</p> </br> <b><a href="http://localhost:3000/recover">Recover Password</a></b>', // html body
+
       });
     
       console.log("Message sent: %s", info.messageId);
