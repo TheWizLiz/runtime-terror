@@ -1,4 +1,5 @@
 import React from "react";
+import Logo from '../images/logo.png';
 
 function Home() {
   return (
@@ -8,7 +9,7 @@ function Home() {
           <div class="col-lg-7">
             <img
               class="img-fluid rounded mb-4 mb-lg-0"
-              src="https://i2.wp.com/gatorhvz.com/wp-content/uploads/2020/10/android-chrome-512x512-1.png?w=512&ssl=1"
+              src={Logo}
               alt="GHvZ Logo"
             />
           </div>
