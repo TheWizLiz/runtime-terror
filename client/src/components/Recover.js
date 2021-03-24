@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import { useParams } from 'react-router-dom';
-import RecoverForm from './RecoverForm';
+import React from "react";
 
 function Recover () {
-  const { user } = useParams()
-  const [isLoading, setLoading] = useState(false)
-  // console.log(user)
 
   return (
     <div className="forgot">
@@ -14,9 +9,8 @@ function Recover () {
           <div class="col">
             <h1 class="font-weight-light">Reset Password</h1><br/>
             <p>Please enter a new password.</p>
-            <RecoverForm user={user} handler={() => setLoading(true)} />
           </div>
-        </div> 
+        </div>
       </div>
     </div>
   )

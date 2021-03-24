@@ -1,6 +1,5 @@
 import React from 'react'
 import { getFromStorage } from '../utils/storage.js'
-import LogoutButton from './LogoutButton'
 
 class AccountDisplay extends React.Component {
   constructor (props) {
@@ -29,21 +28,42 @@ class AccountDisplay extends React.Component {
     // console.log(token)
     if (storage && storage.token) {
       const { token } = storage
-      Promise.all([
-        fetch('http://localhost:5000/api/account/getAcct/?acct=' + token).then(res => res.json()),
-        fetch('http://localhost:5000/api/games/getStats/?user=' + 'example' + '&game=' + this.state.game).then(res => res.json())
-      ]).then(([account, game]) =>
-        this.setState({
-          username: account.username,
-          email: account.email,
-          acctType: account.acctType,
-          createdAt: account.createdAt,
-          playerLoaded: true,
-          kills: game[0].kills,
-          deaths: game[0].deaths,
-          team: game[0].team
+      fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+        .then(res => res.json())
+        .then(player => this.setState({
+          username: player.username,
+          email: player.email,
+          acctType: player.acctType,
+          createdAt: player.createdAt,
+          playerLoaded: true
+        }))
+        .catch((err) => console.log('An error Occured Loading the Player Data', err))
+    }
+  }
+
+  // Currently only grabs first game since this.state.game = 1.
+  componentDidUpdate () {
+    if (this.state.playerLoaded) {
+      fetch('http://localhost:5000/api/games/getStats/?user=' + this.state.username + '&game=' + this.state.game)
+        .then(res => res.json())
+        .then(game => {
+          console.log(game)
+          let totalKills = 0
+          let totalDeaths = 0
+
+          for (let i = 0; i < game.length; i++) {
+            totalKills += game[i].kills
+            totalDeaths += game[i].deaths
+          }
+
+          this.setState({
+            kills: totalKills,
+            deaths: totalDeaths,
+            team: game[0].team,
+            playerLoaded: false
+          })
         })
-      ).catch((err) => console.log('An error Occured Loading the Player or Game Data', err))
+        .catch((err) => console.log('An error Occured Loading the Game Data', err))
     }
   }
 

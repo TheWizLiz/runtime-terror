@@ -1,5 +1,4 @@
 import React from 'react'
-import LogoutButton from './LogoutButton'
 import { getFromStorage, setInStorage } from '../utils/storage.js'
 
 class LoginForm extends React.Component {
