@@ -1,8 +1,8 @@
 import React from "react";
 
-function Cashhuntrules(){
+function CashHuntRules(){
     return(
-        <div classname="Cashhuntrules">
+        <div classname="CashHuntRules">
             <div class="container">
                 <h1 class="font-weight-light">Kraus Cash Hunt Rules</h1>
                     <p>
@@ -26,4 +26,4 @@ function Cashhuntrules(){
     );
 }
 
-export default Cashhuntrules;
+export default CashHuntRules;

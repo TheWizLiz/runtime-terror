@@ -4,9 +4,9 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import Button from "react-bootstrap/Button";
 
-function Gamecreation(){
+function GameCreation(){
     return(
-        <div classname="Gamecreation">
+        <div classname="GameCreation">
             <div class="container">
                 <h1 class="font-weight-light">Create a Game</h1>
 
@@ -92,4 +92,4 @@ function Gamecreation(){
     );
 }
 
-export default Gamecreation;
+export default GameCreation;

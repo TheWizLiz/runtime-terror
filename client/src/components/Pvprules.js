@@ -1,8 +1,8 @@
 import React from "react";
 
-function Pvprules(){
+function PvpRules(){
     return(
-        <div classname="Pvprules">
+        <div classname="PvpRules">
             <div class="container">
                 <h1 class="font-weight-light">PVP Rules</h1>
 
@@ -60,4 +60,4 @@ function Pvprules(){
     );
 }
 
-export default Pvprules;
+export default PvpRules;

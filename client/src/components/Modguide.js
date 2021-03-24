@@ -1,9 +1,9 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 
-function Modguide(){
+function ModGuide(){
     return(
-        <div classname="Modguide">
+        <div classname="ModGuide">
             <div class="container">
                 <h1 class="font-weight-light">Modifications Guide</h1>
                     <p>
@@ -169,4 +169,4 @@ function Modguide(){
     );
 }
 
-export default Modguide;
+export default ModGuide;

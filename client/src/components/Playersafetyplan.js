@@ -1,8 +1,8 @@
 import React from "react";
 
-function Playersafetyplan(){
+function PlayerSafetyPlan(){
     return(
-        <div classname="Playersafetyplan">
+        <div classname="PlayerSafetyPlan">
             <div class="container">
                 <h1 class="font-weight-light">Player Safety Plan</h1>
                     <p>
@@ -47,4 +47,4 @@ function Playersafetyplan(){
     );
 }
 
-export default Playersafetyplan;
+export default PlayerSafetyPlan;

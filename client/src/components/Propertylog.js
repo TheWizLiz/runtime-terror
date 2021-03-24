@@ -2,9 +2,9 @@ import React from "react";
 import Table from "react-bootstrap/Table";
 import Card from 'react-bootstrap/Card'
 
-function Propertylog() {
+function PropertyLog() {
     return (
-        <div classname="Propertylog">
+        <div classname="PropertyLog">
             <div class="container">
                 <h1 class="font-weight-light">Property Log</h1>
 
@@ -61,3 +61,5 @@ function Propertylog() {
         </div>
     );
 }
+
+export default PropertyLog;
