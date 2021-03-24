@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
+import RecoverForm from './RecoverForm';
 
-function Recover() {
+function Recover () {
+  const { user } = useParams()
+  const [isLoading, setLoading] = useState(false)
+  // console.log(user)
+
   return (
-    <div className="recover">
+    <div className="forgot">
       <div class="container">
-            <div class="row align-items-center my-5">
-              <h1 class="font-weight-light">Recover Password</h1>
-            </div>
+        <div class="row align-items-center my-5">
+          <div class="col">
+            <h1 class="font-weight-light">Reset Password</h1><br/>
+            <p>Please enter a new password.</p>
+            <RecoverForm user={user} handler={() => setLoading(true)} />
+          </div>
+        </div> 
       </div>
     </div>
-  );
+  )
 }
 
-export default Recover;
+export default Recover
