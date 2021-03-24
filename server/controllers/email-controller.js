@@ -5,10 +5,9 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export const getEmail = async (req, res, next) => {
-<<<<<<< HEAD
   let { email } = body
   email = email.toLowerCase()
-  User.find({email : email}, (err, user) => {
+  User.find({ email : email }, (err, user) => {
     if (err) {
       return res.send({
         success: false,
@@ -26,29 +25,6 @@ export const getEmail = async (req, res, next) => {
       })
     }
   })
-=======
-    let { email } = body
-    email = email.toLowerCase()
-    User.find({email : email}, (err, user) => {
-        if (err) {
-            return res.send({
-              success: false,
-              message: 'Error: server error. (1e)'
-            })
-         } else if (user.length > 0) {
-                return res.send({
-                  success: true,
-                  message: 'Account verified.'
-                })
-          } else {
-            return res.send({
-                success: false,
-                message: 'Got here.'
-              })
-          }
-
-    })
->>>>>>> main
 }
 
 export const sendEmail = async (req, res) => {
