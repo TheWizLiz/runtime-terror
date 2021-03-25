@@ -240,3 +240,59 @@ export const deleteUser = async (req, res) => {
     .then(user => user.remove.then(() => res.json({ success: true })))
     .catch(error => res.status(404).json({ message: error.message }))
 }
+
+export const getAcct = async (req, res, next) => {
+  try {
+    // If the browswer returns a correct token in the localStorage
+    // localStorage pasted in browser request
+    // Make sure Usersession is logged in and that the correct token is returned
+    // Connect UserSession to User
+    const { query } = req
+    const { acct } = query
+    // console.log('request', acct)
+    UserSession.findOne({ _id: acct, isDeleted: false }, (err, sessions) => {
+      if (err) {
+        return res.send({
+          success: false,
+          message: 'Error: server error (101)'
+        })
+      }
+
+      if (!sessions) {
+        return res.send({
+          success: false,
+          message: 'Error: User not found???'
+        })
+      } else {
+        req.user = sessions
+        next()
+      }
+    })
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const getUser = async (req, res) => {
+  const { user } = req
+  const { userId } = user
+
+  if (user) {
+    console.log('USERID', userId)
+    User.findOne({ _id: userId }, (err, user) => {
+      if (err) {
+        return res.send({
+          success: false,
+          message: 'Found session but not user. Strange...'
+        })
+      } else {
+        res.send(JSON.stringify(user))
+      }
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'user object not found'
+    })
+  }
+}
