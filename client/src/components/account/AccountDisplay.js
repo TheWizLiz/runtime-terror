@@ -71,10 +71,12 @@ class AccountDisplay extends React.Component {
     if (this.state.username) {
       return (
         <div className='AccountDetails'>
+          <h4>Account Information:</h4>
           <p>Username: {this.state.username}</p>
           <p>Email: {this.state.email}</p>
           <p>Account Type: {this.state.acctType}</p>
-          <p>Created At: {this.state.createdAt}</p>
+          <p>Created At: {this.state.createdAt}</p> <br />
+          <h4>Lifetime Player Statistics:</h4>
           <p>Kills: {this.state.kills}</p>
           <p>Deaths: {this.state.deaths}</p>
           <p>Team: {this.state.team}</p>
