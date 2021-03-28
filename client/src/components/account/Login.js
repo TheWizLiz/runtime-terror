@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { getFromStorage } from '../utils/storage'
 import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
@@ -62,16 +63,18 @@ class Login extends React.Component {
     if (!this.state.token) {
       return (
         <div>
-          <p>Sign Up</p>
-          <SignUpForm />
-          <p>Sign In</p>
+          <p>Gator Humans vs Zombies</p>
           <LoginForm handler={this.loggedHandler} />
+          <p>Don't have an account?</p>
+          <Link to='/signup'>Sign Up</Link> <br />
+          <Link to='/forgot'>Forgot Password?</Link>
         </div>
       )
     } else {
       return (
         <div>
           <p>Account (Verified)</p>
+          <Link to='/account-details'>Account Details</Link> <br /> <br />
           <LogoutButton handler={this.loggedHandler} />
         </div>
       )

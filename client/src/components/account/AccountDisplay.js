@@ -68,17 +68,25 @@ class AccountDisplay extends React.Component {
   }
 
   render () {
-    return (
-      <div className='AccountDetails'>
-        <p>Username: {this.state.username}</p>
-        <p>Email: {this.state.email}</p>
-        <p>Account Type: {this.state.acctType}</p>
-        <p>Created At: {this.state.createdAt}</p>
-        <p>Kills: {this.state.kills}</p>
-        <p>Deaths: {this.state.deaths}</p>
-        <p>Team: {this.state.team}</p>
-      </div>
-    )
+    if (this.state.username) {
+      return (
+        <div className='AccountDetails'>
+          <p>Username: {this.state.username}</p>
+          <p>Email: {this.state.email}</p>
+          <p>Account Type: {this.state.acctType}</p>
+          <p>Created At: {this.state.createdAt}</p>
+          <p>Kills: {this.state.kills}</p>
+          <p>Deaths: {this.state.deaths}</p>
+          <p>Team: {this.state.team}</p>
+        </div>
+      )
+    } else {
+      return (
+        <div className='AccountDetails'>
+          <p>User not logged in. Inaccessible.</p>
+        </div>
+      )
+    }
   }
 }
 

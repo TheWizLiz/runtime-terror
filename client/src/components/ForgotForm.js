@@ -58,6 +58,7 @@ class ForgotForm extends React.Component {
             <br />
             <input
               type='submit'
+              class='btn btn-primary'
               value='Submit'
             />
           </div>
