@@ -36,6 +36,11 @@ export const sendEmail = async (req, res) => {
     if (err) {
       return res.send({
         success: false,
+        message: 'Error sending email. Please Try Again.'
+      })
+    } else if (!user) {
+      return res.send({
+        success: false,
         message: 'User not found with particular email address.'
       })
     } else {
@@ -62,6 +67,18 @@ export const sendEmail = async (req, res) => {
     subject: 'Gator HvZ Password Recovery', // Subject line
     text: 'Please click on the link to reset your password in the Gator Humans vs. Zombies website. By clicking this link, you will be redirected to a new page.', // plain text body
     html: `<p>Please click on the link to reset your password in the Gator Humans vs. Zombies website. By clicking this link, you will be redirected to a new page.</p> </br> <b><a href="http://localhost:3000/recover/${userToken}">Recover Password</a></b>` // html body
+  }, (err) => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error: failed to send email.'
+      })
+    } else {
+      return res.send({
+        success: true,
+        message: 'Email successfully sent.'
+      })
+    }
   });
 
   console.log("Message sent: %s", info.messageId);

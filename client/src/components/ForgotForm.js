@@ -28,6 +28,7 @@ class ForgotForm extends React.Component {
             // Redirect or clear state after
             email: ''
           })
+          this.props.handler()
         }
       })
       .catch(err => console.error(err))
