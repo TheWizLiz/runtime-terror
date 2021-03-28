@@ -1,5 +1,6 @@
 import express from 'express'
 import { getUsers, createUser, deleteUser, loginUser, verifyUser, logoutUser } from '../../controllers/user-controller.js'
+import { getEmail, sendEmail, resetPassword } from '../../controllers/email-controller.js'
 
 const router = express.Router()
 
@@ -11,5 +12,8 @@ router.post('/login', loginUser)
 router.get('/verify', verifyUser)
 router.get('/logout', logoutUser)
 router.delete('/', deleteUser)
+router.get('/email', getEmail)
+router.post('/sendEmail', sendEmail)
+router.post('/resetPassword', resetPassword)
 
 export default router
