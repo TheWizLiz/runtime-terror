@@ -13,7 +13,6 @@ class LoginForm extends React.Component {
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleLogout = this.handleLogout.bind(this)
   }
 
   componentDidMount () {
@@ -62,6 +61,7 @@ class LoginForm extends React.Component {
             password: '',
             token: json.token
           })
+          this.props.handler()
         } else {
           this.setState({
             logInError: json.message,
@@ -76,30 +76,6 @@ class LoginForm extends React.Component {
     const name = target.name
 
     this.setState({ [name]: target.value })
-  }
-
-  handleLogout () {
-    this.setState({ isLoading: true })
-    // Make 'the_main_app' unique. Sets initial status for website.
-    const storage = getFromStorage('the_main_app')
-    if (storage && storage.token) {
-      const { token } = storage
-      console.log(token)
-      // Seperate into other file for organization
-      fetch('http://localhost:5000/api/account/logout?token=' + token)
-        .then(res => res.json())
-        .then(json => {
-          console.log('logout json', json)
-          if (json.success) {
-            this.setState({ token: '', isLoading: false })
-          } else {
-            // Server Error... Token is not valid
-            this.setState({ isLoading: false })
-          }
-        })
-    } else {
-      this.setState({ isLoading: false })
-    }
   }
 
   render () {
@@ -135,7 +111,6 @@ class LoginForm extends React.Component {
             />
           </div>
         </form>
-        <button onClick={this.handleLogout}>Logout</button>
       </div>
     )
   }
