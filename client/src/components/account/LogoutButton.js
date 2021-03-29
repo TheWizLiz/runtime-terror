@@ -40,7 +40,7 @@ class LogoutButton extends React.Component {
   render () {
     if (this.state.visible) {
       return (
-        <button onClick={this.handleLogout}>Logout</button>
+        <button class="btn btn-danger" onClick={this.handleLogout}>Logout</button>
       )
     } else {
       return (

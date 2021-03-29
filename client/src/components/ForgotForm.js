@@ -28,6 +28,7 @@ class ForgotForm extends React.Component {
             // Redirect or clear state after
             email: ''
           })
+          this.props.handler()
         }
       })
       .catch(err => console.error(err))
@@ -58,6 +59,7 @@ class ForgotForm extends React.Component {
             <br />
             <input
               type='submit'
+              class='btn btn-primary'
               value='Submit'
             />
           </div>

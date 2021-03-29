@@ -1,5 +1,7 @@
 import React from 'react'
+import GameResults from '../../components/games/GameResults.js'
 import { getFromStorage } from '../utils/storage.js'
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class AccountDisplay extends React.Component {
   constructor (props) {
@@ -9,12 +11,14 @@ class AccountDisplay extends React.Component {
       username: '',
       email: '',
       acctType: '',
+      firstname: '',
+      lastname: '',
       createdAt: '',
       playerLoaded: false,
+      gamesLoaded: false,
       kills: 0,
       deaths: 0,
-      team: '',
-      game: 1
+      games: []
     }
   }
 
@@ -33,6 +37,8 @@ class AccountDisplay extends React.Component {
         .then(player => this.setState({
           username: player.username,
           email: player.email,
+          firstname: player.firstname,
+          lastname: player.lastname,
           acctType: player.acctType,
           createdAt: player.createdAt,
           playerLoaded: true
@@ -44,7 +50,7 @@ class AccountDisplay extends React.Component {
   // Currently only grabs first game since this.state.game = 1.
   componentDidUpdate () {
     if (this.state.playerLoaded) {
-      fetch('http://localhost:5000/api/games/getStats/?user=' + this.state.username + '&game=' + this.state.game)
+      fetch('http://localhost:5000/api/games/getStats/?user=' + this.state.username)
         .then(res => res.json())
         .then(game => {
           console.log(game)
@@ -59,8 +65,9 @@ class AccountDisplay extends React.Component {
           this.setState({
             kills: totalKills,
             deaths: totalDeaths,
-            team: game[0].team,
-            playerLoaded: false
+            playerLoaded: false,
+            games: game,
+            gamesLoaded: true
           })
         })
         .catch((err) => console.log('An error Occured Loading the Game Data', err))
@@ -68,17 +75,44 @@ class AccountDisplay extends React.Component {
   }
 
   render () {
-    return (
-      <div className='AccountDetails'>
-        <p>Username: {this.state.username}</p>
-        <p>Email: {this.state.email}</p>
-        <p>Account Type: {this.state.acctType}</p>
-        <p>Created At: {this.state.createdAt}</p>
-        <p>Kills: {this.state.kills}</p>
-        <p>Deaths: {this.state.deaths}</p>
-        <p>Team: {this.state.team}</p>
-      </div>
-    )
+    if (this.state.username && this.state.gamesLoaded) {
+      return (
+        <div className='AccountDetails'>
+          <div class='container'>
+            <div class='row'>
+              <div class='col-6'>
+                <h4>Account Information:</h4>
+                <p>Name: {this.state.firstname + ' ' + this.state.lastname}</p>
+                <p>Username: {this.state.username}</p>
+                <p>Email: {this.state.email}</p>
+                <p>Account Type: {this.state.acctType}</p>
+                <p>Created At: {this.state.createdAt}</p> <br />
+                <Link to='/forgot'>Reset Password</Link>
+              </div>
+              <div class='col-6'>
+                <h4>Lifetime Player Statistics:</h4>
+                <p>Kills: {this.state.kills}</p>
+                <p>Deaths: {this.state.deaths}</p>
+                <p>Games Participated In: {this.state.games.length}</p>
+                <p>Games Won: {0}</p>
+              </div>
+            </div>
+            <div class='row justify-content-center'>
+              <div class='col-6'>
+                <h4>Previous Games</h4>
+                {this.state.games ? <GameResults games={this.state.games} /> : 'No games found...'}
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div className='AccountDetails'>
+          <p>User not logged in. Inaccessible.</p>
+        </div>
+      )
+    }
   }
 }
 

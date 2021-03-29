@@ -1,7 +1,7 @@
 import React from 'react'
 import { getFromStorage } from '../utils/storage'
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import LoginForm from './LoginForm'
-import SignUpForm from './SignUpForm'
 import LogoutButton from './LogoutButton'
 
 class Login extends React.Component {
@@ -62,16 +62,20 @@ class Login extends React.Component {
     if (!this.state.token) {
       return (
         <div>
-          <p>Sign Up</p>
-          <SignUpForm />
-          <p>Sign In</p>
-          <LoginForm handler={this.loggedHandler} />
+          <p>Gator Humans vs Zombies</p>
+          <LoginForm handler={this.loggedHandler} /> <br />
+          <p>
+            Don't have an account?
+            <Link to='/signup'> Sign Up</Link> <br />
+          </p>
+          <Link to='/forgot'>Forgot Password?</Link>
         </div>
       )
     } else {
       return (
         <div>
           <p>Account (Verified)</p>
+          <Link to='/account-details'>Account Details</Link> <br /> <br />
           <LogoutButton handler={this.loggedHandler} />
         </div>
       )
