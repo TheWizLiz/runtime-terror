@@ -1,4 +1,5 @@
 import React from 'react'
+import GameResult from '../../components/games/GameResult.js'
 import { getFromStorage } from '../utils/storage.js'
 
 class AccountDisplay extends React.Component {
@@ -14,7 +15,7 @@ class AccountDisplay extends React.Component {
       kills: 0,
       deaths: 0,
       team: '',
-      game: 1
+      games: []
     }
   }
 
@@ -44,7 +45,7 @@ class AccountDisplay extends React.Component {
   // Currently only grabs first game since this.state.game = 1.
   componentDidUpdate () {
     if (this.state.playerLoaded) {
-      fetch('http://localhost:5000/api/games/getStats/?user=' + this.state.username + '&game=' + this.state.game)
+      fetch('http://localhost:5000/api/games/getStats/?user=' + this.state.username)
         .then(res => res.json())
         .then(game => {
           console.log(game)
@@ -60,7 +61,8 @@ class AccountDisplay extends React.Component {
             kills: totalKills,
             deaths: totalDeaths,
             team: game[0].team,
-            playerLoaded: false
+            playerLoaded: false,
+            games: game
           })
         })
         .catch((err) => console.log('An error Occured Loading the Game Data', err))
@@ -71,15 +73,29 @@ class AccountDisplay extends React.Component {
     if (this.state.username) {
       return (
         <div className='AccountDetails'>
-          <h4>Account Information:</h4>
-          <p>Username: {this.state.username}</p>
-          <p>Email: {this.state.email}</p>
-          <p>Account Type: {this.state.acctType}</p>
-          <p>Created At: {this.state.createdAt}</p> <br />
-          <h4>Lifetime Player Statistics:</h4>
-          <p>Kills: {this.state.kills}</p>
-          <p>Deaths: {this.state.deaths}</p>
-          <p>Team: {this.state.team}</p>
+          <div class='container'>
+            <div class='row'>
+              <div class='col-6'>
+                <h4>Account Information:</h4>
+                <p>Username: {this.state.username}</p>
+                <p>Email: {this.state.email}</p>
+                <p>Account Type: {this.state.acctType}</p>
+                <p>Created At: {this.state.createdAt}</p> <br />
+              </div>
+              <div class='col-6'>
+                <h4>Lifetime Player Statistics:</h4>
+                <p>Kills: {this.state.kills}</p>
+                <p>Deaths: {this.state.deaths}</p>
+                <p>Team: {this.state.team}</p>
+              </div>
+            </div>
+            <div class='row justify-content-center'>
+              <div class='col-6'>
+                <h4>Previous Games</h4>
+                <GameResult />
+              </div>
+            </div>
+          </div>
         </div>
       )
     } else {
