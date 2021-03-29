@@ -1,6 +1,5 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
 import Accordion from 'react-bootstrap/Accordion'
 
 class GameResult extends React.Component {
@@ -17,16 +16,6 @@ class GameResult extends React.Component {
     }
   }
 
-
-  /*
-        <div class='Game-Result'>
-        <p class='dropdown-item'>Game: {this.state.gameTitle}</p>
-        <p class='dropdown-item'>Kills: {this.state.kills}</p>
-        <p class='dropdown-item'>Deaths: {this.state.deaths}</p>
-        <p class='dropdown-item'>Team: {this.state.team}</p>
-        <p class='dropdown-item'>Time Alive: {this.state.timeAlive}</p>
-      </div>
-  */
   render () {
     return (
       <Card>

@@ -9,15 +9,8 @@ class GameResults extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      gameId: 0,
-      gameTitle: '',
-      player: '',
-      kills: 0,
-      deaths: 0,
-      team:'Zombie',
-      timeAlive: 0
-    }
 
+    }
   }
 
   render () {

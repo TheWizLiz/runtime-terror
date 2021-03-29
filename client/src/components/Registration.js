@@ -3,7 +3,7 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import Button from "react-bootstrap/Button";
 
-function Registration(){
+function Registration() {
     return(
         <div classname="Registration">
             <div class="container">

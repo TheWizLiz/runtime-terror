@@ -1,7 +1,7 @@
 import React from 'react'
 import GameResults from '../../components/games/GameResults.js'
 import { getFromStorage } from '../utils/storage.js'
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class AccountDisplay extends React.Component {
   constructor (props) {
@@ -11,6 +11,8 @@ class AccountDisplay extends React.Component {
       username: '',
       email: '',
       acctType: '',
+      firstname: '',
+      lastname: '',
       createdAt: '',
       playerLoaded: false,
       gamesLoaded: false,
@@ -35,6 +37,8 @@ class AccountDisplay extends React.Component {
         .then(player => this.setState({
           username: player.username,
           email: player.email,
+          firstname: player.firstname,
+          lastname: player.lastname,
           acctType: player.acctType,
           createdAt: player.createdAt,
           playerLoaded: true
@@ -78,6 +82,7 @@ class AccountDisplay extends React.Component {
             <div class='row'>
               <div class='col-6'>
                 <h4>Account Information:</h4>
+                <p>Name: {this.state.firstname + ' ' + this.state.lastname}</p>
                 <p>Username: {this.state.username}</p>
                 <p>Email: {this.state.email}</p>
                 <p>Account Type: {this.state.acctType}</p>

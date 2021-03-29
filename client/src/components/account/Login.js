@@ -1,8 +1,7 @@
 import React from 'react'
 import { getFromStorage } from '../utils/storage'
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import LoginForm from './LoginForm'
-import SignUpForm from './SignUpForm'
 import LogoutButton from './LogoutButton'
 
 class Login extends React.Component {

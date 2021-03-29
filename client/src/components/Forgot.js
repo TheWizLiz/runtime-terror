@@ -1,6 +1,6 @@
 import React from "react";
 import ForgotForm from './ForgotForm';
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class Forgot extends React.Component {
   constructor (props) {
@@ -31,7 +31,7 @@ class Forgot extends React.Component {
                 <p>Enter your email address to recieve a password recovery email.</p>
                 <ForgotForm handler={this.forgotHandler} /> <br />
                 <Link to='/signup'>Create New Account</Link> <br />
-                <Link to='/signup'>Back To Login</Link>
+                <Link to='/login'>Back To Login</Link>
               </div>
             </div>
           </div>
