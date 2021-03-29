@@ -20,10 +20,6 @@ class Forgot extends React.Component {
     })
   }
 
-  componentDidUpdate () {
-    console.log('Email Sent!')
-  }
-
   render () {
     if (!this.state.sent) {
       return (

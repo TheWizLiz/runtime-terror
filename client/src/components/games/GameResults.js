@@ -1,9 +1,14 @@
 import React from 'react'
+import GameResult from './GameResult.js'
+import Accordion from 'react-bootstrap/Accordion'
+
+// Add Placement Attribute Later..?
+//         <p class='dropdown-item'>Placement: {this.state.placement}</p>
 
 class GameResults extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {    
+    this.state = {
       gameId: 0,
       gameTitle: '',
       player: '',
@@ -14,21 +19,23 @@ class GameResults extends React.Component {
     }
 
   }
-// Add Placement Attribute Later..?
-//         <p class='dropdown-item'>Placement: {this.state.placement}</p>
+
   render () {
+    const games = this.props.games
+    const gameResults = []
+
+    for (let i = 0; i < games.length; i++) {
+      gameResults.push(<GameResult gameNum={i + 1} game={games[i]} />)
+    }
+
     return (
-       <div class='Game-Result'>
-        <p class='dropdown-item'>Game: {this.state.gameTitle}</p>
-        <p class='dropdown-item'>Kills: {this.state.kills}</p>
-        <p class='dropdown-item'>Deaths: {this.state.deaths}</p>
-        <p class='dropdown-item'>Team: {this.state.team}</p>
-        <p class='dropdown-item'>Time Alive: {this.state.timeAlive}</p>
-       </div> 
+      <div class='game-results'>
+        <Accordion>
+          {gameResults}
+        </Accordion>
+      </div>
     )
   }
 }
-
-
 
 export default GameResults

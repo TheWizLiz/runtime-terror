@@ -1,6 +1,6 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { getFromStorage } from '../utils/storage'
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
 import LogoutButton from './LogoutButton'
@@ -64,9 +64,11 @@ class Login extends React.Component {
       return (
         <div>
           <p>Gator Humans vs Zombies</p>
-          <LoginForm handler={this.loggedHandler} />
-          <p>Don't have an account?</p>
-          <Link to='/signup'>Sign Up</Link> <br />
+          <LoginForm handler={this.loggedHandler} /> <br />
+          <p>
+            Don't have an account?
+            <Link to='/signup'> Sign Up</Link> <br />
+          </p>
           <Link to='/forgot'>Forgot Password?</Link>
         </div>
       )

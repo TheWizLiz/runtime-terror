@@ -1,6 +1,7 @@
 import React from 'react'
-import GameResult from '../../components/games/GameResult.js'
+import GameResults from '../../components/games/GameResults.js'
 import { getFromStorage } from '../utils/storage.js'
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 class AccountDisplay extends React.Component {
   constructor (props) {
@@ -12,9 +13,9 @@ class AccountDisplay extends React.Component {
       acctType: '',
       createdAt: '',
       playerLoaded: false,
+      gamesLoaded: false,
       kills: 0,
       deaths: 0,
-      team: '',
       games: []
     }
   }
@@ -60,9 +61,9 @@ class AccountDisplay extends React.Component {
           this.setState({
             kills: totalKills,
             deaths: totalDeaths,
-            team: game[0].team,
             playerLoaded: false,
-            games: game
+            games: game,
+            gamesLoaded: true
           })
         })
         .catch((err) => console.log('An error Occured Loading the Game Data', err))
@@ -70,7 +71,7 @@ class AccountDisplay extends React.Component {
   }
 
   render () {
-    if (this.state.username) {
+    if (this.state.username && this.state.gamesLoaded) {
       return (
         <div className='AccountDetails'>
           <div class='container'>
@@ -81,18 +82,20 @@ class AccountDisplay extends React.Component {
                 <p>Email: {this.state.email}</p>
                 <p>Account Type: {this.state.acctType}</p>
                 <p>Created At: {this.state.createdAt}</p> <br />
+                <Link to='/forgot'>Reset Password</Link>
               </div>
               <div class='col-6'>
                 <h4>Lifetime Player Statistics:</h4>
                 <p>Kills: {this.state.kills}</p>
                 <p>Deaths: {this.state.deaths}</p>
-                <p>Team: {this.state.team}</p>
+                <p>Games Participated In: {this.state.games.length}</p>
+                <p>Games Won: {0}</p>
               </div>
             </div>
             <div class='row justify-content-center'>
               <div class='col-6'>
                 <h4>Previous Games</h4>
-                <GameResult />
+                {this.state.games ? <GameResults games={this.state.games} /> : 'No games found...'}
               </div>
             </div>
           </div>

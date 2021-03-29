@@ -11,8 +11,9 @@ function SignUp() {
         </div>
         <SignUpForm />
         <div class="row align-items-center my-5">
-          <p>Have an account?</p>
-          <Link to='/login'>Log In</Link>
+          <p>Have an account?
+            <Link to='/login'> Log In</Link>
+          </p>
         </div>
       </div>
     </div>
