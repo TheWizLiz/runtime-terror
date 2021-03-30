@@ -4,8 +4,10 @@ function PvpRules(){
     return(
         <div classname="PvpRules">
             <div class="container">
+            <div class="row align-items-center mt-5 mb-3">
                 <h1 class="font-weight-light">PVP Rules</h1>
-
+                </div>
+                <div class="row">       
                 <h2 class="font-weight-light">Kill Confirmed</h2>
                     <p>
                         <li>There are two teams, each starting on opposite sides of the area.</li>
@@ -15,6 +17,8 @@ function PvpRules(){
                         <li>Players may pick up poker chips of either team.</li>
                         <li>First team to bring 30 of the other team’s poker chips to their respawn point wins.</li>
                     </p>
+                </div>
+                <div class="row align-items-center my-3">
                 <h2 class="font-weight-light">Ammo Shortage</h2>
                     <p>
                         <li>There are two teams, each starting on opposite sides of the area.</li>
@@ -25,6 +29,8 @@ function PvpRules(){
                         <li>If shot while carrying a box, you must drop the box and go respawn.</li>
                         <li>First team to collect 3 victory points wins.</li>
                     </p>
+                </div>
+                <div class="row align-items-center my-3">
                 <h2 class="font-weight-light">Protect the President</h2>
                     <p>
                         <li>There are two teams, the Secret Service and Assassins.</li>
@@ -34,7 +40,8 @@ function PvpRules(){
                         <li>The Assassin’s have no respawns, but get released into the area a minute before the Secret Service, in order to set up.</li>
                         <li>This game will be played in rounds, with Secret Service and Assassins switching between rounds.</li>
                     </p>
-
+                </div>
+                <div class="row align-items-center my-3">
                 <h2 class="font-weight-light">Free for All</h2>
                     <p>
                         <li>Free for All will be a <b>pistols-only</b> game type.</li>
@@ -43,7 +50,11 @@ function PvpRules(){
                         <li>As the game goes on, the cones that mark the borders of the area will be slowly brought closer together to shrink the field of play.</li>
                     </p>
 
+                </div>
+                <div class="row align-items-center mt-3">
                 <h2 class="font-weight-light">Rush</h2>
+                </div>
+                <div class="row mb-5">
                     <p>
                         <li>There are two teams, the attackers and the defenders.</li>
                         <li>The attackers must capture all 3 of the defenders’ objectives.</li>
@@ -55,6 +66,7 @@ function PvpRules(){
                         <li>Once the attackers take the final objective, the teams switch and try to get a faster time. Whichever team captured all 3 objectives fastest wins.</li>
                     </p>
 
+                </div>
             </div>
         </div>
     );
