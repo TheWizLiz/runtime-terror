@@ -4,7 +4,8 @@ import Table from "react-bootstrap/Table";
 function ModGuide(){
     return(
         <div classname="ModGuide">
-            <div class="container">
+            <div class="container mb-5">
+            <div class="row align-items-center mt-5 mb-3">
                 <h1 class="font-weight-light">Modifications Guide</h1>
                     <p>
                         Every “weapon” used in GHvZ that is modified from its original form or homemade (excluding socks) MUST be cleared with a moderator, who may also be assisted by modification experts.
@@ -19,8 +20,11 @@ function ModGuide(){
                     <p>
                         The following is a comprehensive guide to help you help us keep the game safe:
                     </p>
-
+                </div>
+                <div class="row">
                 <h2 class="font-weight-light">1. General Notes</h2>
+                </div>
+                <div class="row">
                     <p>
                         <li>No marshmallow/water/xploders/paintball/airsoft guns and <b>NO REAL GUNS</b></li>
                         <li>No, melee weapons and shields are not allowed <b>UNLESS</b> handed out by a moderator</li>
@@ -31,7 +35,11 @@ function ModGuide(){
                         <li>It is suggested to mark everything that is personal</li>
                     </p>
 
+                </div>
+                <div class="row">
                 <h2 class="font-weight-light">2. Ammo</h2>
+                </div>
+                <div class="row">
                     <p>
                         1. Modification
                         <li>Cannot be modified beyond stock/aftermarket form (weighted, cut, pin in tip, glued, etc)</li>
@@ -89,6 +97,8 @@ function ModGuide(){
                 {/*Not sure how to make sublists*/}
 
                 <h2 class="font-weight-light">3. Blasters</h2>
+                </div>
+                <div class="row">
                     <p>
                         1. Construction
                         <li>Not realistic looking</li>
@@ -101,8 +111,11 @@ function ModGuide(){
                         <li>No metallic body colors, but metallic accents are fine</li>
                         <li>Brightly colored tape on handles of all holstered blasters or those with dark/grey/metallic handles</li>
                     </p>
-
+                </div>
+                <div class="row">
                 <h2 class="font-weight-light">4. Bows</h2>
+                </div>
+                <div class="row">
                     <p>
                         <li>Stock Rebelle and zingbow approved</li>
                         <li>Other bows tested on case by case basis</li>
@@ -110,8 +123,12 @@ function ModGuide(){
                         <li>No modified ammo</li>
                         <li>Same coloring rules as blasters</li>
                     </p>
+                </div>
+                <div class="row">
 
                 <h2 class="font-weight-light">5. Rival Slingshots</h2>
+                </div>
+                <div class="row">
                     <p>
                         <li>5 ft max draw</li>
                         <li>Chrono tested from full draw</li>
@@ -125,7 +142,12 @@ function ModGuide(){
                         alt="slingshot_pic"
                     />
                     
+                </div>
+                <div class="row">
+
                 <h2 class="font-weight-light">6. Blow Guns</h2>
+                </div>
+                <div class="row">
                     <p>
                         1. Construction
                         <li>Pvc or similar material</li>
@@ -150,7 +172,9 @@ function ModGuide(){
                         alt="tip_pic"
                     />    
 
+                </div>
                 <h2 class="font-weight-light">7. Socks</h2>
+                <div class="row">
                     <p>
                         <li>Balled/rolled socks or fabric</li>
                         <li>Roughly 1-1.5” diameter,  1-2” long</li>
@@ -163,7 +187,7 @@ function ModGuide(){
                         src="https://i2.wp.com/gatorhvz.com/wp-content/uploads/2020/10/sock.png?w=662&ssl=1"
                         alt="Sock_pic"
                     />            
-
+                </div>
             </div>
         </div>
     );

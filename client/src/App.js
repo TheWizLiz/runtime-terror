@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Footer, Home, About, Games, Rules, Updates, Leaderboard, Contact, LogIn, Forgot, Registration, Recover, AccountDetails, AdminDashboard, GameCreation, Log, Property, SignUp} from "./components";
+import { Navigation, Footer, Home, About, Games, PlayerSafetyPlan, PvPRules, CashHuntRules, ModGuide, Updates, Leaderboard, Contact, LogIn, Forgot, Registration, Recover, AccountDetails, AdminDashboard, GameCreation, ActionLog, Property, SignUp} from "./components";
 function App() {
   return (
     <div className="App">
@@ -10,7 +10,10 @@ function App() {
           <Route path="/" exact component={() => <Home />} />
           <Route path="/about" exact component={() => <About />} />
           <Route path="/games" exact component={() => <Games />} />
-          <Route path="/rules" exact component={() => <Rules />} />
+          <Route path="/mod-guide" exact component={() => <ModGuide />} />
+          <Route path="/cash-hunt-rules" exact component={() => <CashHuntRules />} />
+          <Route path="/player-safety-plan" exact component={() => <PlayerSafetyPlan />} />
+          <Route path="/pvp-rules" exact component={() => <PvPRules />} />
           <Route path="/updates" exact component={() => <Updates />} />
           <Route path="/leaderboard" exact component={() => <Leaderboard />} />
           <Route path="/contact" exact component={() => <Contact />} />
@@ -21,7 +24,7 @@ function App() {
           <Route path="/account-details" exact component={() => <AccountDetails />} />
           <Route path="/admin-dashboard" exact component={() => <AdminDashboard />} />
           <Route path="/game-creation" exact component={() => <GameCreation />} />
-          <Route path="/log" exact component={() => <Log />} />
+          <Route path="/action-log" exact component={() => <ActionLog />} />
           <Route path="/property" exact component={() => <Property />} />
           <Route path="/signup" exact component={() => <SignUp />} />
         </Switch>
