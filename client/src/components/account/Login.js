@@ -52,9 +52,11 @@ class Login extends React.Component {
     if (storage && storage.token && this.state.isLoading) {
       const { token } = storage
       this.setState({ token: token, isLoading: false })
+      window.navbar.shouldReload()
     } else if (!storage && this.state.token && this.state.isLoading) {
       // Occur when logoutButton
       this.setState({ token: '', isLoading: false })
+      window.navbar.shouldReload()
     }
   }
 

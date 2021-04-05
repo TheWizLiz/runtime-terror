@@ -10,6 +10,7 @@ class Navigation extends React.Component {
     this.state = {isLoggedIn: false, isAdmin: false}
     this.validateAdmin = this.validateAdmin.bind(this)
     this.loc = props.location.pathname;
+    window.navbar = this;
   }
 
   componentDidMount () {
@@ -24,20 +25,26 @@ class Navigation extends React.Component {
     }
   }
 
+  shouldReload() {
+    this.componentDidMount();
+    this.validateAdmin();
+    this.render();
+  }
+
   validateAdmin (player) {
-    if (player.acctType === 'admin') {
-      this.setState({
-        isAdmin: true,
-        isLoggedIn: true
-      })
-    } else if (player.acctType === null) {
+    if (player == null) {
       this.setState({
         isAdmin: false,
         isLoggedIn: false
       })
-    } else {
+    } else if (player.acctType === 'player') {
       this.setState({
         isAdmin: false,
+        isLoggedIn: true
+      })
+    } else {
+      this.setState({
+        isAdmin: true,
         isLoggedIn: true
       })
     }
