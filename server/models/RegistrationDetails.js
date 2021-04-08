@@ -5,7 +5,8 @@ const RegistrationSchema = new mongoose.Schema({
   player_id: { type: Number, requred: true },
   blaster_id: { type: Number },
   bandana_id: { type: Number },
-  notifications: { type: Boolean, default: false }
+  notifications: { type: Boolean, default: false },
+  team: { type: String, default: 'Human' }
 })
 
 const RegistrationDetails = mongoose.model('RegistrationDetails', RegistrationSchema)

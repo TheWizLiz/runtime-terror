@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export const getEmail = async (req, res, next) => {
-  let { email } = body
+  let { email } = req.body
   email = email.toLowerCase()
   User.find({ email : email }, (err, user) => {
     if (err) {
