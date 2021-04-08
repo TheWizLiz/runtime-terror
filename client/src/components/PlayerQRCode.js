@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getFromStorage } from '../utils/storage.js'
+import { getFromStorage } from './utils/storage.js'
 var QRCode = require('qrcode.react');
 
 class PlayerQRCode extends Component {
@@ -22,16 +22,22 @@ class PlayerQRCode extends Component {
             .then(res => res.json())
             .then(player => this.setState({
               username: player.username,
-              playerLoaded: true
+              playerLoaded: true,
             }))
             .catch((err) => console.log('An error Occured Loading the Player Data', err))
         }
       }
 
     render(){
-        if (this.state.playerLoaded) {
-            <QRCode value={this.state.username} />
-        }
+        return(
+            <div>
+                {this.state.username != " " ? (
+                    <QRCode style={{height:250, width:250}} value={this.state.username} />
+                ) : (
+                    null
+                )}
+            </div>
+        );
     }
 
 }

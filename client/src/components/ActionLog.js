@@ -9,9 +9,9 @@ function ActionLog(){
         <div classname="ActionLog">
             <div class="container">
                 
-                <PlayerQRCode />
-
                 <h1 class="font-weight-light">Action Log</h1>
+
+                <PlayerQRCode />
 
                 <Form>
                     <Form.Label>Current Game</Form.Label>
