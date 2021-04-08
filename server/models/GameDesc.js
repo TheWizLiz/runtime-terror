@@ -5,6 +5,7 @@ const GameDescSchema = new mongoose.Schema({
   location: { type: String, default: 'UF Campus' },
   description: { type: String, default: '' },
   // photo: { type: Buffer, contentType: String }
+  registration_start: { type: Date, default: Date.now() }
   registration_deadline: { type: Date, required: true }
 })
 
