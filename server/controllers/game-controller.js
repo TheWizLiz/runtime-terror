@@ -5,7 +5,8 @@ import GameLimits from '../models/GameLimits.js'
 export const createGame = async (req, res, next) => {
   // Get all inputs
   const { body } = req
-  const { gameTitle, gameDate, gameTime, gameEnd } = body
+  const { gameTitle, gameDate, gameEnd } = body
+  console.log('create game request ', gameEnd)
 
   // Checking form values
   if (!gameTitle) {
@@ -18,11 +19,6 @@ export const createGame = async (req, res, next) => {
       success: false,
       message: 'Error: No date specified.'
     })
-  } else if (!gameTime) {
-    return res.send({
-      success: false,
-      message: 'Error: No time specified.'
-    })
   } else if (!gameEnd) {
     return res.send({
       success: false,
@@ -33,8 +29,8 @@ export const createGame = async (req, res, next) => {
   // Creating game object to insert
   const newGame = new Game()
   newGame.game_title = gameTitle
-  // newGame.time_start = gameDate
-  // newGame.time_end = gameEnd
+  newGame.time_start = gameDate
+  newGame.time_end = gameEnd
   // CurrentGame: false (Default)
 
   const gameId = newGame._id
@@ -58,6 +54,7 @@ export const gameDetails = async (req, res, next) => {
   const { game_id } = req
   const { gameDesc, gameLocation, gamePhoto, regStart, regEnd } = body
 
+  console.log('gameDetails', game_id)
   GameDesc.find({ game_id: game_id }, (err, games) => {
     if (err) {
       return res.send({
@@ -82,7 +79,7 @@ export const gameDetails = async (req, res, next) => {
   GameDetails.game_id = game_id
   GameDetails.location = gameLocation
   GameDetails.description = gameDesc
-  GameDetails.photo = gamePhoto
+  // GameDetails.photo = gamePhoto
   GameDetails.registration_deadline = regEnd
 
   GameDetails.save((err, doc) => {
@@ -104,17 +101,17 @@ export const gameLimits = async (req, res, next) => {
   const { game_id } = req
   const { playerLimit, playerLives, hoardeLimit, blasterLimit, bandanaLimit, wristbandLimit } = body
 
-  const GameLimits = new GameLimits()
+  const GameL = new GameLimits()
 
-  GameLimits.game_id = game_id
-  GameLimits.player_lives = playerLives
-  GameLimits.player_limit = playerLimit
-  GameLimits.hoarde_limit = hoardeLimit
-  GameLimits.blaster_no = blasterLimit
-  GameLimits.bandana_no = bandanaLimit
-  GameLimits.writstband_no = wristbandLimit
+  GameL.game_id = game_id
+  GameL.player_lives = playerLives
+  GameL.player_limit = playerLimit
+  GameL.hoarde_limit = hoardeLimit
+  GameL.blaster_no = blasterLimit
+  GameL.bandana_no = bandanaLimit
+  GameL.writstband_no = wristbandLimit
 
-  GameLimits.save((err, doc) => {
+  GameL.save((err, doc) => {
     if (err) {
       console.log('An error saving the game occurred (GameLimits): ', err)
       return res.send({
