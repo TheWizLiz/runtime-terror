@@ -146,7 +146,7 @@ class GameCreation extends React.Component {
               <Form.Group controlId="gameLogistics">
                 <Form.Label>Game Logistics</Form.Label>
                 <Form.Control name='playerLimit' placeholder="Maximum Number of Participants" value={this.state.playerLimit} />
-                <Form.Control name='hoardeLimit' placeholder="Number of Particpants Allowed to Select Team Preference" value={this.state.hoardeLimit} />
+                <Form.Control name='hoardeLimit' placeholder="Number of Particpants Allowed to Select Hoarde" value={this.state.hoardeLimit} />
                 <Form.Control name='playerLives' placeholder="Player Lives" value={this.state.playerLives} />
               </Form.Group>
   
