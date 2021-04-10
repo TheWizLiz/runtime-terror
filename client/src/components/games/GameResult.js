@@ -7,7 +7,7 @@ class GameResult extends React.Component {
     super(props)
     this.state = {
       gameId: 0,
-      gameTitle: 'GAME TITLE',
+      gameTitle: 'Game',
       player: '',
       kills: 0,
       deaths: 0,
