@@ -101,6 +101,7 @@ export const gameLimits = async (req, res, next) => {
   const { game_id } = req
   const { playerLimit, playerLives, hoardeLimit, blasterLimit, bandanaLimit, wristbandLimit } = body
 
+  console.log('Wristbands', wristbandLimit)
   const GameL = new GameLimits()
 
   GameL.game_id = game_id
@@ -126,4 +127,64 @@ export const gameLimits = async (req, res, next) => {
       })
     }
   })
+}
+
+export const getGames = async (req, res) => {
+  /* { 
+    title:
+    description:
+    registration_deadline:
+    photo:
+    location:
+    playerlimit:
+   } */
+  let allGames = []
+  let matchGames = []
+  const gameIds = []
+
+  await GameDesc.find({ 
+    registration_start: { $lte: Date.now()}, 
+    registration_deadline: { $gte: Date.now() }
+  })
+  .lean()
+  .sort({ registration_deadline: 1 })
+  .then(games => {
+    for (let i = 0; i < games.length; i++) {
+      allGames.push(games[i])
+      gameIds.push(games[i].game_id)
+    }
+    console.log(gameIds)
+  })
+  .catch(err => {
+    console.log('Something went wrong...', err)
+    return res.send({
+      success: false,
+      message: 'Error: No active games found.',
+    })
+  })
+
+  await Game.find({ _id: { $in: gameIds } })
+    .lean()
+    .then(foundGames => {
+          // console.log(games)
+      for (let i = 0; i < allGames.length; i++) {
+        allGames.find((game, index) => {
+          if (game.game_id == foundGames[i]._id.toString() ) {
+            // console.log('FoundGame', foundGames[j])
+            allGames[index].game_title = foundGames[i].game_title
+            allGames[index].current_game = foundGames[i].current_game
+            allGames[index].time_start = foundGames[i].time_start
+            allGames[index].time_end = foundGames[i].time_end
+          }
+        })
+      }
+
+      console.log(allGames)
+      return res.send({
+        success: true,
+        message: 'Active Games Found.',
+        games: allGames
+      })
+    })
+
 }
