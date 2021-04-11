@@ -1,6 +1,8 @@
 import Game from '../models/Game.js'
 import GameDesc from '../models/GameDesc.js'
 import GameLimits from '../models/GameLimits.js'
+import fileUpload from 'express-fileupload'
+import GameImage from '../models/GameImage.js'
 
 export const createGame = async (req, res, next) => {
   // Get all inputs
@@ -53,8 +55,9 @@ export const gameDetails = async (req, res, next) => {
   const { body } = req
   const { game_id } = req
   const { gameDesc, gameLocation, gamePhoto, regStart, regEnd } = body
+  // Find game ID of recently created game.
+  console.log('gamePhoto', gamePhoto)
 
-  console.log('gameDetails', game_id)
   GameDesc.find({ game_id: game_id }, (err, games) => {
     if (err) {
       return res.send({
@@ -71,6 +74,24 @@ export const gameDetails = async (req, res, next) => {
 
   const GameDetails = new GameDesc()
 
+  const Image = new GameImage()
+  Image.game_id = game_id
+
+  if (gamePhoto) {
+    Image.fileName = gamePhoto.fileName
+    Image.filePath = gamePhoto.filePath
+  }
+
+  Image.save((err, doc) => {
+    if (err) {
+      console.log('An error saving the game image occurred (GameDesc)', err)
+      return res.send({
+        success: false,
+        message: 'Error: Photo not saved properly.'
+      })
+    }
+  })
+
   // Registration Start will be set to Date.now() if no registration start date is selected.
   if (regStart) {
     GameDetails.registration_start = regStart
@@ -79,7 +100,6 @@ export const gameDetails = async (req, res, next) => {
   GameDetails.game_id = game_id
   GameDetails.location = gameLocation
   GameDetails.description = gameDesc
-  // GameDetails.photo = gamePhoto
   GameDetails.registration_deadline = regEnd
 
   GameDetails.save((err, doc) => {
@@ -124,13 +144,14 @@ export const gameLimits = async (req, res, next) => {
       return res.send({
         success: true,
         message: 'All Game information saved successfully.'
+        // , photo: gamePhotoUploaded
       })
     }
   })
 }
 
 export const getGames = async (req, res) => {
-  /* { 
+  /* {
     title:
     description:
     registration_deadline:
@@ -142,34 +163,34 @@ export const getGames = async (req, res) => {
   let matchGames = []
   const gameIds = []
 
-  await GameDesc.find({ 
-    registration_start: { $lte: Date.now()}, 
+  await GameDesc.find({
+    registration_start: { $lte: Date.now() },
     registration_deadline: { $gte: Date.now() }
   })
-  .lean()
-  .sort({ registration_deadline: 1 })
-  .then(games => {
-    for (let i = 0; i < games.length; i++) {
-      allGames.push(games[i])
-      gameIds.push(games[i].game_id)
-    }
-    console.log(gameIds)
-  })
-  .catch(err => {
-    console.log('Something went wrong...', err)
-    return res.send({
-      success: false,
-      message: 'Error: No active games found.',
+    .lean()
+    .sort({ registration_deadline: 1 })
+    .then(games => {
+      for (let i = 0; i < games.length; i++) {
+        allGames.push(games[i])
+        gameIds.push(games[i].game_id)
+      }
+      console.log(gameIds)
     })
-  })
+    .catch(err => {
+      console.log('Something went wrong...', err)
+      return res.send({
+        success: false,
+        message: 'Error: No active games found.'
+      })
+    })
 
   await Game.find({ _id: { $in: gameIds } })
     .lean()
     .then(foundGames => {
-          // console.log(games)
+      // console.log(games)
       for (let i = 0; i < allGames.length; i++) {
         allGames.find((game, index) => {
-          if (game.game_id == foundGames[i]._id.toString() ) {
+          if (game.game_id == foundGames[i]._id.toString()) {
             // console.log('FoundGame', foundGames[j])
             allGames[index].game_title = foundGames[i].game_title
             allGames[index].current_game = foundGames[i].current_game
@@ -178,13 +199,55 @@ export const getGames = async (req, res) => {
           }
         })
       }
-
-      console.log(allGames)
-      return res.send({
-        success: true,
-        message: 'Active Games Found.',
-        games: allGames
-      })
     })
 
+  await GameImage.find({ game_id: { $in: gameIds } })
+    .lean()
+    .then(foundGames => {
+      for (let i = 0; i < allGames.length; i++) {
+        allGames.find((game, index) => {
+          if (game.game_id === foundGames[i].game_id) {
+            // console.log('FoundGame', foundGames[j])
+            allGames[index].fileName = foundGames[i].fileName
+            allGames[index].filePath = foundGames[i].filePath
+          }
+        })
+      }
+    })
+
+  console.log(allGames)
+  return res.send({
+    success: true,
+    message: 'Active Games Found.',
+    games: allGames
+  })
+}
+
+export const upload = async (req, res) => {
+// Image Uploading for Games.
+  // console.log('here.')
+  if (!req.files) {
+    return res.json({
+      success: false,
+      message: 'File failed to upload'
+    })
+  }
+
+  const file = req.files.file
+
+  file.mv(`../../runtime-terror/client/public/images/uploads/${file.name}`, err => {
+    if (err) {
+      console.error('An error occured moving the file', err)
+      return res.json({
+        success: false,
+        message: 'An error occured moving the file to the correct directory.'
+      })
+    }
+    return res.json({
+      success: true,
+      message: 'file uploaded successfully.',
+      fileName: file.name,
+      filePath: `/images/uploads/${file.name}`
+    })
+  })
 }
