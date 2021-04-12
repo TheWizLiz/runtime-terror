@@ -6,7 +6,8 @@ class QRScan extends Component {
   constructor(props){
       super(props)
       this.state = {
-          result: "Aim Camera at QR Code"
+          result: "Aim Camera at QR Code",
+          prevResult: ""
       }
       this.handleScan=this.handleScan.bind(this)
   }
@@ -22,6 +23,30 @@ class QRScan extends Component {
   handleError = err => {
     console.error(err)
   }
+
+  componentDidUpdate () {
+    if (this.state.result !== "Aim Camera at QR Code" && this.state.prevResult !== this.state.result) {
+      fetch("http://localhost:5000/api/games/addDeaths", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: this.state.result
+        })
+      })
+      .then(res => res.json())
+      .then(json => {
+        if(json.success){
+          this.setState({
+            isLoading: false,
+            username: '',
+            prevResult: this.state.result
+          })
+        }
+      })
+      .catch(err => console.error(err))
+  }
+  
+}
 
   render() {
     return (
@@ -40,11 +65,13 @@ class QRScan extends Component {
             <div>
                 {this.state.result !== "Aim Camera at QR Code" ? (
                     <UpdateKills />
+
                 ) : (
                     null
                 )}
             </div>
         </React.Fragment>
+        
     )
   }
 }
