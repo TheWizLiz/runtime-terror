@@ -31,7 +31,7 @@ class PlayerQRCode extends Component {
     render(){
         return(
             <div>
-                {this.state.username != " " ? (
+                {this.state.username !== " " ? (
                     <QRCode style={{height:250, width:250}} value={this.state.username} />
                 ) : (
                     null

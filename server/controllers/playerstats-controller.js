@@ -26,3 +26,21 @@ export const getStats = async (req, res) => {
     })
   }
 }
+
+export const updateStats = async (req, res) => {
+  const { username } = req.body
+
+  PlayerStats.findOneAndUpdate({player_id: username}, {$inc: { kills: 1 }}, (err, doc) => {
+    if(err){
+      return res.send({
+        success: false,
+        message: "An error has occured."
+      })
+    } else {
+      return res.send({
+        success: true,
+        message: 'Kill added.'
+      })
+    }
+  })
+}

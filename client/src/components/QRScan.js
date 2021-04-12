@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import QrReader from 'react-qr-reader'
+import React, { Component } from 'react';
+import QrReader from 'react-qr-reader';
+import UpdateKills from "./UpdateKills";
  
 class QRScan extends Component {
   constructor(props){
@@ -34,6 +35,14 @@ class QRScan extends Component {
                 style={{ width: '100%' }}
                 />
                 <h2>{this.state.result}</h2>
+            </div>
+
+            <div>
+                {this.state.result !== "Aim Camera at QR Code" ? (
+                    <UpdateKills />
+                ) : (
+                    null
+                )}
             </div>
         </React.Fragment>
     )
