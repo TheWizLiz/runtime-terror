@@ -1,6 +1,9 @@
 import React from "react";
 import AccManager from './admin/AccManager.js'
+import UpdateGameManager from './admin/UpdateGameManager.js'
 import { getFromStorage } from './utils/storage.js'
+import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
 
 class AdminDashboard extends React.Component {
   constructor (props) {
@@ -53,8 +56,37 @@ class AdminDashboard extends React.Component {
             <div class='row align-items-center my-5'>
               <h1 class='font-weight-light'>Admin Dashboard</h1>
             </div>
-            <h4>Manage Accounts:</h4>
-            <AccManager />
+            <div class = "row">
+              <div class = "col">
+                <div class = "row">
+                  <h4>Create a New Game:</h4>
+                </div>
+                  <div class = "row">
+                <Button variant="primary" type="submit" href="http://localhost:3000/game-creation">
+                  Create
+                </Button>
+                </div>
+                <br/>
+                <div class = "row">
+                  <h4>Manage Accounts:</h4>
+                  <AccManager />
+                </div>
+              </div>
+              <div class = "col">
+              <h4>Current Game:</h4>
+                <Dropdown>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Select Game to Display
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item>Current Game Title</Dropdown.Item>
+                    <Dropdown.Item>Next Game Title</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <br/>
+                <UpdateGameManager />
+              </div>
+            </div>
           </div>
         </div>
       )
