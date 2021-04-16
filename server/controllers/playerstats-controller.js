@@ -67,11 +67,12 @@ export const addDeaths = async (req, res) => {
 export const updateBlasterBandana = async (req, res) => {
   const { username, blasterID, bandanaID } = req.body
 
-  RegistrationDetails.findOneAndUpdate({player_id: username}, {$set: {blaster_id: blasterID}, $set: {bandana_id: bandanaID}}, (err, doc) => {
+  RegistrationDetails.findOneAndUpdate({player_id: username}, {$set: {blaster_id: blasterID, bandana_id: bandanaID }}, (err, doc) => {
     if(err){
       return res.send({
         success: false,
-        message: "An error has occured."
+        message: "An error has occured.",
+        error: err
       })
     } else {
       return res.send({
