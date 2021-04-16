@@ -3,6 +3,7 @@
 // HTTP Status Codes: https://www.restapitutorial.com/httpstatuscodes.html
 import User from '../models/User.js'
 import UserSession from '../models/UserSession.js'
+import RegistrationDetails from '../models/RegistrationDetails.js'
 
 // Retrieve all users from MongoDB
 export const getUsers = async (req, res) => {
@@ -354,4 +355,46 @@ export const getUser = async (req, res) => {
       message: 'user object not found'
     })
   }
+}
+
+export const registerUser = async (req, res) => {
+  // Get all inputs
+  const { body } = req
+  const { userID, gameID, notify, horde} = body
+
+  // Checking form values
+  if (!userID) {
+    return res.send({
+      success: false,
+      message: 'Error: No userID in request.'
+    })
+  } else if (!gameID) {
+    return res.send({
+      success: false,
+      message: 'Error: No gameID specified.'
+    })
+  }
+
+  // Creating registration object to insert
+  const newRegistration = new RegistrationDetails()
+
+    newRegistration.game_id = gameID
+    newRegistration.player_id = userID
+    newRegistration.notifications = notify
+    newRegistration.originalHorde = horde
+
+  // Adding registration to database
+  newRegistration.save((err, user) => {
+    if (err) {
+      console.log('An error registering for the game occurred: ', err)
+      return res.send({
+        success: false,
+        message: 'Error: Registration not completed properly.'
+      })
+    }
+    return res.send({
+      success: true,
+      message: 'Registered Successfully.'
+    })
+  })
 }

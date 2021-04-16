@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from 'react-bootstrap/Button';
 import Figure from 'react-bootstrap/Figure';
-import FigureImage from 'react-bootstrap/FigureImage'
+//import FigureImage from 'react-bootstrap/FigureImage'
 import Game_Logo from './../../images/gameLogo.png';
 
 class UpdateForm extends React.Component {

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SignUpForm from '../components/account/SignUpForm.js'
 
 function SignUp() {

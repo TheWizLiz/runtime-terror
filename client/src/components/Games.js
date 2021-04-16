@@ -1,5 +1,5 @@
 import React from "react";
-import GameCard from './games/GameCard.js'
+//import GameCard from './games/GameCard.js'
 import GameCards from './games/GameCards.js'
 
 class Games extends React.Component {
@@ -25,7 +25,7 @@ class Games extends React.Component {
 
   render () {
     return (
-      <div className="games">
+      <div className="games mb-5">
         <div className="container">
           <div className="row align-items-center my-5">
             <h1 className="font-weight-light">Games</h1>
