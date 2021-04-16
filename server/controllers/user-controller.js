@@ -296,3 +296,42 @@ export const getUser = async (req, res) => {
     })
   }
 }
+
+export const registerUser = async (req, res, next) => {
+  // Get all inputs
+  const { body } = req
+  const { userID, gameID, horde, notify } = body
+
+  // Checking form values
+  if (!userID) {
+    return res.send({
+      success: false,
+      message: 'Error: No userID in request.'
+    })
+  } else if (!gameID) {
+    return res.send({
+      success: false,
+      message: 'Error: No gameID specified.'
+    })
+  }
+
+  // Creating registration object to insert
+  const newRegistration = new RegistrationDetails()
+
+    newRegistration.game_ID = gameID
+    newRegistration.player_id = userID
+    newRegistration.notifications = notify
+    newRegistration.originalHorde = horde
+
+  // Adding registration to database
+  newRegistration.save((err, doc) => {
+    if (err) {
+      console.log('An error registering for the game occurred: ', err)
+      return res.send({
+        success: false,
+        message: 'Error: Registration not completed properly.'
+      })
+    }
+    next()
+  })
+}

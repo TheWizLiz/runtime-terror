@@ -24,7 +24,7 @@ function Home() {
               src={GameLogo}
               alt="Architecture Obliteration Logo"
             />
-            <a class="btn btn-secondary" href="./registration" role="button">Register Now</a>
+            <a class="btn btn-secondary" href="./registration/:oblit" role="button">Register Now</a>
           </div>
         </div>
       </div>

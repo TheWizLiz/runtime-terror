@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUsers, getUser, getAcct, createUser, deleteUser, loginUser, verifyUser, logoutUser } from '../../controllers/user-controller.js'
+import { getUsers, getUser, getAcct, createUser, deleteUser, loginUser, verifyUser, logoutUser, registerUser } from '../../controllers/user-controller.js'
 import { getEmail, sendEmail, resetPassword } from '../../controllers/email-controller.js'
 
 const router = express.Router()
@@ -8,6 +8,7 @@ const router = express.Router()
 // GET and POST HTTP Requests
 router.get('/', getUsers)
 router.post('/signup', createUser)
+router.post('/registration', registerUser)
 router.post('/login', loginUser)
 router.get('/verify', verifyUser)
 router.get('/logout', logoutUser)

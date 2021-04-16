@@ -1,6 +1,6 @@
 import React from 'react'
 import { getFromStorage } from '../utils/storage'
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoginForm from './LoginForm'
 import LogoutButton from './LogoutButton'
 

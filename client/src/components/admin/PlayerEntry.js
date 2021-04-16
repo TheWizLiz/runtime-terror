@@ -1,5 +1,5 @@
 import React from 'react'
-import Table from 'react-bootstrap/Table'
+//import Table from 'react-bootstrap/Table'
 
 class PlayerEntry extends React.Component {
   constructor (props) {

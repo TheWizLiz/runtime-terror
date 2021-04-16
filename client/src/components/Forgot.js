@@ -1,6 +1,6 @@
 import React from "react";
 import ForgotForm from './ForgotForm';
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 class Forgot extends React.Component {
   constructor (props) {

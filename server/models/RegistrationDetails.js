@@ -2,10 +2,11 @@ import mongoose from 'mongoose'
 
 const RegistrationSchema = new mongoose.Schema({
   game_id: { type: Number, required: true },
-  player_id: { type: Number, requred: true },
+  player_id: { type: String, required: true },
   blaster_id: { type: Number },
   bandana_id: { type: Number },
-  notifications: { type: Boolean, default: false }
+  notifications: { type: Boolean, default: false },
+  originalHorde: { type: Boolean, default: false }
 })
 
 const RegistrationDetails = mongoose.model('RegistrationDetails', RegistrationSchema)
