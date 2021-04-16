@@ -5,27 +5,45 @@ class GameCards extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
+    this.formatTime = this.formatTime.bind(this)
+  }
+
+  formatTime (time) {
+    const hours = +time.substring(0, time.indexOf(':'))
+    const min = time.substring(time.indexOf(':'))
+    console.log(hours)
+    if (hours > 12) {
+      const pmFix = '0' + ((hours - 12).toString())
+      const time = pmFix + min + 'PM'
+      return time
+    } else {
+      const amFix = time + 'AM'
+      return amFix
+    }
   }
 
   render () {
     const games = this.props.games
     const gameInfo = []
     for (let i = 0; i < games.length; i++) {
-      console.log(Date.now() - games[i].registration_deadline)
-      const startTime = games[i].time_start.substr((games[i].time_start.indexOf('T') + 1), games[i].time_start.indexOf('.'))
-      const endTime = games[i].time_end.substr((games[i].time_end.indexOf('T') + 1), games[i].time_end.indexOf('.'))
+      const stringStart = games[i].time_start.toString()
+      const stringEnd = games[i].time_end.toString()
+      const startTime = this.formatTime(stringStart.substr(11, 5))
+      const endTime = this.formatTime(stringEnd.substr(11, 5))
       const regDays = Math.floor(Date.parse(games[i].registration_deadline) - Date.now()) / (1000 * 60 * 60 * 24)
       const regHours = (regDays - Math.floor(regDays)) * 24
       const regMin = (regHours - Math.floor(regHours)) * 60
       const regSec = (regMin - Math.floor(regMin)) * 60
+      // console.log('START TIME', stringStart.substr(11, 8))
       gameInfo.push(
         <GameCard
+          game_id={games[i].game_id}
           title={games[i].game_title}
-          desc= {games[i].description}
+          desc={games[i].description}
           location={games[i].location}
           current_game={games[i].current_game}
-          start_date={games[i].time_start.substr(0, games[i].time_start.indexOf('T'))}
-          end_date={games[i].time_end.substr(0, games[i].time_end.indexOf('T'))}
+          start_date={stringStart.substr((stringStart.indexOf('-') + 1), 5)}
+          end_date={stringEnd.substr((stringStart.indexOf('-') + 1), 5)}
           start_time={startTime}
           end_time={endTime}
           reg_days={Math.floor(regDays) < 10 ? ('0' + Math.floor(regDays)).toString() : Math.floor(regDays)}
@@ -37,7 +55,7 @@ class GameCards extends React.Component {
     }
 
     return (
-      <div class='game-results'>
+      <div className='gameCards'>
         {gameInfo}
       </div>
     )

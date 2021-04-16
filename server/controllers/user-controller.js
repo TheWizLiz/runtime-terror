@@ -255,8 +255,6 @@ export const deleteUser = async (req, res) => {
     }
   })
 }
-  
-  
 
 export const getAcct = async (req, res, next) => {
   try {

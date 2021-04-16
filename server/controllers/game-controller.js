@@ -3,6 +3,7 @@ import GameDesc from '../models/GameDesc.js'
 import GameLimits from '../models/GameLimits.js'
 import fileUpload from 'express-fileupload'
 import GameImage from '../models/GameImage.js'
+import PlayerStats from '../models/PlayerStats.js'
 
 export const createGame = async (req, res, next) => {
   // Get all inputs
@@ -251,3 +252,21 @@ export const upload = async (req, res) => {
     })
   })
 }
+
+export const currLeaderboard = async (req, res) => {
+  const results = await PlayerStats.find().sort({ kills: 'desc' })
+
+  if (results) {
+    return res.send({
+      success: true,
+      message: 'Leaderboard Loaded.',
+      leaderboard: results
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'Could not return leaderboard.'
+    })
+  }
+}
+
