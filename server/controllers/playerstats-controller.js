@@ -48,7 +48,7 @@ export const updateStats = async (req, res) => {
 export const addDeaths = async (req, res) => {
   const { username } = req.body
   
-  PlayerStats.findOneAndUpdate({player_id: username}, {$inc: {deaths: 1}}, (err, doc) => {
+  PlayerStats.findOneAndUpdate({player_id: username}, {$inc: {deaths: 1}, $set: {current_team: "Zombie"}}, (err, doc) => {
     if(err){
       return res.send({
         success: false,
