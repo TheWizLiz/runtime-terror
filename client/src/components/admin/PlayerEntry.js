@@ -16,27 +16,26 @@ class PlayerEntry extends React.Component {
   }
 
   handleDelete () {
-    //e.preventDefault();
+    // e.preventDefault();
     fetch('http://localhost:5000/api/account/deleteAccount', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-          username: this.props.player.username
+        username: this.props.player.username
       })
     })
-    .then(res => res.json())
-    .then(json => {
-      if (json.success) {          
-        this.setState({
-          //Clear state after
-          usernameToDelete: ''
-        })
-      }
-      console.log('json', json)
-    })
-    .catch((err) => console.log('An error occured deleting the user', err))
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          this.setState({
+            // Clear state after
+            usernameToDelete: ''
+          })
+        }
+        console.log('json', json)
+      })
+      .catch((err) => console.log('An error occured deleting the user', err))
   }
-  
 
   render () {
     return (
@@ -51,9 +50,9 @@ class PlayerEntry extends React.Component {
             </Button>
           </td>
           <td> 
-              <Button onClick={this.handleDelete} variant='outline-danger'> 
-                <Trash />
-              </Button> 
+            <Button onClick={this.handleDelete} variant='outline-danger'> 
+              <Trash />
+            </Button>
           </td>
         </tr>
       </tbody>
