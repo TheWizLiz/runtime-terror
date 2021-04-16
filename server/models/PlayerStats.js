@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const PlayerStatsSchema = new mongoose.Schema({
-  game_id: { type: Number, required: true },
+  game_id: { type: String, required: true },
   player_id: { type: String, required: true },
   kills: { type: Number, default: 0 },
   deaths: { type: Number, default: 0 },

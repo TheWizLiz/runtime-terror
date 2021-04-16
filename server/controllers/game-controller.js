@@ -4,6 +4,7 @@ import GameLimits from '../models/GameLimits.js'
 import fileUpload from 'express-fileupload'
 import GameImage from '../models/GameImage.js'
 import PlayerStats from '../models/PlayerStats.js'
+import RegistrationDetails from '../models/RegistrationDetails.js'
 
 export const createGame = async (req, res, next) => {
   // Get all inputs
@@ -254,7 +255,7 @@ export const upload = async (req, res) => {
 }
 
 export const currLeaderboard = async (req, res) => {
-  const results = await PlayerStats.find().sort({ kills: 'desc' })
+  const results = await PlayerStats.find().sort({ kills: 'desc', deaths: 'asc', remaining_lives: 'desc' })
 
   if (results) {
     return res.send({
@@ -270,3 +271,72 @@ export const currLeaderboard = async (req, res) => {
   }
 }
 
+export const gameStartTransfer = async (req, res) => {
+
+  // Drop PlayerStats to clear out previous game's stats (NEED TO ADD)
+  // Get GameID of started game
+  // Find all players registered in the registration table
+  // Get their playerid's and team from registration
+  // Get Limits (PlayerLives) from GameLimits
+  // Save all users into PlayerStats
+  // Set Game to current_game: true
+  const { body } = req
+  const { game_id } = body
+  const registeredPlayers = []
+  let lives = 0
+
+  // Find Lives for Game
+  await GameLimits.findOne({ game_id: game_id }, (err, game) => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'There was an error retrieving game limits',
+        error: err
+      })
+    } else if (game) {
+      lives = game.player_lives
+      console.log('GAME DATA', game)
+    }
+    console.log('Player Lives for Game: ', lives)
+  })
+
+  await RegistrationDetails.find({ game_id: game_id }, (err, players) => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'There was an error retrieving registration details',
+        error: err
+      })
+    } else if (players) {
+      console.log('PLAYERS FOUND:', players)
+    }
+
+    for (let i = 0; i < players.length; i++) {
+      registeredPlayers.push({
+        player_id: players[i].player_id,
+        game_id: players[i].game_id,
+        original_team: players[i].team,
+        current_team: players[i].team,
+        remaining_lives: lives
+      })
+    }
+
+    console.log('Got players: ', registeredPlayers)
+  })
+
+  PlayerStats.insertMany(registeredPlayers)
+    .then(players => {
+      console.log(players)
+      return res.send({
+        success: true,
+        message: 'The entering process completed successfully'
+      })
+    })
+    .catch(err => {
+      console.log('ERROR HAS OCCURRED', err)
+      return res.send({
+        success: true,
+        message: 'The entering process completed successfully.'
+      })
+    })
+}
