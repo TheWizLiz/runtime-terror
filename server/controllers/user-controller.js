@@ -358,7 +358,7 @@ export const getUser = async (req, res) => {
   }
 }
 
-export const registerUser = async (req, res, next) => {
+export const registerUser = async (req, res) => {
   // Get all inputs
   const { body } = req
   const { userID, gameID, horde, notify } = body

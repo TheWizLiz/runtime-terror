@@ -18,6 +18,6 @@ router.get('/getAcct', getAcct, getUser)
 router.get('/email', getEmail)
 router.post('/sendEmail', sendEmail)
 router.post('/resetPassword', resetPassword)
-router.post('/registration', registerUser)
+router.post('/registerUser', registerUser)
 
 export default router

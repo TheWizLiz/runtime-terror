@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class GameCard extends React.Component {
   constructor (props) {
@@ -22,7 +22,7 @@ class GameCard extends React.Component {
             <Card.Text>
               {this.props.desc}
             </Card.Text>
-            <Link to='/registration'>
+            <Link to={'/registration/:' + this.props.title}>
               <Button variant="primary">Register</Button>
             </Link>
           </Card.Body>

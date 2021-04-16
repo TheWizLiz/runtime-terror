@@ -39,7 +39,7 @@ class PlayerEntry extends React.Component {
   handleUpdate () {
     console.log('here')
     //e.preventDefault();
-    if (this.props.player.acctType =='player') {
+    if (this.props.player.acctType ==='player') {
       // change player to admin
       
       fetch('http://localhost:5000/api/account/updatePlayerAcc', {
@@ -60,7 +60,7 @@ class PlayerEntry extends React.Component {
     })
     .catch((err) => console.log('An error occured updating player the account type', err))
 
-    } else if (this.props.player.acctType == 'admin') {
+    } else if (this.props.player.acctType === 'admin') {
       // change admin to player
       fetch('http://localhost:5000/api/account/updateAdminAcc', {
       method: 'POST',

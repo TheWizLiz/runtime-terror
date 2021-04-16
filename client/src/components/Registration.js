@@ -1,7 +1,7 @@
 import React from "react";
 //import { FormGroup } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { getFromStorage } from './utils/storage.js'
 //import ToggleButton from "react-bootstrap/ToggleButton";
 //import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
@@ -25,8 +25,7 @@ class Registration extends React.Component {
             gameID: '',
             //gameID: 'test',
             horde: false,
-            notify: false
-            
+            notify: false,            
         }
 
         this.setState({

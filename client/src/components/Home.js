@@ -14,18 +14,6 @@ function Home() {
               alt="GHvZ Logo"
             />
           </div>
-          <div class="col-lg-5">
-            <h1 class="font-weight-light">Architecture Obliteration</h1>
-            <p>
-            March 27th from 2-6pm on the Architecture Courtyard.
-            </p>
-            <img
-              class="img-fluid mb-4 mb-lg-4"
-              src={GameLogo}
-              alt="Architecture Obliteration Logo"
-            />
-            <a class="btn btn-secondary" href="./registration/:oblit" role="button">Register Now</a>
-          </div>
         </div>
       </div>
     </div>

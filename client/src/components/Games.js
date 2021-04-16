@@ -1,5 +1,5 @@
 import React from "react";
-import GameCard from './games/GameCard.js'
+//import GameCard from './games/GameCard.js'
 import GameCards from './games/GameCards.js'
 
 class Games extends React.Component {

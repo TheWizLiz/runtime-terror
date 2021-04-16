@@ -28,7 +28,6 @@ class Navigation extends React.Component {
   shouldReload() {
     this.componentDidMount();
     this.validateAdmin();
-    this.render();
   }
 
   validateAdmin (player) {
@@ -51,7 +50,6 @@ class Navigation extends React.Component {
   }
 
   render () {
-    if (this.state.isAdmin) {
       return (
         <div className="navigation">
           <nav class="navbar fixed-top navbar-expand navbar-dark bg-dark">
@@ -118,131 +116,8 @@ class Navigation extends React.Component {
                       Updates
                     </Link>
                   </li>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/Leaderboard" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/leaderboard">
-                      Leaderboard
-                    </Link>
-                  </li>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/contact" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/contact">
-                      Contact
-                    </Link>
-                  </li>
-
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/AdminDashboard" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/admin-dashboard">
-                      Admin Dashboard
-                    </Link>
-                  </li>
-
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/GameCreation" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/game-creation">
-                      Game Creation
-                    </Link>
-                  </li>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/LogIn" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/login">
-                      Log Out
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </div>
-      );
-    }
-    else if (this.state.isLoggedIn) {
-      return (
-        <div className="navigation">
-          <nav class="navbar fixed-top navbar-expand navbar-dark bg-dark">
-            <div class="container">
-              <Link class="navbar-brand" to="/">
-                Gator Humans versus Zombies
-              </Link>
-    
-              <div>
-                <ul class="navbar-nav ml-auto stick">
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/">
-                      Home
-                      <span class="sr-only">(current)</span>
-                    </Link>
-                  </li>
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/about" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/about">
-                      About
-                    </Link>
-                  </li>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/Games" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/games">
-                      Games
-                    </Link>
-                  </li>
-    
-                  
-                  <NavDropdown title="Rules" id="basic-nav-dropdown">
-                  <li class={`nav-item  ${this.loc === "/PvPRules" ? "active" : ""}`}>
-                    <Link class="dropdown-item" to="/pvp-rules">PvP Rules</Link>
-                    </li>
-                    <li class={`nav-item  ${this.loc === "/CashHuntRules" ? "active" : ""}`}>
-                    <Link class="dropdown-item" to="/cash-hunt-rules">Cash Hunt Rules</Link>
-                    </li>
-                    <li class={`nav-item  ${this.loc === "/ModGuide" ? "active" : ""}`}>
-                    <Link class="dropdown-item" to="/mod-guide">Mod Guide</Link>
-                    </li>
-                    <NavDropdown.Divider />
-                    <li class={`nav-item  ${this.loc === "/PlayerSafetyPlan" ? "active" : ""}`}>
-                    <Link class="dropdown-item" to="/player-safety-plan">Player Safety Plan</Link>
-                    </li>
-                  </NavDropdown>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/Updates" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/updates">
-                      Updates
-                    </Link>
-                  </li>
-
+  
+                  {this.state.isLoggedIn && !this.state.isAdmin &&
                   <li
                     class={`nav-item  ${
                       this.loc === "/ActionLog" ? "active" : ""
@@ -252,7 +127,9 @@ class Navigation extends React.Component {
                       Log Kill
                     </Link>
                   </li>
-                  
+                  }
+
+                  {this.state.isLoggedIn &&
                   <li
                     class={`nav-item  ${
                       this.loc === "/AccountDetails" ? "active" : ""
@@ -262,7 +139,8 @@ class Navigation extends React.Component {
                       Account Details
                     </Link>
                   </li>
-    
+                  }
+
                   <li
                     class={`nav-item  ${
                       this.loc === "/Leaderboard" ? "active" : ""
@@ -273,6 +151,7 @@ class Navigation extends React.Component {
                     </Link>
                   </li>
     
+                  {!this.state.isAdmin &&
                   <li
                     class={`nav-item  ${
                       this.loc === "/contact" ? "active" : ""
@@ -282,7 +161,20 @@ class Navigation extends React.Component {
                       Contact
                     </Link>
                   </li>
-    
+                  }
+
+                  {this.state.isAdmin && 
+                      <li
+                      class={`nav-item  ${
+                        this.loc === "/AdminDashboard" ? "active" : ""
+                      }`}
+                    >
+                      <Link class="nav-link" to="/admin-dashboard">
+                        Admin Dashboard
+                      </Link>
+                    </li>
+                  }
+                  
                   <li
                     class={`nav-item  ${
                       this.loc === "/LogIn" ? "active" : ""
@@ -298,112 +190,6 @@ class Navigation extends React.Component {
           </nav>
         </div>
       );
-    }
-    else {
-      return (
-        <div className="navigation">
-          <nav class="navbar fixed-top navbar-expand navbar-dark bg-dark">
-            <div class="container">
-              <Link class="navbar-brand" to="/">
-                Gator Humans versus Zombies
-              </Link>
-    
-              <div>
-                <ul class="navbar-nav ml-auto stick">
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/">
-                      Home
-                      <span class="sr-only">(current)</span>
-                    </Link>
-                  </li>
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/about" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/about">
-                      About
-                    </Link>
-                  </li>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/Games" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/games">
-                      Games
-                    </Link>
-                  </li>
-    
-                  
-                  <NavDropdown title="Rules" id="basic-nav-dropdown">
-                  <li class={`nav-item  ${this.loc === "/PvPRules" ? "active" : ""}`}>
-                    <Link class="dropdown-item" to="/pvp-rules">PvP Rules</Link>
-                    </li>
-                    <li class={`nav-item  ${this.loc === "/CashHuntRules" ? "active" : ""}`}>
-                    <Link class="dropdown-item" to="/cash-hunt-rules">Cash Hunt Rules</Link>
-                    </li>
-                    <li class={`nav-item  ${this.loc === "/ModGuide" ? "active" : ""}`}>
-                    <Link class="dropdown-item" to="/mod-guide">Mod Guide</Link>
-                    </li>
-                    <NavDropdown.Divider />
-                    <li class={`nav-item  ${this.loc === "/PlayerSafetyPlan" ? "active" : ""}`}>
-                    <Link class="dropdown-item" to="/player-safety-plan">Player Safety Plan</Link>
-                    </li>
-                  </NavDropdown>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/Updates" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/updates">
-                      Updates
-                    </Link>
-                  </li>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/Leaderboard" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/leaderboard">
-                      Leaderboard
-                    </Link>
-                  </li>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/contact" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/contact">
-                      Contact
-                    </Link>
-                  </li>
-    
-                  <li
-                    class={`nav-item  ${
-                      this.loc === "/LogIn" ? "active" : ""
-                    }`}
-                  >
-                    <Link class="nav-link" to="/login">
-                      Log In
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-        </div>
-      );
-    }
-
   }
 
 }
