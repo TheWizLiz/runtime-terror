@@ -1,8 +1,9 @@
 import React from "react";
 import Logo from '../images/logo.png';
-import GameLogo from '../images/gameLogo.png';
+import GameLogo from '../images/gameLogo.png'
+import HomeGame from '../components/HomeGame.js'
 
-function Home() {
+function Home () {
   return (
     <div className="home">
       <div class="container">
@@ -14,10 +15,15 @@ function Home() {
               alt="GHvZ Logo"
             />
           </div>
+          <div class="col-lg-5">
+            <br /> <br />
+            <h1 class="font-weight-light">Upcoming Game</h1>
+            <HomeGame />
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Home;
+export default Home
