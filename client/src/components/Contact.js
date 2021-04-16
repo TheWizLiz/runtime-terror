@@ -14,10 +14,6 @@ function Contact() {
                <SocialIcon url="https://www.instagram.com/gatorshvz/" network="instagram"/> {""}
                <SocialIcon url="https://www.reddit.com/user/gatorshvz/" network="reddit"/> {""}
               <SocialIcon url="ufgatorhvz@gmail.com" network="email"/></p>
-            <p>Or, send us a message through the form below</p>
-            <p>Name<span style={{ color: 'red' }}>*</span></p>
-            <p>Email<span style={{ color: 'red' }}>*</span></p>
-            <p>Message or Question<span style={{ color: 'red' }}>*</span></p>
           </div>
         </div>
       </div>

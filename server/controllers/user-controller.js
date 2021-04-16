@@ -236,10 +236,71 @@ export const logoutUser = async (req, res) => {
 
 // Deleting a user
 export const deleteUser = async (req, res) => {
-  User.findById(req.params.id)
-    .then(user => user.remove.then(() => res.json({ success: true })))
-    .catch(error => res.status(404).json({ message: error.message }))
+  const { body } = req
+  const { username } = body
+
+  User.findOneAndRemove({username: username}, (err, user) => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error deleting user. Please Try Again.'
+      })
+    } else if (!user) {
+      return res.send({
+        success: false,
+        message: 'User to delete was not found.'
+      })
+    } else {
+      console.log("Removed User : ", user);
+    }
+  })
 }
+
+// updating a player's account
+export const updatePlayerAcc = async (req, res) => {
+  const { body } = req
+  const { username } = body
+
+  User.findOneAndUpdate({ username: username, acctType: 'player' }, { $set: { acctType: 'admin' } }, (err, type)  => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error updating user. Please Try Again.'
+      })
+    } else if (!type) {
+      return res.send({
+        success: false,
+        message: 'Account type was not found'
+      })
+    } else {
+      //console.log("(updatePlayerAcc: Changed type to ", type);
+    }
+  })
+} 
+
+// updating a admin's account
+export const updateAdminAcc = async (req, res) => {
+  const { body } = req
+  const { username } = body
+
+  User.findOneAndUpdate({ username: username, acctType: 'admin' }, { $set: { acctType: 'player' } }, (err, type)  => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error updating user. Please Try Again.'
+      })
+    } else if (!type) {
+      return res.send({
+        success: false,
+        message: 'Account type was not found'
+      })
+    } else {
+      //console.log("(updateAdminAcc: Changed type to ", type);
+    }
+  })
+} 
+
+
 
 export const getAcct = async (req, res, next) => {
   try {

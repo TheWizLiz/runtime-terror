@@ -3,93 +3,238 @@ import Form from "react-bootstrap/Form";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import Button from "react-bootstrap/Button";
+import axios from 'axios'
+import Message from './Message.js'
 
-function GameCreation(){
-    return(
-        <div classname="GameCreation">
-            <div class="container">
-                <h1 class="font-weight-light">Create a Game</h1>
+class GameCreation extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      // Loading for state
+      loading: true,
+      message: '',
+      msgType: '',
 
-                <br/>
+      // Basic Game Information
+      gameTitle: '',
+      gameDate: '',
+      gameTime: '',
+      gameDesc: '',
+      gameLocation: '',
 
-                <Form>
-                    <Form.Group controlId="gameInformation">
-                        <Form.Label>Game Information</Form.Label>
-                        <Form.Control placeholder="Game Title" />
-                        <Form.Control type="date" placeholder="Game Date" />
-                        <Form.Control type="time" placeholder="Game Time" />
-                        <Form.Control placeholder="Game Location" />
-                    </Form.Group>
+      gameEndTime: '',
+      gameEndDate: '',
+      gamePhoto: '',
+      gamePhotoName: '',
+      gamePhotoUploaded: {},
 
-                    <Form.Group controlId="registrationInformation">
-                        <Form.Label>Registration Information</Form.Label>
-                        <Form.Control type="date" placeholder="Registration Release Date" />
-                        <Form.Control type="time" placeholder="Registration Release Time" />
-                    </Form.Group>
+      // Game Limits
+      playerLimit: '',
+      playerLives: '',
+      hoardeLimit: '',
+      blasterLimit: '',
+      bandanaLimit: '',
+      wristbandLimit: '',
 
-                    <Form.Group controlId="rulesMeetingInfo">
-                        <Form.Label>Rules Meeting Information</Form.Label>
-                        <Form.Control type="date" placeholder="Date" />
-                        <Form.Control type="time" placeholder="Time Start" />
-                        <Form.Control type="time" placeholder="Time End" />
-                        <Form.Control placeholder="Location/Zoom Link" />
-                    </Form.Group>
+      // Registration and Meeting Information
+      regStartDate: '',
+      regStartTime: '',
+      regEndDate: '',
+      regEndTime: '',
 
-                    <Form.Group controlId="gameLogistics">
-                        <Form.Label>Game Logistics</Form.Label>
-                        <Form.Control placeholder="Maximum Number of Participants" />
-                        <Form.Control placeholder="Number of Particpants Allowed to Select Team Preference" />
-                    </Form.Group>
+      ruleMeetingDate: '',
+      ruleMeetingTime: '',
+      ruleMeetingEnd: '',
+      ruleMeetingZoom: '',
+      ruleMeetingLocation: '',
 
-                    <Form.Group controlId="gameProperties">
-                        <Form.Label>Game Properties</Form.Label>
-                        <Form.Control placeholder="Number of Bandanas" />
-                        <Form.Control placeholder="Number of Blasters" />
-                        <Form.Control placeholder="Number of Wristbands" />
-                    </Form.Group>
+      // Questionable Inputs...
+      requirePlayerID: '',
+      zombieToHuman: '',
+      humanToZombie: ''
+    }
+    this.handleInputChange = this.handleInputChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleImage = this.handleImage.bind(this)
+    this.handleImageSubmit = this.handleImageSubmit.bind(this)
+  }
 
-                    <Form.Group controlId="gameAttibutes">
-                        <Form.Label>Game Attributes</Form.Label>
-                        <Form.Control placeholder="Attribute Name" />
-                        <Form.Control placeholder="Attribute Datatype" />
-                        <Form.Control placeholder="Reward Name" />
-                        <Form.Control placeholder="Reward Datatype" />
-                    </Form.Group>
+  handleImage (e) {
+    console.log(e.target.files)
+    this.setState({
+      gamePhoto: e.target.files[0],
+      gamePhotoName: e.target.files[0].name
+    })
+  }
 
-                    <p>Require player ID?</p>
-                    <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-                        <ToggleButton value={1}>Opponent</ToggleButton>
-                        <ToggleButton value={2}>Team Member</ToggleButton>
-                        <ToggleButton value={3}>Both</ToggleButton>
-                        <ToggleButton value={4}>Neither</ToggleButton>
-                    </ToggleButtonGroup>
+  async handleImageSubmit (e) {
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append('file', this.state.gamePhoto)
+    console.log('ABOUT TO UPLOAD')
 
-                    <br/>
-                    <br/>
+    await axios.post('http://localhost:5000/api/games/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+      .then(res => {
+        if (!res.data.success) {
+          this.setState({
+            message: 'No file uploaded.',
+            msgType: 'danger'
+          })
+        } else {
+          console.log('resDATA', res)
+          const { fileName, filePath } = res.data
+          this.setState({
+            gamePhotoUploaded: { fileName, filePath },
+            message: 'File Uploaded.',
+            msgType: 'success'
+          })
+        }
+      })
+      .catch(err => {
+        console.log('An error has occurred when trying to upload file: ', err)
+        this.setState({
+          message: 'Error Uploading File.',
+          msgType: 'warning'
+        })
+      })
+  }
 
-                    <p>Require player ID?</p>
-                    <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-                        <ToggleButton value={1}>Yes</ToggleButton>
-                        <ToggleButton value={2}>No</ToggleButton>
-                    </ToggleButtonGroup>
+  handleInputChange (e) {
+    const target = e.target
+    const name = target.name
 
-                    <br/>
-                    <br/>
+    this.setState({ [name]: target.value })
+  }
 
-                    <Form.Group controlId="instances">
-                        <Form.Label>How many instances until a human switches to zombie?</Form.Label>
-                        <Form.Control placeholder="Enter here..." />
-                        <Form.Label>How many instances until a zombie switches to human?</Form.Label>
-                        <Form.Control placeholder="Enter here..." />
-                    </Form.Group>
+  handleSubmit (e) {
+    e.preventDefault()
+    console.log('Game Time', this.state.gameTime)
+    console.log('Game Date', this.state.gameDate)
+    // Format date
+    const gameDateFormatted = this.state.gameDate + 'T' + this.state.gameTime + ':00'
+    const gameEnd = this.state.gameEndDate + 'T' + this.state.gameEndTime + ':00'
 
-                    <Button variant="primary">Create Game</Button>{' '}
+    const regStart = this.state.regStartDate + 'T' + this.state.regStartTime + ':00'
+    console.log(gameDateFormatted)
+    const regEnd = this.state.regEndDate + 'T' + this.state.regEndTime + ':00'
+    // Call fetch function.
+    fetch('http://localhost:5000/api/games/createGame', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        gameTitle: this.state.gameTitle,
+        gameDate: gameDateFormatted,
+        gameEnd: gameEnd,
 
-                </Form>
+        gameDesc: this.state.gameDesc,
+        gameLocation: this.state.gameLocation,
+        gamePhoto: this.state.gamePhotoUploaded,
+        regStart: regStart,
+        regEnd: regEnd,
 
-            </div>
+        playerLimit: this.state.playerLimit,
+        playerLives: this.state.playerLives,
+        hoardeLimit: this.state.hoardeLimit,
+        blasterLimit: this.state.blasterLimit,
+        bandanaLimit: this.state.bandanaLimit,
+        wristbandLimit: this.state.wristbandLimit
+      })
+    })
+      .then(res => res.json())
+      .then(game => {
+        console.log(game)
+        this.setState({
+          loading: false,
+          gamePhotoUploaded: game.photo
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+  render () {
+    if (this.state.loading) {
+      return (
+        <div className="GameCreation">
+          <div className="container">
+            <h1 className="font-weight-light">Create a Game</h1>
+            <br />
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Group onChange={this.handleInputChange} controlId="gameInformation">
+                <Form.Label>Game Information</Form.Label>
+                <Form.Control name='gameTitle' placeholder="Game Title" value={this.state.gameTitle} />
+                <Form.Label>Game Start Time</Form.Label>
+                <Form.Control name='gameDate' placeholder="Game Date" type="date" value={this.state.gameDate} />
+                <Form.Control name='gameTime' placeholder="Game Time" type="time" value={this.state.gameTime} />
+                <Form.Label>Game End Time</Form.Label>
+                <Form.Control name='gameEndDate' placeholder="Game End Time" type="date" value={this.state.gameEndDate} />
+                <Form.Control name='gameEndTime' placeholder="Game End Time" type="time" value={this.state.gameEndTime} />
+                <Form.Label>Location and Description</Form.Label>
+                <Form.Control name='gameLocation' placeholder="Game Location" value={this.state.gameLocation} />
+                <Form.Control name='gameDesc' as='textarea' placeholder='Game Description' value={this.state.gameDesc} />
+              </Form.Group>
+
+              <Form.Group onChange={this.handleInputChange} controlId="registrationInformation">
+                <Form.Label>Registration Information</Form.Label>
+                <Form.Control name='regStartDate' type="date" placeholder="Registration Release Date" value={this.state.regStartDate} />
+                <Form.Control name='regStartTime' type="time" placeholder="Registration Release Time" /> <br />
+                <Form.Label>Registration End Date</Form.Label>
+                <Form.Control name='regEndDate' type='date' placeholder='Registration End Date' value={this.state.regEndDate} />
+                <Form.Control name='regEndTime' type='time' placeholder='Registration End Date' value={this.state.regEndTime} />
+              </Form.Group>
+
+              <Form.Group onChange={this.handleInputChange} controlId="rulesMeetingInfo">
+                <Form.Label>Rules Meeting Information</Form.Label>
+                <Form.Control name='ruleMeetingDate' type="date" placeholder="Date" value={this.state.ruleMeetingDate} />
+                <Form.Control name='ruleMeetingTime' type="time" placeholder="Time Start" value={this.state.ruleMeetingTime} />
+                <Form.Control name='ruleMeetingZoom' placeholder="Location/Zoom Link" value={this.state.ruleMeetingZoom} /> <br />
+                <Form.Label>Rules Meeting End Time</Form.Label>
+                <Form.Control name='ruleMeetingEnd' type="time" placeholder="Time End" value={this.state.ruleMeetingEnd} />
+              </Form.Group>
+
+              <Form.Group onChange={this.handleInputChange} controlId="gameLogistics">
+                <Form.Label>Game Logistics</Form.Label>
+                <Form.Control name='playerLimit' placeholder="Maximum Number of Participants" value={this.state.playerLimit} />
+                <Form.Control name='hoardeLimit' placeholder="Number of Particpants Allowed to Select Original Hoarde" value={this.state.hoardeLimit} />
+                <Form.Control name='playerLives' placeholder="Player Lives" value={this.state.playerLives} />
+              </Form.Group>
+
+              <Form.Group onChange={this.handleInputChange} controlId="gameProperties">
+                <Form.Label>Game Properties</Form.Label>
+                <Form.Control name='blasterLimit' placeholder="Number of Bandanas" value={this.state.blasterLimit} />
+                <Form.Control name='bandanaLimit' placeholder="Number of Blasters" value={this.state.bandanaLimit} />
+                <Form.Control name='wristbandLimit' placeholder="Number of Wristbands" value={this.state.wristbandLimit} />
+              </Form.Group>
+              <Button type='submit' variant="primary">Create Game</Button>{' '}
+            </Form>
+
+            <Form onSubmit={this.handleImageSubmit} onChange={this.handleImage}>
+              <Form.Group controlId='imageUpload'>
+                <Form.File name="gamePhoto" label="Game Image" />
+              </Form.Group>
+              <Button type='submit' variant="primary">Upload Image</Button>{' '}
+            </Form>
+            {this.state.message ? <Message message={this.state.message} type={this.state.msgType} /> : null}
+            {this.state.gamePhotoUploaded ?
+              <div className='row'>
+                <div className='col-6 m-auto'>
+                  <h3>{this.state.gamePhotoUploaded.fileName}</h3>
+                  <img style={{ width: '50%' }} src={this.state.gamePhotoUploaded.filePath} />
+                </div>
+              </div>
+              : null}
+          </div>
         </div>
-    );
+      )
+    } else {
+      return (
+        <div className='gameConfirm'>
+          <h1>Game Added to Database.</h1>
+        </div>
+      )
+    }
+  }
 }
 
-export default GameCreation;
+export default GameCreation
