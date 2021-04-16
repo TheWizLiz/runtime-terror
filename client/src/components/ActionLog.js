@@ -51,15 +51,6 @@ class ActionLog extends Component{
 
                     <PlayerQRCode />
 
-                    {/*<Form>
-                        <Form.Label>Current Game</Form.Label>
-                        <Form.Control placeholder="Game Title" />
-                        <Form.Label>Time Remaining:</Form.Label>
-                        <Form.Control type="time" placeholder="Game Time" />
-                        <Form.Label>Current Team:</Form.Label>
-                        <Form.Control placeholder="Team Name" />
-                    </Form>*/}
-
                     <br/>
 
                     <h1 class="font-weight-light">Log Kill</h1>

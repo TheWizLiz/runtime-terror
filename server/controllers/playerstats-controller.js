@@ -1,4 +1,5 @@
 import PlayerStats from '../models/PlayerStats.js'
+import RegistrationDetails from '../models/RegistrationDetails.js'
 
 export const getStats = async (req, res) => {
   try {
@@ -60,6 +61,26 @@ export const addDeaths = async (req, res) => {
         message: 'Kill added.'
       })
     }
+  })
+}
+
+export const updateBlasterBandana = async (req, res) => {
+  const { username, blasterID, bandanaID } = req.body
+
+  RegistrationDetails.findOneAndUpdate({player_id: username}, {$set: {blaster_id: blasterID}, $set: {bandana_id: bandanaID}}, (err, doc) => {
+    if(err){
+      return res.send({
+        success: false,
+        message: "An error has occured."
+      })
+    } else {
+      return res.send({
+        success: true,
+        message: 'Blaster and Bandana IDs updated.'
+      })
+    }
+
+
   })
 }
   

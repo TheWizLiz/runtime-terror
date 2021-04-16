@@ -37,7 +37,6 @@ class QRScan extends Component {
   componentDidMount () {
     if(this.state.playerLoaded == false){
       const storage = getFromStorage('the_main_app')
-      // console.log(token)
       if (storage && storage.token) {
         const { token } = storage
         fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
@@ -66,7 +65,6 @@ class QRScan extends Component {
               if(json.success){
                 this.setState({
                   isLoading: false,
-                  //username: '',
                   scanned: false
                 })
               }
@@ -85,7 +83,6 @@ class QRScan extends Component {
               if(json.success){
                 this.setState({
                   isLoading: false,
-                  //username: '',
                   prevResult: this.state.result,
                   scanned: false
                 })
