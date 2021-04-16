@@ -1,7 +1,7 @@
 import React from "react";
 //import { FormGroup } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { getFromStorage } from './utils/storage.js'
 //import queryString from 'query-string';
 //import ToggleButton from "react-bootstrap/ToggleButton";
@@ -15,8 +15,7 @@ class Registration extends React.Component {
         this.state = {
             // Loading for state
             loading: true,
-            message: '',
-            msgType: '',
+            isLoggedIn: false,
 
             //Registration Information
             userID: '',
@@ -49,10 +48,11 @@ class Registration extends React.Component {
         const name = target.name
     
         this.setState({ [name]: value })
+
+        console.log( {[name]: value });
       }
 
     handleSubmit (e) {
-        console.log(this.state.gameID)
         e.preventDefault()
         // Call fetch function.
         fetch('http://localhost:5000/api/account/registerUser', {
@@ -72,11 +72,14 @@ class Registration extends React.Component {
          })
         })
       .catch(err => console.log(err))
-      console.log("fetched")
     }
 
     render () {
-        if (this.state.loading) {
+      if (!window.navbar.state.isLoggedIn) {
+        return (
+            <Redirect to="/login"/>
+        )
+      } else if (this.state.loading) {
           return (
                 <div classname="Registration">
                     <div class="container">
@@ -119,7 +122,7 @@ class Registration extends React.Component {
             return (
                 <div className='Registration'>
                   <div class='container'>
-                    <div class="row align-items-center my-5">
+                    <div class="row align-items-center my-5 mt-5">
                       <div class="col">
                         <p>Registered Successfully</p>
                       </div>
