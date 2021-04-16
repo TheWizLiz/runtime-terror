@@ -19,7 +19,7 @@ class AccManager extends React.Component {
       .then(res => res.json())
       .then(json => {
         this.setState({
-          players: json,
+          players: json
         })
         console.log(this.state.players)
       })
