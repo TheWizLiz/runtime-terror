@@ -359,7 +359,7 @@ export const getUser = async (req, res) => {
 export const registerUser = async (req, res) => {
   // Get all inputs
   const { body } = req
-  const { userID, gameID, horde, notify } = body
+  const { userID, gameID, notify, horde} = body
 
   // Checking form values
   if (!userID) {

@@ -63,22 +63,42 @@ class Login extends React.Component {
   render () {
     if (!this.state.token) {
       return (
-        <div>
+        <div class="container">
+          <div class="row align-items-center my-5">
+          <h1 class="font-weight-light">Log In</h1>
+          </div>
+          <div class="row">
           <p>Gator Humans vs Zombies</p>
-          <LoginForm handler={this.loggedHandler} /> <br />
+          </div>
+          <div class="row">
+          <LoginForm handler={this.loggedHandler} />
+          </div>
+          <div class="row mt-3">
           <p>
             Don't have an account?
             <Link to='/signup'> Sign Up</Link> <br />
           </p>
+          </div>
+          <div class="row">
           <Link to='/forgot'>Forgot Password?</Link>
+        </div>
         </div>
       )
     } else {
       return (
-        <div>
+        <div class="container">
+        <div class="row align-items-center my-5">
+          <h1 class="font-weight-light">Log Out</h1>
+          </div>
+          <div class="row">
           <p>Account (Verified)</p>
-          <Link to='/account-details'>Account Details</Link> <br /> <br />
+          </div>
+          <div class="row">
+          <Link to='/account-details'>Account Details</Link>
+          </div>
+          <div class="row mt-3">
           <LogoutButton handler={this.loggedHandler} />
+        </div>
         </div>
       )
     }

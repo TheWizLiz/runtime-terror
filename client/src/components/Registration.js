@@ -1,8 +1,9 @@
 import React from "react";
 //import { FormGroup } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { getFromStorage } from './utils/storage.js'
+//import queryString from 'query-string';
 //import ToggleButton from "react-bootstrap/ToggleButton";
 //import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 //import Button from "react-bootstrap/Button";
@@ -10,9 +11,6 @@ import { getFromStorage } from './utils/storage.js'
 class Registration extends React.Component {
     constructor (props) {
         super(props)
-
-        const { game } = this.props.match.params.game;
-        //console.log(game)
 
         this.state = {
             // Loading for state
@@ -22,20 +20,15 @@ class Registration extends React.Component {
 
             //Registration Information
             userID: '',
-            gameID: '',
+            gameID: this.props.match.params.id,
             //gameID: 'test',
             horde: false,
             notify: false,            
         }
 
-        this.setState({
-            gameID: game
-        })
-
         console.log(this.state.gameID);
 
         const storage = getFromStorage('the_main_app')
-        console.log("TEST".token)
         if (storage && storage.token) {
         const { token } = storage
         fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
@@ -59,7 +52,7 @@ class Registration extends React.Component {
       }
 
     handleSubmit (e) {
-        console.log('test')
+        console.log(this.state.gameID)
         e.preventDefault()
         // Call fetch function.
         fetch('http://localhost:5000/api/account/registerUser', {
@@ -79,6 +72,7 @@ class Registration extends React.Component {
          })
         })
       .catch(err => console.log(err))
+      console.log("fetched")
     }
 
     render () {
@@ -87,7 +81,7 @@ class Registration extends React.Component {
                 <div classname="Registration">
                     <div class="container">
                         <div class="row align-items-center mt-5 mb-3">
-                        <h1 class="font-weight-light">Register for Game {this.state.gameID}</h1>
+                        <h1 class="font-weight-light">Register for Game</h1>
 
                         </div>
 

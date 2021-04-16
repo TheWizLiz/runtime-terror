@@ -12,6 +12,7 @@ function PlayerSafetyPlan(){
                         Outlined below are the changes to the different aspects of our game. 
                     </p>
             </div>
+            <div class="row align-items-center mb-3">
                 <h2 class="font-weight-light">General Game Changes</h2>
                     <p>
                         <li>Games are restricted to current UF students who have been cleared to return to campus and non-students who provide negative COVID test results from within a week of the event.</li>
@@ -42,6 +43,9 @@ function PlayerSafetyPlan(){
                         <li>Pre-Game briefings are being held in large open areas where players can maintain social distancing.</li>
                         <li>Briefing areas are being supplied with hand sanitizer to clean players and their gear before, during, and after missions. This gear includes blasters, darts, and other supplies used during gameplay.</li>
                     </p>
+                <br></br>
+                <br></br>
+                </div>
             </div>
         </div>
     );

@@ -19,7 +19,7 @@ function App() {
           <Route path="/contact" exact component={() => <Contact />} />
           <Route path="/login" exact component={() => <LogIn />} />
           <Route path="/recover/:user" exact component={() => <Recover />} />
-          <Route path="/registration/:game" exact component={() => <Registration />} />
+          <Route path="/registration/:id" exact component={() => <Registration />} />
           <Route path="/forgot" exact component={() => <Forgot />} />
           <Route path="/account-details" exact component={() => <AccountDetails />} />
           <Route path="/admin-dashboard" exact component={() => <AdminDashboard />} />

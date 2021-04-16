@@ -175,6 +175,7 @@ class Navigation extends React.Component {
                     </li>
                   }
                   
+                  {this.state.isLoggedIn && 
                   <li
                     class={`nav-item  ${
                       this.loc === "/LogIn" ? "active" : ""
@@ -184,6 +185,19 @@ class Navigation extends React.Component {
                       Log Out
                     </Link>
                   </li>
+                  }
+
+                  {!this.state.isLoggedIn && 
+                  <li
+                    class={`nav-item  ${
+                      this.loc === "/LogIn" ? "active" : ""
+                    }`}
+                  >
+                    <Link class="nav-link" to="/login">
+                      Log In
+                    </Link>
+                  </li>
+                  }
                 </ul>
               </div>
             </div>

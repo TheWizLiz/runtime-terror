@@ -157,7 +157,7 @@ class GameCreation extends React.Component {
     if (this.state.loading) {
       return (
         <div className="GameCreation">
-          <div className="container mt-5">
+          <div className="container mt-5 mb-5">
             <h1 className="font-weight-light">Create a Game</h1>
             <br />
             <Form onSubmit={this.handleSubmit}>
@@ -229,7 +229,7 @@ class GameCreation extends React.Component {
       )
     } else {
       return (
-        <div className='gameConfirm'>
+        <div className='gameConfirm mt-5'>
           <h1>Game Added to Database.</h1>
         </div>
       )
