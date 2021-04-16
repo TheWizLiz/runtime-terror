@@ -95,10 +95,10 @@ class PlayerEntry extends React.Component {
               <PencilSquare />
             </Button>
           </td>
-          <td> 
-              <Button onClick={this.handleDelete} variant='outline-danger'> 
-                <Trash />
-              </Button> 
+          <td>
+            <Button onClick={this.handleDelete} variant='outline-danger'>
+              <Trash />
+            </Button>
           </td>
         </tr>
       </tbody>

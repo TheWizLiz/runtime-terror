@@ -300,8 +300,6 @@ export const updateAdminAcc = async (req, res) => {
   })
 } 
 
-
-
 export const getAcct = async (req, res, next) => {
   try {
     // If the browswer returns a correct token in the localStorage
