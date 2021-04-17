@@ -1,46 +1,79 @@
-import React from "react";
+import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import QRScan from "./QRScan";
+import PlayerQRCode from "./PlayerQRCode";
 
-function ActionLog(){
-    return(
-        <div classname="ActionLog">
-            <div class="container">
-                <h1 class="font-weight-light">Game Title</h1>
+class ActionLog extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            playerid: ""
+        }
+        this.handleInputChange = this.handleInputChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
 
-                <Form>
-                <Form.Label>Time Remaining:</Form.Label>
-                <Form.Control type="time" placeholder="Game Time" />
-                <Form.Label>Current Team:</Form.Label>
-                <Form.Control placeholder="Team Name" />
-                </Form>
+    handleInputChange (e) {
+        const target = e.target
+        const name = target.name
+    
+        this.setState({ [name]: target.value })
+      }
 
-                <br/>
+    handleSubmit (e) {
+        e.preventDefault()
 
-                <h1 class="font-weight-light">Log Kill</h1>
+        fetch("http://localhost:5000/api/games/addDeaths", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: this.state.playerid
+            })
+            })
+            .then(res => res.json())
+            .then(json => {
+            if(json.success){
+                this.setState({
+                playerid: "",
+                })
+            }
+            })
+            .catch(err => console.error(err))
+    }
 
-                <Form>
-                <Form.Control placeholder="User of ID of Killed Player" />
+    render(){
+        return(
+            <div classname="ActionLog">
+                <div class="container">
+                    
+                    <h1 class="font-weight-light">Action Log</h1>
 
-                <br/>
+                    <PlayerQRCode />
 
-                <h1 class="font-weight-light">or</h1>
+                    <br/>
 
-                <br/>
+                    <h1 class="font-weight-light">Log Kill</h1>
 
-                <h1 class="font-weight-light">Scan QR Code</h1>
-                <Button variant="primary">Log Kill</Button>{' '}
+                    <Form onChange={this.handleInputChange} onSubmit={this.handleSubmit}>
+                        <Form.Control name="playerid" placeholder="User of ID of Killed Player" value={this.state.playerid} />
+                        <Button variant="primary" type="submit">Log Kill</Button>{' '}
+                    </Form>
 
-                <br/>
-                <br/>
+                    <br/>
 
-                <Button variant="primary" href="tel:352-474-8358">Contact an Administrator</Button>{' '}
+                    <h1 class="font-weight-light">Scan QR Code</h1>
 
-                </Form>
+                    <QRScan />
 
+                    <br/>
+
+                    <Button variant="primary" href="tel:352-474-8358">Contact an Administrator</Button>{' '}
+
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
 export default ActionLog;
