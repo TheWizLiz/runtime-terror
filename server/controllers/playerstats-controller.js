@@ -4,12 +4,12 @@ import RegistrationDetails from '../models/RegistrationDetails.js'
 export const getStats = async (req, res) => {
   try {
     const { query } = req
-    const { user, game } = query
+    const { user } = query
 
     // console.log(user)
     // console.log(game)
 
-    PlayerStats.find({ player_id: user, game_id: game }, (err, results) => {
+    PlayerStats.find({ player_id: user }, (err, results) => {
       if (err) {
         return res.send({
           success: false,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { getFromStorage } from '../utils/storage'
+import { Link } from "react-router-dom";
 import LoginForm from './LoginForm'
-import SignUpForm from './SignUpForm'
 import LogoutButton from './LogoutButton'
 
 class Login extends React.Component {
@@ -52,27 +52,53 @@ class Login extends React.Component {
     if (storage && storage.token && this.state.isLoading) {
       const { token } = storage
       this.setState({ token: token, isLoading: false })
+      window.navbar.shouldReload()
     } else if (!storage && this.state.token && this.state.isLoading) {
       // Occur when logoutButton
       this.setState({ token: '', isLoading: false })
+      window.navbar.shouldReload()
     }
   }
 
   render () {
     if (!this.state.token) {
       return (
-        <div>
-          <p>Sign Up</p>
-          <SignUpForm />
-          <p>Sign In</p>
+        <div class="container">
+          <div class="row align-items-center my-5">
+          <h1 class="font-weight-light">Log In</h1>
+          </div>
+          <div class="row">
+          <p>Gator Humans vs Zombies</p>
+          </div>
+          <div class="row">
           <LoginForm handler={this.loggedHandler} />
+          </div>
+          <div class="row mt-3">
+          <p>
+            Don't have an account?
+            <Link to='/signup'> Sign Up</Link> <br />
+          </p>
+          </div>
+          <div class="row">
+          <Link to='/forgot'>Forgot Password?</Link>
+        </div>
         </div>
       )
     } else {
       return (
-        <div>
+        <div class="container">
+        <div class="row align-items-center my-5">
+          <h1 class="font-weight-light">Log Out</h1>
+          </div>
+          <div class="row">
           <p>Account (Verified)</p>
+          </div>
+          <div class="row">
+          <Link to='/account-details'>Account Details</Link>
+          </div>
+          <div class="row mt-3">
           <LogoutButton handler={this.loggedHandler} />
+        </div>
         </div>
       )
     }

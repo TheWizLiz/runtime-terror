@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import fileUpload from 'express-fileupload'
 
 // Imports for Routes
 import userRoutes from './routes/api/signin.js'
@@ -18,6 +19,7 @@ const CONNECTION_URL = process.env.CONNECTION_URL
 // Used for post route to be reached by ex: localhost:5000/posts, not localhost:5000
 
 app.use(express.json({ limit: '30mb', extended: true }), cors())
+app.use(fileUpload())
 
 app.use('/api/account', userRoutes)
 app.use('/api/games', inGameData)

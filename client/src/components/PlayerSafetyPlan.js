@@ -4,13 +4,15 @@ function PlayerSafetyPlan(){
     return(
         <div classname="PlayerSafetyPlan">
             <div class="container">
+            <div class="row align-items-center mt-5 mb-3">
                 <h1 class="font-weight-light">Player Safety Plan</h1>
                     <p>
                         To ensure the health and safety of our players, our moderators, and our community, Gators Humans vs Zombies has enacted the below safety plan.
                         This plan will be in effect for the Spring 2021 semester, and we will revisit this plan before starting games in future semesters. 
                         Outlined below are the changes to the different aspects of our game. 
                     </p>
-
+            </div>
+            <div class="row align-items-center mb-3">
                 <h2 class="font-weight-light">General Game Changes</h2>
                     <p>
                         <li>Games are restricted to current UF students who have been cleared to return to campus and non-students who provide negative COVID test results from within a week of the event.</li>
@@ -41,7 +43,9 @@ function PlayerSafetyPlan(){
                         <li>Pre-Game briefings are being held in large open areas where players can maintain social distancing.</li>
                         <li>Briefing areas are being supplied with hand sanitizer to clean players and their gear before, during, and after missions. This gear includes blasters, darts, and other supplies used during gameplay.</li>
                     </p>
-
+                <br></br>
+                <br></br>
+                </div>
             </div>
         </div>
     );

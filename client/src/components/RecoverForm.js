@@ -31,6 +31,7 @@ class RecoverForm extends React.Component {
             // Redirect or clear state after
             password: ''
           })
+          this.props.handler()
         }
       })
       .catch(err => console.error(err))
