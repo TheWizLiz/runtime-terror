@@ -5,6 +5,7 @@ import fileUpload from 'express-fileupload'
 import GameImage from '../models/GameImage.js'
 import PlayerStats from '../models/PlayerStats.js'
 import RegistrationDetails from '../models/RegistrationDetails.js'
+import GameResults from '../models/GameResults.js'
 
 export const createGame = async (req, res, next) => {
   // Get all inputs
@@ -324,7 +325,7 @@ export const gameStartTransfer = async (req, res) => {
     console.log('Got players: ', registeredPlayers)
   })
 
-  PlayerStats.insertMany(registeredPlayers)
+  await PlayerStats.insertMany(registeredPlayers)
     .then(players => {
       console.log(players)
       return res.send({
@@ -339,4 +340,103 @@ export const gameStartTransfer = async (req, res) => {
         message: 'The entering process completed successfully.'
       })
     })
+}
+
+export const gameEndTransfer = async (req, res) => {
+  // When game ends...
+  // Retrieve all player tuples with game_id O
+  // Depending if they are on the correct team, update if they are winners. O
+  // Grab placement from position they are in the array when retrieved O
+  // Transfer all relevant players into gameResults.
+  // Delete tuples out of PlayerStats with specific game_id...
+    // Should drop table.. ?
+  const { body } = req
+  const { game_id, winner } = body
+  const inGamePlayers = []
+  
+  // Grab Players in current game
+  // Add additional attributes
+  await PlayerStats.find({ game_id: game_id })
+    .sort({ kills: 'desc', deaths: 'asc', remaining_lives: 'desc' })
+    .then(players => {
+      if (players.length === 0) {
+        return res.send({
+          success: false,
+          message: 'No accounts found in current game.'
+        })
+      } else {
+        for (let i = 0; i < players.length; i++) {
+          let won = false
+  
+          if (players[i].original_team === winner) {
+            won = true
+          }
+  
+          inGamePlayers.push({
+            player_id: players[i].player_id,
+            game_id: players[i].game_id,
+            kills: players[i].kills,
+            deaths: players[i].deaths,
+            original_team: players[i].original_team,
+            end_team: players[i].current_team,
+            remaining_lives: players[i].remaining_lives,
+            winner: won,
+            placement: (i + 1)
+          })
+        }
+        console.log('Got players: ', inGamePlayers)
+      }
+      
+    })
+    .catch(err => {
+      console.log('Caught Error finding players', err)
+      return res.send({
+        success: false,
+        message: 'An error has occurred finding players in the current game',
+        error: err
+      })
+    })
+  
+  // insert players into GameResults
+  if (inGamePlayers) {
+    await GameResults.insertMany(inGamePlayers)
+    .then(players => {
+      console.log('Entered players:', players)
+    })
+    .catch(err => {
+      console.log('ERROR HAS OCCURRED', err)
+      return res.send({
+        success: false,
+        message: 'The entering process not completed successfully.'
+      })
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'No accounts found in PlayerStats in game.'
+    })
+  }
+  
+
+  await PlayerStats.deleteMany({ game_id: game_id }, (err, doc) => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'There was an error removing accounts from PlayerStats',
+        error: err
+      })
+    } else if (doc.deletedCount === 0) {
+      return res.send({
+        success: false,
+        message: 'No accounts to remove found...'
+      })
+    } else {
+      console.log(`Removed ${doc.deletedCount} accounts`)
+      return res.send({
+        success: true,
+        message: 'Accounts Deleted. Everything completed successfully.',
+      })
+    }
+  })
+
 }
