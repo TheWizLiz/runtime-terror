@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import QrReader from 'react-qr-reader';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import PropertyTable from "./PropertyTable"
 
 class PropertyLog extends Component {
     constructor(props){
@@ -48,6 +49,8 @@ class PropertyLog extends Component {
     }
 
     handleSubmit (e) {
+        this.state.prevResult=this.state.username
+
         e.preventDefault()
         
         fetch("http://localhost:5000/api/games/updateBlasterBandana", {
@@ -63,7 +66,7 @@ class PropertyLog extends Component {
             .then(json => {
               if(json.success){
                 this.setState({
-                  prevResult: this.state.result,
+                  prevResult: this.state.username,
                   isLoading: false,
                   scanned: false,
                   username: '',
@@ -90,9 +93,12 @@ class PropertyLog extends Component {
                         <br/>
 
                         <Form onChange={this.handleInputChange} onSubmit={this.handleSubmit}>
+                          <Form.Label>Username</Form.Label>
                           <Form.Control name="username" placeholder="Username" value={this.state.username} />
-                          <Form.Control name="bandanaID" placeholder="Bandana ID" value={this.state.bandanaID} />
+                          <Form.Label>Blaster ID</Form.Label>
                           <Form.Control name="blasterID" placeholder="Blaster ID" value={this.state.blasterID} />
+                          <Form.Label>Bandana ID</Form.Label>
+                          <Form.Control name="bandanaID" placeholder="Bandana ID" value={this.state.bandanaID} />
                           <Button variant="primary" type="submit">Submit</Button>{' '}
                         </Form>
 
@@ -114,7 +120,13 @@ class PropertyLog extends Component {
                                 <p class="font-weight-light"> {this.state.result}</p> :
                                 null
                             }
-    
+
+                          <br/>
+                          <br/>
+
+                          <div>
+                            <PropertyTable />
+                          </div>
                     </div> 
                 </div> 
 
@@ -124,8 +136,7 @@ class PropertyLog extends Component {
         return(
           <div class = "container">
             <h1 class="font-weight-light">Property Log</h1>
-            {/*<Button onClick={() => this.setState({result:"Aim Camera at QR Code"}, {isLoading: true}, {showComponent: true})}>Click to Log another User</Button>*/}
-            <p class="font-weight-light">Bandana {this.state.prevBandanaID} and Blaster {this.state.prevBlasterID} logged to {this.state.prevResult}</p>
+            <p class="font-weight-light">Blaster: {this.state.prevBlasterID} and Bandana: {this.state.prevBandanaID} logged to {this.state.prevResult}</p>
           </div>
         )
       }
