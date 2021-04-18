@@ -273,7 +273,6 @@ export const currLeaderboard = async (req, res) => {
 }
 
 export const gameStartTransfer = async (req, res) => {
-
   // Drop PlayerStats to clear out previous game's stats (NEED TO ADD)
   // Get GameID of started game
   // Find all players registered in the registration table
@@ -349,11 +348,12 @@ export const gameEndTransfer = async (req, res) => {
   // Grab placement from position they are in the array when retrieved O
   // Transfer all relevant players into gameResults.
   // Delete tuples out of PlayerStats with specific game_id...
-    // Should drop table.. ?
+  // Should drop table.. ?
+
   const { body } = req
   const { game_id, winner } = body
   const inGamePlayers = []
-  
+
   // Grab Players in current game
   // Add additional attributes
   await PlayerStats.find({ game_id: game_id })
@@ -367,11 +367,11 @@ export const gameEndTransfer = async (req, res) => {
       } else {
         for (let i = 0; i < players.length; i++) {
           let won = false
-  
+
           if (players[i].original_team === winner) {
             won = true
           }
-  
+
           inGamePlayers.push({
             player_id: players[i].player_id,
             game_id: players[i].game_id,
@@ -386,7 +386,6 @@ export const gameEndTransfer = async (req, res) => {
         }
         console.log('Got players: ', inGamePlayers)
       }
-      
     })
     .catch(err => {
       console.log('Caught Error finding players', err)
@@ -396,27 +395,26 @@ export const gameEndTransfer = async (req, res) => {
         error: err
       })
     })
-  
+
   // insert players into GameResults
   if (inGamePlayers) {
     await GameResults.insertMany(inGamePlayers)
-    .then(players => {
-      console.log('Entered players:', players)
-    })
-    .catch(err => {
-      console.log('ERROR HAS OCCURRED', err)
-      return res.send({
-        success: false,
-        message: 'The entering process not completed successfully.'
+      .then(players => {
+        console.log('Entered players:', players)
       })
-    })
+      .catch(err => {
+        console.log('ERROR HAS OCCURRED', err)
+        return res.send({
+          success: false,
+          message: 'The entering process not completed successfully.'
+        })
+      })
   } else {
     return res.send({
       success: false,
       message: 'No accounts found in PlayerStats in game.'
     })
   }
-  
 
   await PlayerStats.deleteMany({ game_id: game_id }, (err, doc) => {
     if (err) {
@@ -438,5 +436,4 @@ export const gameEndTransfer = async (req, res) => {
       })
     }
   })
-
 }

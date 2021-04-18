@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true, default: '' },
   password: { type: String, required: true, default: '' },
   email: { type: String, required: true, unique: true, default: '' },
+  phone_no: { type: String, required: true, unique: true },
   acctType: { type: String, default: 'player' },
   createdAt: { type: Date, default: Date.now() }
 })

@@ -19,7 +19,7 @@ export const getUsers = async (req, res) => {
 // Signing Up
 export const createUser = async (req, res) => {
   const { body } = req
-  const { firstname, lastname, username, password } = body
+  const { firstname, lastname, username, password, phone_no } = body
   let { email } = body
 
   if (!firstname) {
@@ -57,11 +57,18 @@ export const createUser = async (req, res) => {
     })
   }
 
+  if (!phone_no) {
+    return res.send({
+      success: false,
+      message: 'Error: phone number cannot be blank'
+    })
+  }
+
   email = email.toLowerCase()
 
   // Need to extend form verification to usernames as well.
   // Also need to learn about sanitizing inputs
-  User.find({ email: email }, (err, previousUsers) => {
+  User.find({ $or: [{ email: email }, { username: username }, { phone_no: phone_no }] }, (err, previousUsers) => {
     if (err) {
       return res.send({
         success: false,
@@ -70,7 +77,7 @@ export const createUser = async (req, res) => {
     } else if (previousUsers.length > 0) {
       return res.send({
         success: false,
-        message: 'An account with this email adress already exists.'
+        message: 'An account with this email address/username/phone number already exists.'
       })
     }
 
@@ -80,6 +87,7 @@ export const createUser = async (req, res) => {
     newUser.lastname = lastname
     newUser.email = email
     newUser.username = username
+    newUser.phone_no = phone_no
     newUser.password = newUser.generateHash(password)
 
     // console.log(newUser)

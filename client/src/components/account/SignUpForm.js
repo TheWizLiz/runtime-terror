@@ -8,6 +8,7 @@ class SignUpForm extends React.Component {
       lastname: '',
       email: '',
       username: '',
+      phone_no: '',
       password: '',
       signUpError: ''
     }
@@ -24,6 +25,7 @@ class SignUpForm extends React.Component {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
         email: this.state.email,
+        phone_no: this.state.phone_no,
         username: this.state.username,
         password: this.state.password
       })
@@ -38,15 +40,17 @@ class SignUpForm extends React.Component {
             firstname: '',
             lastname: '',
             email: '',
+            phone_no: '',
             username: '',
             password: ''
           })
+        } else {
+          console.log('json', json)
+          this.setState({
+            signUpError: json.message,
+            isLoading: false
+          })
         }
-        console.log('json', json)
-        this.setState({
-          logInError: json.message,
-          isLoading: false
-        })
       })
       .catch(err => console.error(err))
   }
@@ -101,6 +105,16 @@ class SignUpForm extends React.Component {
                 value={this.state.username}
                 onChange={this.handleInputChange}
                 placeholder='Username'
+              />
+            </label>
+            <br />
+            <label>Phone Number:
+              <input
+                type='text'
+                name='phone_no'
+                value={this.state.phone_no}
+                onChange={this.handleInputChange}
+                placeholder='Phone Number'
               />
             </label>
             <br />
