@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getFromStorage } from './utils/storage.js'
-var QRCode = require('qrcode.react');
+import QRCode from 'qrcode.react'
 
 class PlayerQRCode extends Component {
     constructor(props){
