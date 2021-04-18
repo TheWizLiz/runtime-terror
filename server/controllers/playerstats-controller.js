@@ -1,4 +1,5 @@
 import PlayerStats from '../models/PlayerStats.js'
+import GameResults from '../models/GameResults.js'
 import RegistrationDetails from '../models/RegistrationDetails.js'
 
 export const getStats = async (req, res) => {
@@ -9,7 +10,7 @@ export const getStats = async (req, res) => {
     // console.log(user)
     // console.log(game)
 
-    PlayerStats.find({ player_id: user }, (err, results) => {
+    GameResults.find({ player_id: user }, (err, results) => {
       if (err) {
         return res.send({
           success: false,

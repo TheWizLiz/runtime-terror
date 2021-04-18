@@ -16,6 +16,8 @@ class AdminDashboard extends React.Component {
       adminLoaded: false
     }
     this.validateAdmin = this.validateAdmin.bind(this)
+    this.handleStart = this.handleStart.bind(this)
+    this.handleEnd = this.handleEnd.bind(this)
   }
 
   componentDidMount () {
@@ -48,6 +50,36 @@ class AdminDashboard extends React.Component {
     }
   }
 
+  handleStart () {
+    const game_id = 'EXAMPLE'
+
+    fetch('http://localhost:5000/api/games/gameStartTransfer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        game_id: game_id
+      })
+    })
+      .then(res => res.json())
+      .then(game => console.log('Worked...?', game))
+  }
+
+  handleEnd () {
+    const game_id = 'EXAMPLE2'
+    const winner = 'Zombie'
+
+    fetch('http://localhost:5000/api/games/gameEndTransfer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        game_id: game_id,
+        winner: winner
+      })
+    })
+      .then(res => res.json())
+      .then(game => console.log('Worked...?', game))
+  }
+
   render () {
     if (this.state.isAdmin && this.state.adminLoaded) {
       return (
@@ -67,6 +99,14 @@ class AdminDashboard extends React.Component {
                 </Button>
                 </div>
                 <br/>
+                <div className='row'>
+                  <h4>Start Game (TESTING)</h4>
+                  <Button variant="success" onClick={this.handleStart}>Start</Button>
+                </div>
+                <div className='row'>
+                  <h4>End Game (TESTING)</h4>
+                  <Button variant="danger" onClick={this.handleEnd}>End</Button>
+                </div>
                 <div class = "row">
                   <h4>Manage Accounts:</h4>
                   <AccManager />

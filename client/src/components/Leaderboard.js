@@ -10,9 +10,6 @@ function Leaderboard () {
           <h1 class="font-weight-light">Leaderboard</h1>
         </div>
         <div className='row align-items-center my-5'>
-          <LeaderboardSelector />
-        </div>
-        <div className='row align-items-center my-5'>
           <LeaderboardTable />
         </div>
       </div>

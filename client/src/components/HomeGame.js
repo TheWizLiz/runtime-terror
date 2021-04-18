@@ -31,7 +31,7 @@ class HomeGame extends React.Component {
       )
     } else {
       return (
-        <h3>Game not Loaded</h3>
+        null
       )
     }
   }

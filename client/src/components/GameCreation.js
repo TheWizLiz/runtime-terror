@@ -160,53 +160,60 @@ class GameCreation extends React.Component {
           <div className="container mt-5 mb-5">
             <h1 className="font-weight-light">Create a Game</h1>
             <br />
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Group onChange={this.handleInputChange} controlId="gameInformation">
-                <Form.Label>Game Information</Form.Label>
-                <Form.Control name='gameTitle' placeholder="Game Title" value={this.state.gameTitle} />
-                <Form.Label>Game Start Time</Form.Label>
-                <Form.Control name='gameDate' placeholder="Game Date" type="date" value={this.state.gameDate} />
-                <Form.Control name='gameTime' placeholder="Game Time" type="time" value={this.state.gameTime} />
-                <Form.Label>Game End Time</Form.Label>
-                <Form.Control name='gameEndDate' placeholder="Game End Time" type="date" value={this.state.gameEndDate} />
-                <Form.Control name='gameEndTime' placeholder="Game End Time" type="time" value={this.state.gameEndTime} />
-                <Form.Label>Location and Description</Form.Label>
-                <Form.Control name='gameLocation' placeholder="Game Location" value={this.state.gameLocation} />
-                <Form.Control name='gameDesc' as='textarea' placeholder='Game Description' value={this.state.gameDesc} />
-              </Form.Group>
+            
+              <Form onSubmit={this.handleSubmit}>
+                <div className='row'>
+                <div className='col-6'>
+                  <Form.Group onChange={this.handleInputChange} controlId="gameInformation">
+                    <Form.Label>Game Information</Form.Label>
+                    <Form.Control name='gameTitle' placeholder="Game Title" value={this.state.gameTitle} />
+                    <Form.Label>Game Start Time</Form.Label>
+                    <Form.Control name='gameDate' placeholder="Game Date" type="date" value={this.state.gameDate} />
+                    <Form.Control name='gameTime' placeholder="Game Time" type="time" value={this.state.gameTime} />
+                    <Form.Label>Game End Time</Form.Label>
+                    <Form.Control name='gameEndDate' placeholder="Game End Time" type="date" value={this.state.gameEndDate} />
+                    <Form.Control name='gameEndTime' placeholder="Game End Time" type="time" value={this.state.gameEndTime} />
+                    <Form.Label>Location and Description</Form.Label>
+                    <Form.Control name='gameLocation' placeholder="Game Location" value={this.state.gameLocation} />
+                    <Form.Control name='gameDesc' as='textarea' placeholder='Game Description' value={this.state.gameDesc} />
+                  </Form.Group>
 
-              <Form.Group onChange={this.handleInputChange} controlId="registrationInformation">
-                <Form.Label>Registration Information</Form.Label>
-                <Form.Control name='regStartDate' type="date" placeholder="Registration Release Date" value={this.state.regStartDate} />
-                <Form.Control name='regStartTime' type="time" placeholder="Registration Release Time" /> <br />
-                <Form.Label>Registration End Date</Form.Label>
-                <Form.Control name='regEndDate' type='date' placeholder='Registration End Date' value={this.state.regEndDate} />
-                <Form.Control name='regEndTime' type='time' placeholder='Registration End Date' value={this.state.regEndTime} />
-              </Form.Group>
+                  <Form.Group onChange={this.handleInputChange} controlId="registrationInformation">
+                    <Form.Label>Registration Information</Form.Label>
+                    <Form.Subtitle>Registration Information</Form.Subtitle>
+                    <Form.Control name='regStartDate' type="date" placeholder="Registration Release Date" value={this.state.regStartDate} />
+                    <Form.Control name='regStartTime' type="time" placeholder="Registration Release Time" /> <br />
+                    <Form.Label>Registration End Date</Form.Label>
+                    <Form.Control name='regEndDate' type='date' placeholder='Registration End Date' value={this.state.regEndDate} />
+                    <Form.Control name='regEndTime' type='time' placeholder='Registration End Date' value={this.state.regEndTime} />
+                  </Form.Group>
+                </div>
+                <div className='col-6'>
+                  <Form.Group onChange={this.handleInputChange} controlId="rulesMeetingInfo">
+                    <Form.Label>Rules Meeting Information</Form.Label>
+                    <Form.Control name='ruleMeetingDate' type="date" placeholder="Date" value={this.state.ruleMeetingDate} />
+                    <Form.Control name='ruleMeetingTime' type="time" placeholder="Time Start" value={this.state.ruleMeetingTime} />
+                    <Form.Control name='ruleMeetingZoom' placeholder="Location/Zoom Link" value={this.state.ruleMeetingZoom} /> <br />
+                    <Form.Label>Rules Meeting End Time</Form.Label>
+                    <Form.Control name='ruleMeetingEnd' type="time" placeholder="Time End" value={this.state.ruleMeetingEnd} />
+                  </Form.Group>
 
-              <Form.Group onChange={this.handleInputChange} controlId="rulesMeetingInfo">
-                <Form.Label>Rules Meeting Information</Form.Label>
-                <Form.Control name='ruleMeetingDate' type="date" placeholder="Date" value={this.state.ruleMeetingDate} />
-                <Form.Control name='ruleMeetingTime' type="time" placeholder="Time Start" value={this.state.ruleMeetingTime} />
-                <Form.Control name='ruleMeetingZoom' placeholder="Location/Zoom Link" value={this.state.ruleMeetingZoom} /> <br />
-                <Form.Label>Rules Meeting End Time</Form.Label>
-                <Form.Control name='ruleMeetingEnd' type="time" placeholder="Time End" value={this.state.ruleMeetingEnd} />
-              </Form.Group>
+                  <Form.Group onChange={this.handleInputChange} controlId="gameLogistics">
+                    <Form.Label>Game Logistics</Form.Label>
+                    <Form.Control name='playerLimit' placeholder="Maximum Number of Participants" value={this.state.playerLimit} />
+                    <Form.Control name='hoardeLimit' placeholder="Number of Particpants Allowed to Select Original Hoarde" value={this.state.hoardeLimit} />
+                    <Form.Control name='playerLives' placeholder="Player Lives" value={this.state.playerLives} />
+                  </Form.Group>
 
-              <Form.Group onChange={this.handleInputChange} controlId="gameLogistics">
-                <Form.Label>Game Logistics</Form.Label>
-                <Form.Control name='playerLimit' placeholder="Maximum Number of Participants" value={this.state.playerLimit} />
-                <Form.Control name='hoardeLimit' placeholder="Number of Particpants Allowed to Select Original Hoarde" value={this.state.hoardeLimit} />
-                <Form.Control name='playerLives' placeholder="Player Lives" value={this.state.playerLives} />
-              </Form.Group>
-
-              <Form.Group onChange={this.handleInputChange} controlId="gameProperties">
-                <Form.Label>Game Properties</Form.Label>
-                <Form.Control name='blasterLimit' placeholder="Number of Bandanas" value={this.state.blasterLimit} />
-                <Form.Control name='bandanaLimit' placeholder="Number of Blasters" value={this.state.bandanaLimit} />
-                <Form.Control name='wristbandLimit' placeholder="Number of Wristbands" value={this.state.wristbandLimit} />
-              </Form.Group>
-              <Button type='submit' variant="primary">Create Game</Button>{' '}
+                  <Form.Group onChange={this.handleInputChange} controlId="gameProperties">
+                    <Form.Label>Game Properties</Form.Label>
+                    <Form.Control name='blasterLimit' placeholder="Number of Bandanas" value={this.state.blasterLimit} />
+                    <Form.Control name='bandanaLimit' placeholder="Number of Blasters" value={this.state.bandanaLimit} />
+                    <Form.Control name='wristbandLimit' placeholder="Number of Wristbands" value={this.state.wristbandLimit} />
+                  </Form.Group>
+                  <Button type='submit' variant="success">Create Game</Button>{' '}
+                </div>
+              </div>
             </Form>
 
             <Form onSubmit={this.handleImageSubmit} onChange={this.handleImage}>
@@ -215,6 +222,7 @@ class GameCreation extends React.Component {
               </Form.Group>
               <Button type='submit' variant="primary">Upload Image</Button>{' '}
             </Form>
+
             {this.state.message ? <Message message={this.state.message} type={this.state.msgType} /> : null}
             {this.state.gamePhotoUploaded ?
               <div className='row'>
