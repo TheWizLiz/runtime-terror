@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Row, Col, Jumbotron } from 'react-bootstrap';
+import { Row, Col, Jumbotron } from 'react-bootstrap';
 import UpdateForm from './UpdateForm.js'
 
 class UpdateGameManager extends React.Component {

@@ -83,7 +83,7 @@ class AdminDashboard extends React.Component {
   render () {
     if (this.state.isAdmin && this.state.adminLoaded) {
       return (
-        <div className='adminDashboard'>
+        <div className='adminDashboard mb-5'>
           <div class='container'>
             <div class='row align-items-center my-5'>
               <h1 class='font-weight-light'>Admin Dashboard</h1>

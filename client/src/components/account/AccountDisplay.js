@@ -1,7 +1,7 @@
 import React from 'react'
 import GameResults from '../../components/games/GameResults.js'
 import { getFromStorage } from '../utils/storage.js'
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class AccountDisplay extends React.Component {
   constructor (props) {

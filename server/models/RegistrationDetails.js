@@ -6,6 +6,7 @@ const RegistrationSchema = new mongoose.Schema({
   blaster_id: { type: Number },
   bandana_id: { type: Number },
   notifications: { type: Boolean, default: false },
+  originalHorde: { type: Boolean, default: false },
   team: { type: String, default: 'Human' }
 })
 
