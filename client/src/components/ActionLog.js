@@ -3,12 +3,15 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import QRScan from "./QRScan";
 import PlayerQRCode from "./PlayerQRCode";
+import { getFromStorage } from './utils/storage.js';
 
 class ActionLog extends Component{
     constructor(props){
         super(props)
         this.state = {
-            playerid: ""
+            playerid: "",
+            playerLoaded: "",
+            username: ""
         }
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -23,6 +26,25 @@ class ActionLog extends Component{
 
     handleSubmit (e) {
         e.preventDefault()
+        if (this.state.playerLoaded) {
+            fetch("http://localhost:5000/api/games/updateStats", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                username: this.state.username
+              })
+            })
+            .then(res => res.json())
+            .then(json => {
+              if(json.success){
+                this.setState({
+                  isLoading: false,
+                  scanned: false
+                })
+              }
+            })
+            .catch(err => console.error(err))
+        }
 
         fetch("http://localhost:5000/api/games/addDeaths", {
             method: "POST",
@@ -41,6 +63,22 @@ class ActionLog extends Component{
             })
             .catch(err => console.error(err))
     }
+
+    componentDidMount () {
+        if(this.state.playerLoaded == false){
+          const storage = getFromStorage('the_main_app')
+          if (storage && storage.token) {
+            const { token } = storage
+            fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+              .then(res => res.json())
+              .then(player => this.setState({
+                username: player.username,
+                playerLoaded: true,
+              }))
+              .catch((err) => console.log('An error Occured Loading the Player Data', err))
+          }
+        }
+      }
 
     render(){
         return(
