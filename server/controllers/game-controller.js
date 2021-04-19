@@ -289,3 +289,19 @@ export const currPropBoard = async (req, res) => {
 
 }
 
+export const checkGameStatus = async (req, res) => {
+  const status = await Game.findOne({current_game: true})
+
+  if (status) {
+    return res.send({
+      success: true,
+      message: 'Game status recieved'
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'Could not retrive Game status'
+    })
+  }
+
+}

@@ -11,7 +11,8 @@ class ActionLog extends Component{
         this.state = {
             playerid: "",
             playerLoaded: "",
-            username: ""
+            username: "",
+            activeGame: false
         }
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -65,6 +66,17 @@ class ActionLog extends Component{
     }
 
     componentDidMount () {
+      fetch('http://localhost:5000/api/games/checkGameStatus')
+      .then(res => res.json())
+      .then(status => {
+        if (status.success) {
+          this.setState({
+            activeGame: true
+          })
+        } else {}
+      })
+      .catch(err => console.log('Problem Loading Game Status', err))
+
         if(this.state.playerLoaded == false){
           const storage = getFromStorage('the_main_app')
           if (storage && storage.token) {
@@ -81,6 +93,7 @@ class ActionLog extends Component{
       }
 
     render(){
+      if(this.state.activeGame){
         return(
             <div classname="ActionLog">
                 <div class="container">
@@ -111,6 +124,17 @@ class ActionLog extends Component{
                 </div>
             </div>
         );
+      } else {
+        return(
+          <div class ="container">
+            <h1 class="font-weight-light">Action Log</h1>
+            
+            <br />
+            
+            <p>There is not currently a game in progress</p>
+          </div>
+        );
+      }
     }
 }
 

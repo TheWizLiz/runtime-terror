@@ -1,6 +1,6 @@
 import express from 'express'
 import { getStats, updateStats, addDeaths, updateBlasterBandana } from '../../controllers/playerstats-controller.js'
-import { createGame, gameDetails, gameLimits, getGames, upload, currLeaderboard, currPropBoard } from '../../controllers/game-controller.js'
+import { createGame, gameDetails, gameLimits, getGames, upload, currLeaderboard, currPropBoard, checkGameStatus } from '../../controllers/game-controller.js'
 
 const router = express.Router()
 
@@ -13,5 +13,6 @@ router.post('/upload', upload)
 router.get('/getGames', getGames)
 router.get('/currLeaderboard', currLeaderboard)
 router.get('/currPropBoard', currPropBoard)
+router.get('/checkGameStatus', checkGameStatus)
 
 export default router
