@@ -67,10 +67,13 @@ class UpdateForm extends React.Component {
                         <Form.Check type="checkbox" label="Remove Bounties" />
                     </Form.Group>
                 </div>
-                <div class = "col">
-                <Form.Label>Registration Limit</Form.Label>
-                    <Form.Control placeholder="Current Limit" />
-                </div>
+            </div>
+                <div class = "row">
+                    <div class = "col">
+                        <Form.Label>Registration Limit</Form.Label>
+                        <Form.Control placeholder="Current Limit" />
+                        <br/>
+                    </div>
             </div>
             <div class = "row">
                 <div class = "col">
