@@ -2,8 +2,10 @@ import React from "react";
 import AccManager from './admin/AccManager.js'
 import UpdateGameManager from './admin/UpdateGameManager.js'
 import { getFromStorage } from './utils/storage.js'
-import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown'
+import Button from 'react-bootstrap/Button'
+import CurrentGameDropdown from './CurrentGameDropdown.js'
+import EndGameDropdown from './EndGameDropdown.js'
 
 class AdminDashboard extends React.Component {
   constructor (props) {
@@ -13,7 +15,8 @@ class AdminDashboard extends React.Component {
       email: '',
       acctType: '',
       isAdmin: false,
-      adminLoaded: false
+      adminLoaded: false,
+      gameTitles: []
     }
     this.validateAdmin = this.validateAdmin.bind(this)
     this.handleStart = this.handleStart.bind(this)
@@ -30,6 +33,7 @@ class AdminDashboard extends React.Component {
         .then(player => this.validateAdmin(player))
         .catch((err) => console.log('An error Occured Loading the Player Data', err))
     }
+
   }
 
   validateAdmin (player) {
@@ -51,33 +55,44 @@ class AdminDashboard extends React.Component {
   }
 
   handleStart () {
-    const game_id = 'EXAMPLE'
+    const game_id = document.getElementById('start_game_selector').value
 
-    fetch('http://localhost:5000/api/games/gameStartTransfer', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        game_id: game_id
+    console.log(game_id)
+    
+    if (game_id) {
+      fetch('http://localhost:5000/api/games/gameStartTransfer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          game_id: game_id
+        })
       })
-    })
-      .then(res => res.json())
-      .then(game => console.log('Worked...?', game))
+        .then(res => res.json())
+        .then(game => console.log('Worked...?', game))
+    } else {
+      alert('No game selected.')
+    }
   }
 
   handleEnd () {
-    const game_id = 'EXAMPLE2'
+    const game_id = document.getElementById('end_game_selector').value
+    // Should change \/ \/
     const winner = 'Zombie'
 
-    fetch('http://localhost:5000/api/games/gameEndTransfer', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        game_id: game_id,
-        winner: winner
+    if (game_id) {
+      fetch('http://localhost:5000/api/games/gameEndTransfer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          game_id: game_id,
+          winner: winner
+        })
       })
-    })
-      .then(res => res.json())
-      .then(game => console.log('Worked...?', game))
+        .then(res => res.json())
+        .then(game => console.log('Worked...?', game))
+    } else {
+      alert('No game selected.')
+    }
   }
 
   render () {
@@ -94,17 +109,19 @@ class AdminDashboard extends React.Component {
                   <h4>Create a New Game:</h4>
                 </div>
                   <div class = "row">
-                <Button variant="primary" type="submit" href="http://localhost:3000/game-creation">
+                <Button variant="primary" type="submit" href="/game-creation">
                   Create
                 </Button>
                 </div>
                 <br/>
                 <div className='row'>
                   <h4>Start Game (TESTING)</h4>
+                  <CurrentGameDropdown />
                   <Button variant="success" onClick={this.handleStart}>Start</Button>
                 </div>
                 <div className='row'>
                   <h4>End Game (TESTING)</h4>
+                  <EndGameDropdown />
                   <Button variant="danger" onClick={this.handleEnd}>End</Button>
                 </div>
                 <div class = "row">

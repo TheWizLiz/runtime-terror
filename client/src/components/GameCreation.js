@@ -1,7 +1,6 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
-//import ToggleButton from "react-bootstrap/ToggleButton";
-//import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
+import { getFromStorage } from './utils/storage.js'
 import Button from "react-bootstrap/Button";
 import axios from 'axios'
 import Message from './Message.js'
@@ -14,6 +13,8 @@ class GameCreation extends React.Component {
       loading: true,
       message: '',
       msgType: '',
+      isAdmin: false,
+      adminLoaded: false,
 
       // Basic Game Information
       gameTitle: '',
@@ -57,6 +58,7 @@ class GameCreation extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleImage = this.handleImage.bind(this)
     this.handleImageSubmit = this.handleImageSubmit.bind(this)
+    this.validateAdmin = this.validateAdmin.bind(this)
   }
 
   handleImage (e) {
@@ -153,16 +155,44 @@ class GameCreation extends React.Component {
       .catch(err => console.log(err))
   }
 
+  componentDidMount () {
+    const storage = getFromStorage('the_main_app')
+    // console.log(token)
+    if (storage && storage.token) {
+      const { token } = storage
+      fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+        .then(res => res.json())
+        .then(player => this.validateAdmin(player))
+        .catch((err) => console.log('An error Occured Loading the Player Data', err))
+    }
+  }
+
+  // componentDidUpdate () {
+
+  // }
+
+  validateAdmin (player) {
+    if (player.acctType === 'admin') {
+      this.setState({
+        adminLoaded: true,
+        isAdmin: true
+      })
+    } else {
+      this.setState({
+        isAdmin: false,
+        adminLoaded: true
+      })
+    }
+  }
+
   render () {
-    if (this.state.loading) {
+    if (this.state.loading && this.state.isAdmin && this.state.adminLoaded) {
       return (
         <div className="GameCreation">
           <div className="container mt-5 mb-5">
             <h1 className="font-weight-light">Create a Game</h1>
-            <br />
-            
-              <Form onSubmit={this.handleSubmit}>
-                <div className='row'>
+            <Form onSubmit={this.handleSubmit}>
+              <div className='row'>
                 <div className='col-6'>
                   <Form.Group onChange={this.handleInputChange} controlId="gameInformation">
                     <Form.Label>Game Information</Form.Label>
@@ -179,10 +209,9 @@ class GameCreation extends React.Component {
                   </Form.Group>
 
                   <Form.Group onChange={this.handleInputChange} controlId="registrationInformation">
-                    <Form.Label>Registration Information</Form.Label>
-                    <Form.Subtitle>Registration Information</Form.Subtitle>
+                    <Form.Label>Registration Start Date</Form.Label>
                     <Form.Control name='regStartDate' type="date" placeholder="Registration Release Date" value={this.state.regStartDate} />
-                    <Form.Control name='regStartTime' type="time" placeholder="Registration Release Time" /> <br />
+                    <Form.Control name='regStartTime' type="time" placeholder="Registration Release Time" value={this.state.regStartTime} />
                     <Form.Label>Registration End Date</Form.Label>
                     <Form.Control name='regEndDate' type='date' placeholder='Registration End Date' value={this.state.regEndDate} />
                     <Form.Control name='regEndTime' type='time' placeholder='Registration End Date' value={this.state.regEndTime} />
@@ -235,10 +264,17 @@ class GameCreation extends React.Component {
           </div>
         </div>
       )
-    } else {
+    } else if (!this.state.loading && this.state.isAdmin) {
       return (
         <div className='gameConfirm mt-5'>
           <h1>Game Added to Database.</h1>
+          <button onClick={window.location.reload()}>Create New Game</button>
+        </div>
+      )
+    } else {
+      return (
+        <div className='gameConfirm mt-5'>
+          <h1>Restricted Page. Admin Only.</h1>
         </div>
       )
     }
