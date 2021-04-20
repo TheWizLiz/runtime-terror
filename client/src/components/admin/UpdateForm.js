@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from 'react-bootstrap/Button';
 import Figure from 'react-bootstrap/Figure';
-//import FigureImage from 'react-bootstrap/FigureImage'
 import Game_Logo from './../../images/gameLogo.png';
 
 class UpdateForm extends React.Component {
@@ -16,6 +15,8 @@ class UpdateForm extends React.Component {
                     <Form.Label>Game Title</Form.Label>
                     <Form.Control placeholder="Current Title" />
                 </div>
+            </div>
+            <div class="row">
                 <div class="col">
                     <Form.Label>Date</Form.Label>
                     <Form.Control type="date" placeholder=" Current Date" />
@@ -66,14 +67,19 @@ class UpdateForm extends React.Component {
                         <Form.Check type="checkbox" label="Remove Bounties" />
                     </Form.Group>
                 </div>
-                <div class = "col">
-                <Form.Label>Registration Limit</Form.Label>
-                    <Form.Control placeholder="Current Limit" />
-                </div>
+            </div>
+                <div class = "row">
+                    <div class = "col">
+                        <Form.Label>Registration Limit</Form.Label>
+                        <Form.Control placeholder="Current Limit" />
+                        <br/>
+                    </div>
             </div>
             <div class = "row">
-            <Form.Label>Add Attribute</Form.Label>
+                <div class = "col">
+                    <Form.Label>Add Attribute</Form.Label>
                     <Form.Control placeholder="{Attribute Name : Data Type}" />
+                </div>
             </div>
             <br/>
             <Button variant="primary" type="submit">
