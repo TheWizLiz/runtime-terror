@@ -6,9 +6,6 @@ export const getStats = async (req, res) => {
     const { query } = req
     const { user } = query
 
-    // console.log(user)
-    // console.log(game)
-
     PlayerStats.find({ player_id: user }, (err, results) => {
       if (err) {
         return res.send({
@@ -16,7 +13,6 @@ export const getStats = async (req, res) => {
           message: 'Player and Game combination not found.'
         })
       } else {
-        // console.log(results)
         res.send(JSON.stringify(results))
       }
     })
@@ -49,7 +45,25 @@ export const updateStats = async (req, res) => {
 export const addDeaths = async (req, res) => {
   const { username } = req.body
   
-  PlayerStats.findOneAndUpdate({player_id: username}, {$inc: {deaths: 1}, $set: {current_team: "Zombie"}}, (err, doc) => {
+  PlayerStats.findOneAndUpdate({player_id: username}, {$inc: {deaths: 1, remaining_lives: -1}}, (err, doc) => {
+    if(err){
+      return res.send({
+        success: false,
+        message: "An error has occured."
+      })
+    } else {
+      return res.send({
+        success: true,
+        message: 'Kill added.'
+      })
+    }
+  })
+}
+
+export const changeTeam = async (req, res) => {
+  const { username } = req.body
+
+  PlayerStats.findOneAndUpdate({player_id: username}, {$set: {current_team: "Zombie"}}, (err, doc) => {
     if(err){
       return res.send({
         success: false,
@@ -83,5 +97,23 @@ export const updateBlasterBandana = async (req, res) => {
 
 
   })
+}
+
+export const currentPlayerStats = async (req, res) => {
+  const { username } = req.body
+
+  const results = await PlayerStats.find({player_id: username})
+
+  if (results) {
+    return res.send({
+      success: true,
+      message: 'Player Loaded.',
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'Could not return current stats.'
+    })
+  }
 }
   

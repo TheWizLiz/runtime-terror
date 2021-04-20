@@ -16,7 +16,9 @@ class QRScan extends Component {
           kills: 0,
           game: 1,
           isLoading: true,
-          scanned: false
+          scanned: false,
+          lives: 0,
+          currentTeam: ""
       }
       this.handleScan=this.handleScan.bind(this)
   }
@@ -47,7 +49,25 @@ class QRScan extends Component {
           }))
           .catch((err) => console.log('An error Occured Loading the Player Data', err))
       }
+
+      if (this.state.playerLoaded) {
+        fetch("http://localhost:5000/api/games/currentPlayerStats", {
+          body: JSON.stringify({
+            username: this.state.username
+        })
+      })
+      .then(res => res.json())
+      .then(results => {
+        if (results.success) {
+          this.setState({
+            lives: results[0].remaining_lives,
+            currentTeam: results[0].current_team
+          })
+        }
+      })
+      .catch(err => console.log('Problem Loading stats', err))
     }
+  }
   }
 
   componentDidUpdate () {
@@ -84,13 +104,34 @@ class QRScan extends Component {
                 this.setState({
                   isLoading: false,
                   prevResult: this.state.result,
-                  scanned: false
+                  scanned: false,
+                  lives: this.state.lives - 1
                 })
               }
             })
-            .catch(err => console.error(err)) 
+            .catch(err => console.error(err))
       }
     }
+
+    if(this.state.playerLoaded && this.state.lives == 0){
+      fetch("https://localhost:5000/api/games/changeTeam", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: this.state.username
+      })
+    })
+    .then(res => res.json())
+    .then(json => {
+      if(json.success){
+        this.setState({
+          isLoading: false,
+          scanned: false
+        })
+      }
+    })
+    .catch(err => console.error(err))
+  }
   }
 
   render() {

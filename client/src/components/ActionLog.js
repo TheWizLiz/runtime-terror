@@ -12,7 +12,7 @@ class ActionLog extends Component{
             playerid: "",
             playerLoaded: "",
             username: "",
-            activeGame: false
+            activeGame: true //fixxxxx
         }
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -27,7 +27,7 @@ class ActionLog extends Component{
 
     handleSubmit (e) {
         e.preventDefault()
-        if (this.state.playerLoaded) {
+        if (this.state.playerLoaded && this.state.playerid !== "") {
             fetch("http://localhost:5000/api/games/updateStats", {
               method: "POST",
               headers: { "Content-Type": "application/json" },

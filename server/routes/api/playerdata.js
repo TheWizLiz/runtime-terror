@@ -1,5 +1,5 @@
 import express from 'express'
-import { getStats, updateStats, addDeaths, updateBlasterBandana } from '../../controllers/playerstats-controller.js'
+import { getStats, updateStats, addDeaths, changeTeam, updateBlasterBandana, currentPlayerStats } from '../../controllers/playerstats-controller.js'
 import { createGame, gameDetails, gameLimits, getGames, upload, currLeaderboard, currPropBoard, checkGameStatus } from '../../controllers/game-controller.js'
 
 const router = express.Router()
@@ -14,5 +14,7 @@ router.get('/getGames', getGames)
 router.get('/currLeaderboard', currLeaderboard)
 router.get('/currPropBoard', currPropBoard)
 router.get('/checkGameStatus', checkGameStatus)
+router.post('changeTeam', changeTeam)
+router.get('/currentPlayerStats', currentPlayerStats)
 
 export default router
