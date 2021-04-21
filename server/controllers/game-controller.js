@@ -293,6 +293,40 @@ export const currLeaderboard = async (req, res) => {
   }
 }
 
+export const currPropBoard = async (req, res) => {
+  const results = await RegistrationDetails.find().sort({blaster_id: 'desc'})
+
+  if (results) {
+    return res.send({
+      success: true,
+      message: 'Property Board Loaded.',
+      leaderboard: results
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'Could not return Property Board.'
+    })
+  }
+
+}
+
+export const checkGameStatus = async (req, res) => {
+  const status = await Game.findOne({current_game: true})
+
+  if (status) {
+    return res.send({
+      success: true,
+      message: 'Game status recieved'
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'Could not retrive Game status'
+    })
+  }
+}
+
 export const gameStartTransfer = async (req, res) => {
   // Drop PlayerStats to clear out previous game's stats (NEED TO ADD)
   // Get GameID of started game
