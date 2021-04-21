@@ -80,9 +80,13 @@ export const gameDetails = async (req, res, next) => {
   const Image = new GameImage()
   Image.game_id = game_id
 
-  if (gamePhoto) {
+  if (Object.keys(gamePhoto).length !== 0) {
+    console.log('GETS IN HERE...?', gamePhoto)
     Image.fileName = gamePhoto.fileName
     Image.filePath = gamePhoto.filePath
+  } else {
+    Image.fileName = 'default.jpg'
+    Image.filePath = '/images/uploads/default.jpg'
   }
 
   Image.save((err, doc) => {
@@ -133,7 +137,7 @@ export const gameLimits = async (req, res, next) => {
   GameL.hoarde_limit = hoardeLimit
   GameL.blaster_no = blasterLimit
   GameL.bandana_no = bandanaLimit
-  GameL.writstband_no = wristbandLimit
+  GameL.wristband_no = wristbandLimit
 
   GameL.save((err, doc) => {
     if (err) {
@@ -177,7 +181,7 @@ export const getGames = async (req, res) => {
         allGames.push(games[i])
         gameIds.push(games[i].game_id)
       }
-      console.log(gameIds)
+      console.log('Game ID\'s', gameIds)
     })
     .catch(err => {
       console.log('Something went wrong...', err)
@@ -193,8 +197,8 @@ export const getGames = async (req, res) => {
       // console.log(games)
       for (let i = 0; i < allGames.length; i++) {
         allGames.find((game, index) => {
-          if (game.game_id == foundGames[i]._id.toString()) {
-            // console.log('FoundGame', foundGames[j])
+          if (game && game.game_id === foundGames[i]._id.toString()) {
+            console.log('FoundGame', foundGames[i])
             allGames[index].game_title = foundGames[i].game_title
             allGames[index].current_game = foundGames[i].current_game
             allGames[index].time_start = foundGames[i].time_start
@@ -208,6 +212,8 @@ export const getGames = async (req, res) => {
     .lean()
     .then(foundGames => {
       for (let i = 0; i < allGames.length; i++) {
+        // console.log('ALL GAMES', allGames)
+        // console.log('FOUND GAMES', foundGames)
         allGames.find((game, index) => {
           if (game.game_id === foundGames[i].game_id) {
             // console.log('FoundGame', foundGames[j])
@@ -218,12 +224,27 @@ export const getGames = async (req, res) => {
       }
     })
 
+  // for (let i = 0; i < allGames.length; i++) {
+  //   if (!allGames[i].fileName || !allGames[i].filePath) {
+  //     allGames[i].fileName = 'default.jpg'
+  //     allGames[i].filePath = '/images/uploads/default.jpg'
+  //   }
+  // }
+
   console.log(allGames)
-  return res.send({
-    success: true,
-    message: 'Active Games Found.',
-    games: allGames
-  })
+  if (allGames.length > 0) {
+    return res.send({
+      success: true,
+      message: 'Active Games Found.',
+      games: allGames
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'Currently No Active Games.',
+      games: allGames
+    })
+  }
 }
 
 export const upload = async (req, res) => {
@@ -285,6 +306,24 @@ export const gameStartTransfer = async (req, res) => {
   const registeredPlayers = []
   let lives = 0
 
+  // Need to retrieve game_id not title...
+  await Game.findOneAndUpdate({ _id: game_id }, { current_game: true }, (err, game) => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error finding game with specific game_id...',
+        error: err
+      })
+    } else if (!game) {
+      return res.send({
+        success: false,
+        message: 'No games found with associated ID.'
+      })
+    } else {
+      console.log('Updated Current_Game to TRUE')
+    }
+  })
+
   // Find Lives for Game
   await GameLimits.findOne({ game_id: game_id }, (err, game) => {
     if (err) {
@@ -300,45 +339,50 @@ export const gameStartTransfer = async (req, res) => {
     console.log('Player Lives for Game: ', lives)
   })
 
-  await RegistrationDetails.find({ game_id: game_id }, (err, players) => {
-    if (err) {
+  await RegistrationDetails.find({ game_id: game_id })
+    .lean()
+    .then(players => {
+      for (let i = 0; i < players.length; i++) {
+        registeredPlayers.push({
+          player_id: players[i].player_id,
+          game_id: players[i].game_id,
+          original_team: players[i].team,
+          current_team: players[i].team,
+          remaining_lives: lives
+        })
+      }
+      console.log('Added players...', registeredPlayers)
+    })
+    .catch(err => {
       return res.send({
         success: false,
         message: 'There was an error retrieving registration details',
         error: err
       })
-    } else if (players) {
-      console.log('PLAYERS FOUND:', players)
-    }
-
-    for (let i = 0; i < players.length; i++) {
-      registeredPlayers.push({
-        player_id: players[i].player_id,
-        game_id: players[i].game_id,
-        original_team: players[i].team,
-        current_team: players[i].team,
-        remaining_lives: lives
-      })
-    }
-
-    console.log('Got players: ', registeredPlayers)
-  })
-
-  await PlayerStats.insertMany(registeredPlayers)
-    .then(players => {
-      console.log(players)
-      return res.send({
-        success: true,
-        message: 'The entering process completed successfully'
-      })
     })
-    .catch(err => {
-      console.log('ERROR HAS OCCURRED', err)
-      return res.send({
-        success: true,
-        message: 'The entering process completed successfully.'
+
+  if (registeredPlayers.length > 0) {
+    await PlayerStats.insertMany(registeredPlayers)
+      .then(players => {
+        console.log(players)
+        return res.send({
+          success: true,
+          message: 'The entering process completed successfully'
+        })
       })
+      .catch(err => {
+        console.log('ERROR HAS OCCURRED', err)
+        return res.send({
+          success: true,
+          message: 'The entering process completed successfully.'
+        })
+      })
+  } else {
+    return res.send({
+      success: false,
+      message: 'No registered players to add into the game...'
     })
+  }
 }
 
 export const gameEndTransfer = async (req, res) => {
@@ -353,6 +397,35 @@ export const gameEndTransfer = async (req, res) => {
   const { body } = req
   const { game_id, winner } = body
   const inGamePlayers = []
+
+  // Change game to ended. current_game to false.
+  await Game.findOneAndUpdate({ _id: game_id }, { current_game: false }, (err, game) => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error setting current_game to false.'
+      })
+    } else if (!game) {
+      return res.send({
+        success: false,
+        message: 'Game not found to be deleted.'
+      })
+    }
+  })
+
+  await GameDesc.findOneAndUpdate({ game_id: game_id }, { ended: true }, (err, game) => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error setting game to ended.'
+      })
+    } else if (!game) {
+      return res.send({
+        success: false,
+        message: 'Game not found to be deleted.'
+      })
+    }
+  })
 
   // Grab Players in current game
   // Add additional attributes
@@ -432,8 +505,86 @@ export const gameEndTransfer = async (req, res) => {
       console.log(`Removed ${doc.deletedCount} accounts`)
       return res.send({
         success: true,
-        message: 'Accounts Deleted. Everything completed successfully.',
+        message: 'Accounts Deleted. Everything completed successfully.'
       })
     }
   })
+}
+
+// Used for seeing which games are past the registration phase but have not started.
+export const currentGames = async (req, res, next) => {
+  // Get games that are past the registration deadline and have not ended yet.
+  // Ended = false
+  const currGames = []
+
+  await GameDesc.find({ ended: false, registration_deadline: { $lte: Date.now() } })
+    .lean()
+    .then(games => {
+      for (let i = 0; i < games.length; i++) {
+        currGames.push(games[i].game_id)
+      }
+      console.log('Current Games:', currGames)
+    })
+    .catch(err => {
+      return res.send({
+        success: false,
+        message: 'Error finding games which haven\'t occurred yet.',
+        error: err
+      })
+    })
+
+  if (currGames.length !== 0) {
+    await Game.find({ _id: { $in: currGames } })
+      .lean()
+      .then(games => {
+        console.log('Retrieved Game Data...', games)
+        req.games = games
+      })
+      .catch(err => {
+        console.log('Error finding games which were in game details.', err)
+        return res.send({
+          success: false,
+          message: 'Error finding games from gamedetails.',
+          error: err
+        })
+      })
+  } else {
+    req.games = []
+  }
+  next()
+}
+
+export const ongoingGame = async (req, res) => {
+  const { games } = req
+  console.log('GAMES.REQ', games)
+
+  await Game.findOne({ current_game: true })
+    .lean()
+    .then(game => {
+      if (game) {
+        console.log()
+        return res.send({
+          success: true,
+          message: 'Found the ongoing game',
+          current_game: game,
+          games: games
+        })
+      } else {
+        return res.send({
+          success: false,
+          message: 'No ongoing games found...',
+          current_game: '',
+          games: games
+        })
+      }
+    })
+    .catch(err => {
+      return res.send({
+        success: false,
+        message: 'Error finding games with current_game = true',
+        error: err,
+        current_game: '',
+        games: games
+      })
+    })
 }

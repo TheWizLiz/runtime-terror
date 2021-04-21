@@ -21,7 +21,7 @@ class GameResult extends React.Component {
       <Card>
         <Card.Header>
           <Accordion.Toggle as={Card.Header} variant='link' eventKey={this.props.gameNum}>
-            {this.props.game.game_id}
+            {this.props.game.game_title}
           </Accordion.Toggle>
         </Card.Header>
         <Accordion.Collapse eventKey={this.props.gameNum}>
