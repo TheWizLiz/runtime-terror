@@ -1,17 +1,19 @@
-version: 1
-frontend:
-  phases:
-    # IMPORTANT - Please verify your build commands
-    preBuild:
-      commands:
-        - npm install
-    build:
-      commands:
-        - npm start
-  artifacts:
-    # IMPORTANT - Please verify your build output directory
-    baseDirectory: /client/public
-    files:
-      - '**/*'
-  cache:
-    paths: []
+version: 2.1
+orbs:
+  docker: circleci/docker@1.5.0
+jobs:
+  front-end:
+    docker:
+    - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: node -v
+      - run: cd client && npm install
+      - run: cd client && npm start
+      - run: cd server && npm install
+      - run: cd server && npm start
+
+workflows:
+  circle-ci-tests:
+    jobs:
+      - front-end

@@ -27,7 +27,7 @@ class Games extends React.Component {
     return (
       <div className="games mb-5">
         <div className="container">
-          <div className="row align-items-center my-5">
+          <div className="row align-items-center">
             <h1 className="font-weight-light">Games</h1>
           </div>
           <div className='d-inline-block'>

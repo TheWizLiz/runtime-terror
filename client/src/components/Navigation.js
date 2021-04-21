@@ -107,7 +107,7 @@ class Navigation extends React.Component {
                     </li>
                   </NavDropdown>
     
-                  <li
+                  {/*<li
                     class={`nav-item  ${
                       this.loc === "/Updates" ? "active" : ""
                     }`}
@@ -115,7 +115,7 @@ class Navigation extends React.Component {
                     <Link class="nav-link" to="/updates">
                       Updates
                     </Link>
-                  </li>
+                  </li>*/}
   
                   {this.state.isLoggedIn && !this.state.isAdmin &&
                   <li

@@ -198,7 +198,7 @@ class GameCreation extends React.Component {
     if (this.state.loading && this.state.isAdmin && this.state.adminLoaded) {
       return (
         <div className="GameCreation">
-          <div className="container mt-5 mb-5">
+          <div className="container mb-5">
             <h1 className="font-weight-light">Create a Game</h1>
             <Form onSubmit={this.handleSubmit}>
               <div className='row'>
@@ -275,14 +275,14 @@ class GameCreation extends React.Component {
       )
     } else if (!this.state.loading && this.state.isAdmin) {
       return (
-        <div className='gameConfirm mt-5'>
+        <div className='gameConfirm'>
           <h1>Game Added to Database.</h1>
           <button onClick={window.location.reload()}>Create New Game</button>
         </div>
       )
     } else {
       return (
-        <div className='gameConfirm mt-5'>
+        <div className='gameConfirm'>
           <h1>Restricted Page. Admin Only.</h1>
         </div>
       )

@@ -4,7 +4,7 @@ function CashHuntRules(){
     return(
         <div classname="CashHuntRules">
             <div class="container">
-                <div class="row align-items-center mt-5 mb-3">
+                <div class="row align-items-center mb-3">
                     <h1 class="font-weight-light">Kraus Cash Hunt Rules</h1>
                         <p>
                             <li>To claim the $40 Cash Prize you must be the first player to solve a series of clues that will lead you to the final clue.</li>

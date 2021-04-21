@@ -7,7 +7,7 @@ function Home () {
   return (
     <div className="home">
       <div class="container">
-        <div class="row align-items-center my-5">
+        <div class="row align-items-center">
           <div class="col-lg-7">
             <img
               class="img-fluid mb-4 mb-lg-4"

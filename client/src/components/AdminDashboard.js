@@ -191,9 +191,10 @@ class AdminDashboard extends React.Component {
       return (
         <div className='adminDashboard mb-5'>
           <div class='container'>
-            <div class='row align-items-center my-5'>
+            <div class='row align-items-center'>
               <h1 class='font-weight-light'>Admin Dashboard</h1>
             </div>
+            <br />
             <div class = "row justify-content-around">
               <div class="row justify-content-start">
                 <div class = "col-3">
@@ -221,6 +222,7 @@ class AdminDashboard extends React.Component {
                     </Card.Body>
                   </Card>
 
+                  <br />
                   <div className='row'>
                     <h4>Start Game (TESTING)</h4>
                     <CurrentGameDropdown games={this.state.gamesCanStart} />
@@ -264,10 +266,11 @@ class AdminDashboard extends React.Component {
           </div>
       )
     } else {
+      
       return (
         <div className='adminDashboard'>
           <div class='container'>
-            <div class='row align-items-center my-5'>
+            <div class='row align-items-center'>
               <h1 class='font-weight-light'>Not an admin. Restricted.</h1>
             </div>
           </div>

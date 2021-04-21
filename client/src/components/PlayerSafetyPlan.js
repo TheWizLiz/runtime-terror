@@ -4,7 +4,7 @@ function PlayerSafetyPlan(){
     return(
         <div classname="PlayerSafetyPlan">
             <div class="container">
-            <div class="row align-items-center mt-5 mb-3">
+            <div class="row align-items-center mb-3">
                 <h1 class="font-weight-light">Player Safety Plan</h1>
                     <p>
                         To ensure the health and safety of our players, our moderators, and our community, Gators Humans vs Zombies has enacted the below safety plan.

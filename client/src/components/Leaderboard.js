@@ -6,7 +6,7 @@ function Leaderboard () {
   return (
     <div className="leaderboard">
       <div class="container">
-        <div class="row align-items-center my-5">
+        <div class="row align-items-center">
           <h1 class="font-weight-light">Leaderboard</h1>
         </div>
         <div className='row align-items-center my-5'>
