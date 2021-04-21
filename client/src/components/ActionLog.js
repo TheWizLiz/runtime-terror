@@ -10,9 +10,11 @@ class ActionLog extends Component{
         super(props)
         this.state = {
             playerid: "",
-            playerLoaded: "",
+            playerLoaded: false,
             username: "",
-            activeGame: true //fixxxxx
+            activeGame: false,
+            lives: -1,
+            currentTeam: ""
         }
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -84,13 +86,63 @@ class ActionLog extends Component{
             fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
               .then(res => res.json())
               .then(player => this.setState({
-                username: player.username,
-                playerLoaded: true,
+                username: player.username
               }))
               .catch((err) => console.log('An error Occured Loading the Player Data', err))
           }
         }
+    }
+
+    getPlayerStats () {
+      fetch("http://localhost:5000/api/games/currentPlayerStats/?username=" + this.state.username)
+      .then(res => res.json())
+      .then(results => {
+        if (results.success) {
+          const player = results.result[0]
+          console.log('Player', player)
+          this.setState({
+            lives: player.remaining_lives,
+            currentTeam: player.current_team,
+            playerLoaded: true
+          })
+        } else {
+          console.log('Error success was false:', results)
+        }
+      })
+    .catch(err => console.log('Problem Loading stats', err))
+    }
+
+    componentDidUpdate () {
+      if (!this.state.playerLoaded && this.state.username) {
+        console.log('LOADING PLAYER')
+       this.getPlayerStats()
       }
+
+    }
+
+    updateTeam () {
+      if(this.state.lives == 0){
+        fetch("http://localhost:5000/api/games/changeTeam", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: this.state.username
+        })
+      })
+      .then(res => res.json())
+      .then(json => {
+        if(json.success){
+          this.setState({
+            isLoading: false,
+            scanned: false
+          })
+        }
+      })
+      .catch(err => console.error(err))
+
+      }
+
+    }
 
     render(){
       if(this.state.activeGame){
@@ -103,6 +155,9 @@ class ActionLog extends Component{
                     <PlayerQRCode />
 
                     <br/>
+
+                    <p>Current lives: { this.state.lives }</p>
+                    <p>Current team: { this.state.currentTeam }</p>
 
                     <h1 class="font-weight-light">Log Kill</h1>
 

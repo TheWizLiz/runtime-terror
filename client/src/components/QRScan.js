@@ -17,7 +17,7 @@ class QRScan extends Component {
           game: 1,
           isLoading: true,
           scanned: false,
-          lives: 0,
+          lives: -1,
           currentTeam: ""
       }
       this.handleScan=this.handleScan.bind(this)
@@ -121,7 +121,7 @@ class QRScan extends Component {
     }
 
     if(this.state.playerLoaded && this.state.lives == 0){
-      fetch("https://localhost:5000/api/games/changeTeam", {
+      fetch("http://localhost:5000/api/games/changeTeam", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

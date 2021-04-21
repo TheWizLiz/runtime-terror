@@ -101,7 +101,7 @@ export const changeTeam = async (req, res) => {
     } else {
       return res.send({
         success: true,
-        message: 'Kill added.'
+        message: 'Team updated.'
       })
     }
   })
