@@ -37,7 +37,7 @@ class AdminDashboard extends React.Component {
     this.handleRemoveRegPlayers = this.handleRemoveRegPlayers.bind(this)
 
     this.handleDisplayAccounts = this.handleDisplayAccounts.bind(this)
-   //this.handleRemoveAccounts = this.handleRemoveAccounts.bind(this)
+    // this.handleRemoveAccounts = this.handleRemoveAccounts.bind(this)
   }
 
   async componentDidMount () {
@@ -222,12 +222,12 @@ class AdminDashboard extends React.Component {
                   </Card>
 
                   <div className='row'>
-                    <h4>Start Game (TESTING)</h4>
+                    <h4>Start Game</h4>
                     <CurrentGameDropdown games={this.state.gamesCanStart} />
                     <Button variant="success" onClick={this.handleStart}>Start</Button>
                   </div>
                   <div className='row'>
-                    <h4>End Game (TESTING)</h4>
+                    <h4>End Game</h4>
                     <EndGameDropdown game={this.state.ongoingGame} />
                     <Button variant="danger" onClick={this.handleEnd}>End</Button>
                   </div>

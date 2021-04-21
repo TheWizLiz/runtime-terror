@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Navigation, Footer, Home, About, Games, PlayerSafetyPlan, PvPRules, CashHuntRules, ModGuide, Updates, Leaderboard, Contact, LogIn, Forgot, Registration, Recover, AccountDetails, AdminDashboard, GameCreation, ActionLog, Property, SignUp} from "./components";
+import PropertyLog from "./components/PropertyLog"
 function App() {
   return (
     <div className="App">
@@ -27,6 +28,7 @@ function App() {
           <Route path="/action-log" exact component={() => <ActionLog />} />
           <Route path="/property" exact component={() => <Property />} />
           <Route path="/signup" exact component={() => <SignUp />} />
+          <Route path="/property-log" exact component={() => <PropertyLog />} />
         </Switch>
         <Footer />
       </Router>

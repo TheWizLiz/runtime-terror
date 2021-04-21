@@ -588,3 +588,10 @@ export const ongoingGame = async (req, res) => {
       })
     })
 }
+
+// Get all the players that are registered <-- fetch()
+// Make an array of all the different game ids to search over ['483948224', '3123131', '434234234242']
+// fetch() {} send array of game id's as body
+// await Game.find({ _id: { $in: gameIds } })
+// .then() add the game titles to a new array
+// return the array of game titles

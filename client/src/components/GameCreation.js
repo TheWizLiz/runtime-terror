@@ -176,10 +176,6 @@ class GameCreation extends React.Component {
     }
   }
 
-  // componentDidUpdate () {
-
-  // }
-
   validateAdmin (player) {
     if (player.acctType === 'admin') {
       this.setState({
