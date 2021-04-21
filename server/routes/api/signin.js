@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUsers, getUser, getAcct, createUser, deleteUser, loginUser, updatePlayerAcc, updateAdminAcc, verifyUser, logoutUser, registerUser} from '../../controllers/user-controller.js'
+import { getUsers, getRegisteredPlayers, getUser, getAcct, createUser, deleteUser, loginUser, updatePlayerAcc, updateAdminAcc, verifyUser, logoutUser, registerUser} from '../../controllers/user-controller.js'
 import { getEmail, sendEmail, resetPassword } from '../../controllers/email-controller.js'
 
 const router = express.Router()
@@ -19,5 +19,6 @@ router.get('/email', getEmail)
 router.post('/sendEmail', sendEmail)
 router.post('/resetPassword', resetPassword)
 router.post('/registerUser', registerUser)
+router.get('/getRegisteredPlayers', getRegisteredPlayers)
 
 export default router

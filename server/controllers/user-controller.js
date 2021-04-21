@@ -243,6 +243,20 @@ export const logoutUser = async (req, res) => {
   })
 }
 
+// Retrieve all registered players in a game from MongoDB
+export const getRegisteredPlayers = async (req, res) => {
+  console.log("HERE")
+  try {
+    // Find all users
+    const RegDetails = await RegistrationDetails.find()
+    console.log(RegDetails)
+    res.status(200).json(RegDetails)
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
+
 // Deleting a user
 export const deleteUser = async (req, res) => {
   const { body } = req
