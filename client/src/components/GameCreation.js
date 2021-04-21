@@ -112,15 +112,24 @@ class GameCreation extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault()
+    let regStart = ''
+    let regEnd = ''
     console.log('Game Time', this.state.gameTime)
     console.log('Game Date', this.state.gameDate)
     // Format date
     const gameDateFormatted = this.state.gameDate + 'T' + this.state.gameTime + ':00'
     const gameEnd = this.state.gameEndDate + 'T' + this.state.gameEndTime + ':00'
 
-    const regStart = this.state.regStartDate + 'T' + this.state.regStartTime + ':00'
+    // If Registration Date not filled, will start the registration now.
+    if (!this.state.regStartDate) {
+      regStart = Date.now().toString()
+    } else {
+      regStart = this.state.regStartDate + 'T' + this.state.regStartTime + ':00'
+    }
+
+    console.log('Date.now', Date.now())
     console.log(gameDateFormatted)
-    const regEnd = this.state.regEndDate + 'T' + this.state.regEndTime + ':00'
+    regEnd = this.state.regEndDate + 'T' + this.state.regEndTime + ':00'
     // Call fetch function.
     fetch('http://localhost:5000/api/games/createGame', {
       method: 'POST',

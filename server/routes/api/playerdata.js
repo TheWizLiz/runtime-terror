@@ -14,7 +14,6 @@ router.get('/getGames', getGames)
 router.get('/currLeaderboard', currLeaderboard)
 router.post('/gameStartTransfer', gameStartTransfer)
 router.post('/gameEndTransfer', gameEndTransfer)
-router.get('/currentGames', currentGames)
-router.get('/ongoingGame', ongoingGame)
+router.get('/currentGames', currentGames, ongoingGame)
 
 export default router

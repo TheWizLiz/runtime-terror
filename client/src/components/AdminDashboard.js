@@ -16,23 +16,52 @@ class AdminDashboard extends React.Component {
       acctType: '',
       isAdmin: false,
       adminLoaded: false,
-      gameTitles: []
+      gameTitles: [],
+      ongoingGame: '',
+      gamesCanStart: []
     }
     this.validateAdmin = this.validateAdmin.bind(this)
     this.handleStart = this.handleStart.bind(this)
     this.handleEnd = this.handleEnd.bind(this)
   }
 
-  componentDidMount () {
+  async componentDidMount () {
     const storage = getFromStorage('the_main_app')
     // console.log(token)
     if (storage && storage.token) {
       const { token } = storage
-      fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+      await fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
         .then(res => res.json())
         .then(player => this.validateAdmin(player))
         .catch((err) => console.log('An error Occured Loading the Player Data', err))
     }
+
+    await fetch('http://localhost:5000/api/games/currentGames')
+      .then(res => res.json())
+      .then(results => {
+        const games = results.games
+        const current_game = results.current_game
+        console.log('GAMES', games)
+        console.log('CURRENT_GAME', current_game)
+        if (games && games.length > 0 && current_game) {
+          console.log('games && games.length > 0 && current_game')
+          this.setState({
+            gamesCanStart: games,
+            ongoingGame: current_game
+          })
+        } else if ((!games || games.length === 0) && current_game) {
+          console.log('(!games || games.length === 0) && current_game')
+          this.setState({
+            ongoingGame: current_game
+          })
+        } else if (games && games.length > 0 && !current_game) {
+          console.log('games && games.length > 0 && !current_game')
+          this.setState({
+            gamesCanStart: games
+          })
+        }
+      })
+      .catch(err => console.log('Big error with api/games/currentGames', err))
 
   }
 
@@ -58,7 +87,6 @@ class AdminDashboard extends React.Component {
     const game_id = document.getElementById('start_game_selector').value
 
     console.log(game_id)
-    
     if (game_id) {
       fetch('http://localhost:5000/api/games/gameStartTransfer', {
         method: 'POST',
@@ -116,12 +144,12 @@ class AdminDashboard extends React.Component {
                 <br/>
                 <div className='row'>
                   <h4>Start Game (TESTING)</h4>
-                  <CurrentGameDropdown />
+                  <CurrentGameDropdown games={this.state.gamesCanStart} />
                   <Button variant="success" onClick={this.handleStart}>Start</Button>
                 </div>
                 <div className='row'>
                   <h4>End Game (TESTING)</h4>
-                  <EndGameDropdown />
+                  <EndGameDropdown game={this.state.ongoingGame} />
                   <Button variant="danger" onClick={this.handleEnd}>End</Button>
                 </div>
                 <div class = "row">

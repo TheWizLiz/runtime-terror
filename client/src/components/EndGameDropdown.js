@@ -10,23 +10,19 @@ class EndGameDropdown extends React.Component {
     }
   }
 
-  componentDidMount () {
-    fetch('http://localhost:5000/api/games/ongoingGame')
-      .then(res => res.json())
-      .then(results => {
-        const game = results.game
-        if (game) {
-          const options = []
-          options.push(<option value={game._id}>{game.game_title}</option>)
+  componentDidUpdate () {
+    if (!this.state.loaded) {
+      const game = this.props.game
+      const values = []
+      if (game) {
+        values.push(<option name={game.game_title} value={game._id}>{game.game_title}</option>)
+      }
 
-          this.setState({
-            options: options,
-            loaded: true
-          })
-        } else {
-          console.log('Games...', game)
-        }
+      this.setState({
+        options: values,
+        loaded: true
       })
+    }
   }
 
   render () {

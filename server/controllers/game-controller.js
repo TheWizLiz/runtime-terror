@@ -80,7 +80,8 @@ export const gameDetails = async (req, res, next) => {
   const Image = new GameImage()
   Image.game_id = game_id
 
-  if (gamePhoto) {
+  if (Object.keys(gamePhoto).length !== 0) {
+    console.log('GETS IN HERE...?', gamePhoto)
     Image.fileName = gamePhoto.fileName
     Image.filePath = gamePhoto.filePath
   } else {
@@ -231,11 +232,19 @@ export const getGames = async (req, res) => {
   // }
 
   console.log(allGames)
-  return res.send({
-    success: true,
-    message: 'Active Games Found.',
-    games: allGames
-  })
+  if (allGames.length > 0) {
+    return res.send({
+      success: true,
+      message: 'Active Games Found.',
+      games: allGames
+    })
+  } else {
+    return res.send({
+      success: false,
+      message: 'Currently No Active Games.',
+      games: allGames
+    })
+  }
 }
 
 export const upload = async (req, res) => {
@@ -330,29 +339,27 @@ export const gameStartTransfer = async (req, res) => {
     console.log('Player Lives for Game: ', lives)
   })
 
-  await RegistrationDetails.find({ game_id: game_id }, (err, players) => {
-    if (err) {
+  await RegistrationDetails.find({ game_id: game_id })
+    .lean()
+    .then(players => {
+      for (let i = 0; i < players.length; i++) {
+        registeredPlayers.push({
+          player_id: players[i].player_id,
+          game_id: players[i].game_id,
+          original_team: players[i].team,
+          current_team: players[i].team,
+          remaining_lives: lives
+        })
+      }
+      console.log('Added players...', registeredPlayers)
+    })
+    .catch(err => {
       return res.send({
         success: false,
         message: 'There was an error retrieving registration details',
         error: err
       })
-    } else if (players) {
-      console.log('PLAYERS FOUND:', players)
-    }
-
-    for (let i = 0; i < players.length; i++) {
-      registeredPlayers.push({
-        player_id: players[i].player_id,
-        game_id: players[i].game_id,
-        original_team: players[i].team,
-        current_team: players[i].team,
-        remaining_lives: lives
-      })
-    }
-
-    console.log('Got players: ', registeredPlayers)
-  })
+    })
 
   if (registeredPlayers.length > 0) {
     await PlayerStats.insertMany(registeredPlayers)
@@ -370,13 +377,12 @@ export const gameStartTransfer = async (req, res) => {
           message: 'The entering process completed successfully.'
         })
       })
+  } else {
+    return res.send({
+      success: false,
+      message: 'No registered players to add into the game...'
+    })
   }
-
-  return res.send({
-    success: false,
-    message: 'No registered players to add into the game...'
-  })
- 
 }
 
 export const gameEndTransfer = async (req, res) => {
@@ -506,76 +512,79 @@ export const gameEndTransfer = async (req, res) => {
 }
 
 // Used for seeing which games are past the registration phase but have not started.
-export const currentGames = async (req, res) => {
+export const currentGames = async (req, res, next) => {
   // Get games that are past the registration deadline and have not ended yet.
   // Ended = false
-  let currGames = []
-  let titles = []
+  const currGames = []
 
-  await GameDesc.find({ ended: false, registration_deadline: { $lte: Date.now() } }, (err, games) => {
-    if (err) {
+  await GameDesc.find({ ended: false, registration_deadline: { $lte: Date.now() } })
+    .lean()
+    .then(games => {
+      for (let i = 0; i < games.length; i++) {
+        currGames.push(games[i].game_id)
+      }
+      console.log('Current Games:', currGames)
+    })
+    .catch(err => {
       return res.send({
         success: false,
         message: 'Error finding games which haven\'t occurred yet.',
         error: err
       })
-    } else if (games.length < 1) {
-      return res.send({
-        success: false,
-        message: 'No games found...',
-        error: err
-      })
-    } else {
-      console.log('Current games found:', games)
-      for (let i = 0; i < games.length; i++) {
-        currGames.push(games[i].game_id)
-      }
-    }
-  })
+    })
 
-  await Game.find({ _id: { $in: currGames } }, (err, games) => {
-    if (err) {
-      return res.send({
-        success: false,
-        message: 'Error finding games from gamedetails.',
-        error: err
+  if (currGames.length !== 0) {
+    await Game.find({ _id: { $in: currGames } })
+      .lean()
+      .then(games => {
+        console.log('Retrieved Game Data...', games)
+        req.games = games
       })
-    } else if (games.length < 1) {
-      return res.send({
-        success: false,
-        message: 'No games found... (Game.find)',
-        error: err
+      .catch(err => {
+        console.log('Error finding games which were in game details.', err)
+        return res.send({
+          success: false,
+          message: 'Error finding games from gamedetails.',
+          error: err
+        })
       })
-    } else {
-      return res.send({
-        success: true,
-        message: 'Retrieved game data.',
-        games: games
-      })
-    }
-  })
+  } else {
+    req.games = []
+  }
+  next()
 }
 
 export const ongoingGame = async (req, res) => {
+  const { games } = req
+  console.log('GAMES.REQ', games)
 
-  await Game.findOne({ current_game: true }, (err, game) => {
-    if (err) {
+  await Game.findOne({ current_game: true })
+    .lean()
+    .then(game => {
+      if (game) {
+        console.log()
+        return res.send({
+          success: true,
+          message: 'Found the ongoing game',
+          current_game: game,
+          games: games
+        })
+      } else {
+        return res.send({
+          success: false,
+          message: 'No ongoing games found...',
+          current_game: '',
+          games: games
+        })
+      }
+    })
+    .catch(err => {
       return res.send({
         success: false,
         message: 'Error finding games with current_game = true',
-        error: err
+        error: err,
+        current_game: '',
+        games: games
       })
-    } else if (!game) {
-      return res.send({
-        success: false,
-        message: 'No ongoing games found...'
-      })
-    }
-
-    return res.send({
-      success: true,
-      message: 'Found the ongoing game',
-      game: game
     })
-  })
 }

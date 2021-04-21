@@ -11,26 +11,20 @@ class CurrentGameDropdown extends React.Component {
     }
   }
 
-  componentDidMount () {
-    fetch('http://localhost:5000/api/games/currentGames')
-      .then(res => res.json())
-      .then(results => {
-        const games = results.games
-        if (games && games.length > 0) {
-          const options = []
-          // console.log('Games', games)
-
-          for (let i = 0; i < games.length; i++) {
-            options.push(<option value={games[i]._id}>{games[i].game_title}</option>)
-          }
-          this.setState({
-            options: options,
-            loaded: true
-          })
-        } else {
-          console.log('Games...', games)
+  componentDidUpdate () {
+    if (this.state.loaded === false) {
+      const games = this.props.games
+      const values = []
+      if (games.length > 0) {
+        for (let i = 0; i < games.length; i++) {
+          values.push(<option name={games[i].game_title} value={games[i]._id}>{games[i].game_title}</option>)
         }
-      })
+        this.setState({
+          options: values,
+          loaded: true
+        })
+      }
+    }
   }
 
   render () {

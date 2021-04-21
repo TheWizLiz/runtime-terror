@@ -53,7 +53,8 @@ class AccountDisplay extends React.Component {
     if (this.state.playerLoaded) {
       fetch('http://localhost:5000/api/games/getStats/?user=' + this.state.username)
         .then(res => res.json())
-        .then(game => {
+        .then(res => {
+          const game = res.games
           console.log(game)
           let totalKills = 0
           let totalDeaths = 0
