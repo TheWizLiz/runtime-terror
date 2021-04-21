@@ -21,6 +21,7 @@ class QRScan extends Component {
           currentTeam: ""
       }
       this.handleScan=this.handleScan.bind(this)
+      this.getPlayerStats = this.getPlayerStats.bind(this)
   }
  
   handleScan = data => {
@@ -37,40 +38,46 @@ class QRScan extends Component {
   }
 
   componentDidMount () {
-    if(this.state.playerLoaded == false){
+    if (this.state.playerLoaded == false){
       const storage = getFromStorage('the_main_app')
       if (storage && storage.token) {
         const { token } = storage
         fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
           .then(res => res.json())
           .then(player => this.setState({
-            username: player.username,
-            playerLoaded: true,
+            username: player.username
           }))
           .catch((err) => console.log('An error Occured Loading the Player Data', err))
       }
-
-      if (this.state.playerLoaded) {
-        fetch("http://localhost:5000/api/games/currentPlayerStats", {
-          body: JSON.stringify({
-            username: this.state.username
-        })
-      })
-      .then(res => res.json())
-      .then(results => {
-        if (results.success) {
-          this.setState({
-            lives: results[0].remaining_lives,
-            currentTeam: results[0].current_team
-          })
-        }
-      })
-      .catch(err => console.log('Problem Loading stats', err))
     }
   }
+
+  getPlayerStats () {
+    fetch("http://localhost:5000/api/games/currentPlayerStats/?username=" + this.state.username)
+    .then(res => res.json())
+    .then(results => {
+      if (results.success) {
+        const player = results.result[0]
+        console.log('Player', player)
+        this.setState({
+          lives: player.remaining_lives,
+          currentTeam: player.current_team,
+          playerLoaded: true
+        })
+      } else {
+        console.log('Error success was false:', results)
+      }
+    })
+  .catch(err => console.log('Problem Loading stats', err))
   }
 
   componentDidUpdate () {
+    // After setState in mount, do this. makes sure that this.state.username is loaded.
+    if (!this.state.playerLoaded && this.state.username) {
+      console.log('LOADING PLAYER')
+     this.getPlayerStats()
+    }
+
     if (this.state.scanned==true) {
       if (this.state.playerLoaded) {
             fetch("http://localhost:5000/api/games/updateStats", {

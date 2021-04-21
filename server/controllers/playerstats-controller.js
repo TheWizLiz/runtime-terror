@@ -123,21 +123,29 @@ export const updateBlasterBandana = async (req, res) => {
         message: 'Blaster and Bandana IDs updated.'
       })
     }
-
-
   })
 }
 
 export const currentPlayerStats = async (req, res) => {
-  const { username } = req.body
+  const { query } = req
+  const { username } = query
 
-  const results = await PlayerStats.find({player_id: username})
+  const results = await PlayerStats.find({ player_id: username })
 
   if (results) {
-    return res.send({
-      success: true,
-      message: 'Player Loaded.',
-    })
+    if (results.length === 0) {
+      return res.send({
+        success: false,
+        message: 'Player not in current game.',
+        result: results
+      })
+    } else {
+      return res.send({
+        success: true,
+        message: 'Player Loaded.',
+        result: results
+      })
+    }
   } else {
     return res.send({
       success: false,
@@ -145,4 +153,3 @@ export const currentPlayerStats = async (req, res) => {
     })
   }
 }
-  
