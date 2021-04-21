@@ -105,7 +105,7 @@ class QRScan extends Component {
                   isLoading: false,
                   prevResult: this.state.result,
                   scanned: false,
-                  lives: this.state.lives - 1
+                  //lives: this.state.lives - 1
                 })
               }
             })
