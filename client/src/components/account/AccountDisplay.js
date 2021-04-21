@@ -18,6 +18,7 @@ class AccountDisplay extends React.Component {
       gamesLoaded: false,
       kills: 0,
       deaths: 0,
+      wins: 0,
       games: []
     }
   }
@@ -52,19 +53,23 @@ class AccountDisplay extends React.Component {
     if (this.state.playerLoaded) {
       fetch('http://localhost:5000/api/games/getStats/?user=' + this.state.username)
         .then(res => res.json())
-        .then(game => {
+        .then(res => {
+          const game = res.games
           console.log(game)
           let totalKills = 0
           let totalDeaths = 0
+          let totalWins = 0
 
           for (let i = 0; i < game.length; i++) {
             totalKills += game[i].kills
             totalDeaths += game[i].deaths
+            totalWins += game[i].winner
           }
 
           this.setState({
             kills: totalKills,
             deaths: totalDeaths,
+            wins: totalWins,
             playerLoaded: false,
             games: game,
             gamesLoaded: true
@@ -94,7 +99,7 @@ class AccountDisplay extends React.Component {
                 <p>Kills: {this.state.kills}</p>
                 <p>Deaths: {this.state.deaths}</p>
                 <p>Games Participated In: {this.state.games.length}</p>
-                <p>Games Won: {0}</p>
+                <p>Games Won: {this.state.wins}</p>
               </div>
             </div>
             <div class='row justify-content-center'>

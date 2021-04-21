@@ -5,7 +5,8 @@ const GameDescSchema = new mongoose.Schema({
   location: { type: String, default: 'UF Campus' },
   description: { type: String, default: '' },
   registration_start: { type: Date, default: Date.now() },
-  registration_deadline: { type: Date, required: true }
+  registration_deadline: { type: Date, required: true },
+  ended: { type: Boolean, default: false }
 })
 
 const GameDesc = mongoose.model('GameDesc', GameDescSchema)
