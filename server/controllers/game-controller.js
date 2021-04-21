@@ -325,6 +325,7 @@ export const checkGameStatus = async (req, res) => {
       message: 'Could not retrive Game status'
     })
   }
+}
 
 export const gameStartTransfer = async (req, res) => {
   // Drop PlayerStats to clear out previous game's stats (NEED TO ADD)
