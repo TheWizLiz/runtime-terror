@@ -8,7 +8,7 @@ function Updates() {
   return (
     <div className="updates">
         <div class="container">
-            <div class="row align-items-center my-5">
+            <div class="row align-items-center">
                 <h1 class="font-weight-light">Updates</h1>
             </div>
 

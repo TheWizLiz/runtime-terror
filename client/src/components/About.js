@@ -10,7 +10,7 @@ function About() {
   return (
     <div className="about">
       <div class="container">
-        <div class="row align-items-center my-5">
+        <div class="row align-items-center">
           <div class="col">
             <h1 class="font-weight-light">About</h1>
             <p>

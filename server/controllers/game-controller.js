@@ -622,3 +622,35 @@ export const ongoingGame = async (req, res) => {
       })
     })
 }
+
+export const findGameInfo = async (req, res) => {
+  const {query} = req
+  const { game_id } = query
+
+  await Game.findOne({ _id:  game_id })
+  .lean()
+  .then(game => {
+    if (game) {
+      console.log()
+      return res.send({
+        success: true,
+        message: 'Found the ongoing game',
+        requestedGame: game
+      })
+    } else {
+      return res.send({
+        success: false,
+        message: 'No ongoing games found...',
+        requestedGame: ''
+      })
+    }
+  })
+  .catch(err => {
+    return res.send({
+      success: false,
+      message: 'Error finding games with current_game = true',
+      error: err,
+      requestedGame: ''
+    })
+  })
+}

@@ -18,5 +18,5 @@ export { default as AccountDetails } from "./AccountDetails";
 export { default as AdminDashboard } from "./AdminDashboard";
 export { default as GameCreation } from "./GameCreation";
 export { default as ActionLog } from "./ActionLog";
-export { default as Property } from "./Property";
+export { default as PropertyLog } from "./PropertyLog";
 export { default as SignUp } from "./SignUp";
