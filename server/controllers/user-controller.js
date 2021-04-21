@@ -3,6 +3,7 @@
 // HTTP Status Codes: https://www.restapitutorial.com/httpstatuscodes.html
 import User from '../models/User.js'
 import UserSession from '../models/UserSession.js'
+import RegistrationDetails from '../models/RegistrationDetails.js'
 
 // Retrieve all users from MongoDB
 export const getUsers = async (req, res) => {
@@ -19,7 +20,7 @@ export const getUsers = async (req, res) => {
 // Signing Up
 export const createUser = async (req, res) => {
   const { body } = req
-  const { firstname, lastname, username, password } = body
+  const { firstname, lastname, username, password, phone_no } = body
   let { email } = body
 
   if (!firstname) {
@@ -57,11 +58,18 @@ export const createUser = async (req, res) => {
     })
   }
 
+  if (!phone_no) {
+    return res.send({
+      success: false,
+      message: 'Error: phone number cannot be blank'
+    })
+  }
+
   email = email.toLowerCase()
 
   // Need to extend form verification to usernames as well.
   // Also need to learn about sanitizing inputs
-  User.find({ email: email }, (err, previousUsers) => {
+  User.find({ $or: [{ email: email }, { username: username }, { phone_no: phone_no }] }, (err, previousUsers) => {
     if (err) {
       return res.send({
         success: false,
@@ -70,7 +78,7 @@ export const createUser = async (req, res) => {
     } else if (previousUsers.length > 0) {
       return res.send({
         success: false,
-        message: 'An account with this email adress already exists.'
+        message: 'An account with this email address/username/phone number already exists.'
       })
     }
 
@@ -80,6 +88,7 @@ export const createUser = async (req, res) => {
     newUser.lastname = lastname
     newUser.email = email
     newUser.username = username
+    newUser.phone_no = phone_no
     newUser.password = newUser.generateHash(password)
 
     // console.log(newUser)
@@ -236,10 +245,69 @@ export const logoutUser = async (req, res) => {
 
 // Deleting a user
 export const deleteUser = async (req, res) => {
-  User.findById(req.params.id)
-    .then(user => user.remove.then(() => res.json({ success: true })))
-    .catch(error => res.status(404).json({ message: error.message }))
+  const { body } = req
+  const { username } = body
+
+  User.findOneAndRemove({username: username}, (err, user) => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error deleting user. Please Try Again.'
+      })
+    } else if (!user) {
+      return res.send({
+        success: false,
+        message: 'User to delete was not found.'
+      })
+    } else {
+      console.log("Removed User : ", user);
+    }
+  })
 }
+
+// updating a player's account
+export const updatePlayerAcc = async (req, res) => {
+  const { body } = req
+  const { username } = body
+
+  User.findOneAndUpdate({ username: username, acctType: 'player' }, { $set: { acctType: 'admin' } }, (err, type)  => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error updating user. Please Try Again.'
+      })
+    } else if (!type) {
+      return res.send({
+        success: false,
+        message: 'Account type was not found'
+      })
+    } else {
+      //console.log("(updatePlayerAcc: Changed type to ", type);
+    }
+  })
+} 
+
+// updating a admin's account
+export const updateAdminAcc = async (req, res) => {
+  const { body } = req
+  const { username } = body
+
+  User.findOneAndUpdate({ username: username, acctType: 'admin' }, { $set: { acctType: 'player' } }, (err, type)  => {
+    if (err) {
+      return res.send({
+        success: false,
+        message: 'Error updating user. Please Try Again.'
+      })
+    } else if (!type) {
+      return res.send({
+        success: false,
+        message: 'Account type was not found'
+      })
+    } else {
+      //console.log("(updateAdminAcc: Changed type to ", type);
+    }
+  })
+} 
 
 export const getAcct = async (req, res, next) => {
   try {
@@ -295,4 +363,46 @@ export const getUser = async (req, res) => {
       message: 'user object not found'
     })
   }
+}
+
+export const registerUser = async (req, res) => {
+  // Get all inputs
+  const { body } = req
+  const { userID, gameID, notify, horde} = body
+
+  // Checking form values
+  if (!userID) {
+    return res.send({
+      success: false,
+      message: 'Error: No userID in request.'
+    })
+  } else if (!gameID) {
+    return res.send({
+      success: false,
+      message: 'Error: No gameID specified.'
+    })
+  }
+
+  // Creating registration object to insert
+  const newRegistration = new RegistrationDetails()
+
+    newRegistration.game_id = gameID
+    newRegistration.player_id = userID
+    newRegistration.notifications = notify
+    newRegistration.originalHorde = horde
+
+  // Adding registration to database
+  newRegistration.save((err, user) => {
+    if (err) {
+      console.log('An error registering for the game occurred: ', err)
+      return res.send({
+        success: false,
+        message: 'Error: Registration not completed properly.'
+      })
+    }
+    return res.send({
+      success: true,
+      message: 'Registered Successfully.'
+    })
+  })
 }
