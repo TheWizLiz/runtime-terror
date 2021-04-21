@@ -5,7 +5,7 @@ function ModGuide(){
     return(
         <div classname="ModGuide">
             <div class="container mb-5">
-            <div class="row align-items-center mt-5 mb-3">
+            <div class="row align-items-center mb-3">
                 <h1 class="font-weight-light">Modifications Guide</h1>
                     <p>
                         Every “weapon” used in GHvZ that is modified from its original form or homemade (excluding socks) MUST be cleared with a moderator, who may also be assisted by modification experts.

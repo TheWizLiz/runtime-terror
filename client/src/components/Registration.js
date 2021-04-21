@@ -1,8 +1,9 @@
 import React from "react";
 //import { FormGroup } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { getFromStorage } from './utils/storage.js'
+import Login from './account/Login.js'
 //import queryString from 'query-string';
 //import ToggleButton from "react-bootstrap/ToggleButton";
 //import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
@@ -21,25 +22,37 @@ class Registration extends React.Component {
             userID: '',
             gameID: this.props.match.params.id,
             //gameID: 'test',
+            gameName: '',
             horde: false,
             notify: false,            
         }
 
         console.log(this.state.gameID);
 
-        const storage = getFromStorage('the_main_app')
-        if (storage && storage.token) {
-        const { token } = storage
-        fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
-        .then(res => res.json())
-        .then(player => this.setState({
-          userID: player.username,
-        }))
-        .catch((err) => console.log('An error Occured Loading the Player Data', err))
-        }
-
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    async componentDidMount () {
+      const storage = getFromStorage('the_main_app')
+      // console.log(token)
+      if (storage && storage.token) {
+        const { token } = storage
+        await fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+          .then(res => res.json())
+          .then(player => this.setState({
+            userID: player.username,
+            isLoggedIn: true
+          }))
+          .catch((err) => console.log('An error Occured Loading the Player Data', err))
+      }
+
+      fetch('http://localhost:5000/api/game/findGameInfo/?game_id=' + this.state.gameID) 
+        .then(res => res.json())
+          .then(requestedGame => this.setState({
+            gameName: requestedGame.game_title
+          }))
+          .catch((err) => console.log('An error Occured Loading the Game Name', err))
     }
 
     handleInputChange (e) {
@@ -72,20 +85,31 @@ class Registration extends React.Component {
          })
         })
       .catch(err => console.log(err))
-    }
+      }
 
     render () {
-      if (!window.navbar.state.isLoggedIn) {
+      if (!this.state.isLoggedIn) {
         return (
-            <Redirect to="/login"/>
+          <div className='register'>
+          <div class='container'>
+            <div class='row align-items-center'>
+              <h1 class='font-weight-light'>Register for Game:</h1>
+            </div>
+            <div class='row align-items-center'>
+              <p>You must be logged in to register for a game</p>
+              </div>
+            <div class='row align-items-center'>
+              <Link to='/signup'> Sign Up Here</Link> <br />
+            </div>
+          </div>
+        </div>
         )
       } else if (this.state.loading) {
           return (
                 <div classname="Registration">
                     <div class="container">
-                        <div class="row align-items-center mt-5 mb-3">
-                        <h1 class="font-weight-light">Register for Game</h1>
-
+                        <div class="row align-items-center mb-3">
+                        <h1 class="font-weight-light">Register for Game: {this.state.gameName}</h1>
                         </div>
 
                 <Form onSubmit={this.handleSubmit}>
@@ -122,9 +146,9 @@ class Registration extends React.Component {
             return (
                 <div className='Registration'>
                   <div class='container'>
-                    <div class="row align-items-center my-5 mt-5">
+                    <div class="row align-items-center">
                       <div class="col">
-                        <p>Registered Successfully</p>
+                        <p>You have successfully registered for this game.</p>
                       </div>
                     </div>
                   </div>

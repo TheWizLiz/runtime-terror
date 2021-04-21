@@ -64,7 +64,7 @@ class Login extends React.Component {
     if (!this.state.token) {
       return (
         <div class="container">
-          <div class="row align-items-center my-5">
+          <div class="row align-items-center">
           <h1 class="font-weight-light">Log In</h1>
           </div>
           <div class="row">
@@ -87,7 +87,7 @@ class Login extends React.Component {
     } else {
       return (
         <div class="container">
-        <div class="row align-items-center my-5">
+        <div class="row align-items-center">
           <h1 class="font-weight-light">Log Out</h1>
           </div>
           <div class="row">

@@ -5,9 +5,10 @@ function Contact() {
   return (
     <div className="contact">
       <div class="container">
-        <div class="row align-items-center my-5">
+        <div class="row align-items-center">
           <div class="col-lg-5">
             <h1 class="font-weight-light">Contact</h1>
+            <br />
             <p>Find us at any of the social media platforms below</p>
             <p><SocialIcon url="https://www.facebook.com/GatorsHvZ" target="_blank" network="facebook"/> {""}
                <SocialIcon url="https://twitter.com/GatorsHvZ" target="_blank" network="twitter"/> {""}
