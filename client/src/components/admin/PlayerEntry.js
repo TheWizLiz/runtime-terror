@@ -8,7 +8,6 @@ class PlayerEntry extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      usernameToDelete: ''
     }
     this.handleDelete = this.handleDelete.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
@@ -28,7 +27,6 @@ class PlayerEntry extends React.Component {
       if (json.success) {          
         this.setState({
           //Clear state after
-          usernameToDelete: ''
         })
       }
       console.log('json', json)
