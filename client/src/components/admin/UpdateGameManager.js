@@ -7,7 +7,7 @@ class UpdateGameManager extends React.Component {
   render() {
     return (
       <div>
-        <Card style={{ width: '30rem' }}>
+        <Card style={{ width: '25rem' }}>
           <Card.Body>
             <h1>Update Game</h1>
             <p>                                                                  </p>
