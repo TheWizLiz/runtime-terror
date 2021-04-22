@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import QrReader from 'react-qr-reader';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import PropertyTable from "./PropertyTable"
+import PropertyTable from "./PropertyTable";
+import { getFromStorage } from './utils/storage.js';
 
 class PropertyLog extends Component {
     constructor(props){
@@ -20,11 +21,13 @@ class PropertyLog extends Component {
             kills: 0,
             game: 1,
             isLoading: true,
-            scanned: false
+            scanned: false,
+            isAdmin: false
         }
         this.handleScan=this.handleScan.bind(this)
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.validateAdmin = this.validateAdmin.bind(this)
     }
    
     handleScan = data => {
@@ -80,67 +83,101 @@ class PropertyLog extends Component {
             })
             .catch(err => console.error(err))
     }
-  
-    render() {
-      const { showComponent } = this.state;
-      if(this.state.isLoading == true){
-        return (
-            <React.Fragment>
-                <div classname="PropertyLog">
-                    <div class="container">
-                        <h1 class="font-weight-light">Property Log</h1>
 
-                        <br/>
-
-                        <Form onChange={this.handleInputChange} onSubmit={this.handleSubmit}>
-                          <Form.Label>Username</Form.Label>
-                          <Form.Control name="username" placeholder="Username" value={this.state.username} />
-                          <Form.Label>Blaster ID</Form.Label>
-                          <Form.Control name="blasterID" placeholder="Blaster ID" value={this.state.blasterID} />
-                          <Form.Label>Bandana ID</Form.Label>
-                          <Form.Control name="bandanaID" placeholder="Bandana ID" value={this.state.bandanaID} />
-                          <Button variant="primary" type="submit">Submit</Button>{' '}
-                        </Form>
-
-                        <br/>
-                    
-                        <Button onClick={() => this.setState({showComponent:!showComponent})}>Click to use QR Code Scanner</Button>
-                            {this.state.showComponent ? 
-                                <QrReader 
-                                delay={150}
-                                onError={this.handleError}
-                                onScan={this.handleScan}
-                                facingMode={'environment'}
-                                style={{ width: 500, height: 500}}
-                                /> :
-                                null
-                            }
-                            
-                            {this.state.showComponent ?
-                                <p class="font-weight-light"> {this.state.result}</p> :
-                                null
-                            }
-
-                          <br/>
-                          <br/>
-
-                          <div>
-                            <PropertyTable />
-                          </div>
-                    </div> 
-                </div> 
-
-            </React.Fragment>
-        )
-      } else {
-        return(
-          <div class = "container">
-            <h1 class="font-weight-light">Property Log</h1>
-            <p class="font-weight-light">Blaster: {this.state.prevBlasterID} and Bandana: {this.state.prevBandanaID} logged to {this.state.prevResult}</p>
-          </div>
-        )
+    async componentDidMount () {
+      const storage = getFromStorage('the_main_app')
+      // console.log(token)
+      if (storage && storage.token) {
+        const { token } = storage
+        await fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+          .then(res => res.json())
+          .then(player => this.validateAdmin(player))
+          .catch((err) => console.log('An error Occured Loading the Player Data', err))
       }
     }
+
+    validateAdmin (player) {
+      if (player.acctType === 'admin') {
+        this.setState({
+          username: player.username,
+          isAdmin: true
+        })
+      } else {
+        this.setState({
+          isAdmin: false
+        })
+      }
+    }
+  
+    render() {
+      if(this.state.isAdmin){
+        const { showComponent } = this.state;
+        if(this.state.isLoading == true){
+          return (
+              <React.Fragment>
+                  <div classname="PropertyLog">
+                      <div class="container">
+                          <h1 class="font-weight-light">Property Log</h1>
+
+                          <br/>
+
+                          <Form onChange={this.handleInputChange} onSubmit={this.handleSubmit}>
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control name="username" placeholder="Username" value={this.state.username} />
+                            <Form.Label>Blaster ID</Form.Label>
+                            <Form.Control name="blasterID" placeholder="Blaster ID" value={this.state.blasterID} />
+                            <Form.Label>Bandana ID</Form.Label>
+                            <Form.Control name="bandanaID" placeholder="Bandana ID" value={this.state.bandanaID} />
+                            <Button variant="primary" type="submit">Submit</Button>{' '}
+                          </Form>
+
+                          <br/>
+                      
+                          <Button onClick={() => this.setState({showComponent:!showComponent})}>Click to use QR Code Scanner</Button>
+                              {this.state.showComponent ? 
+                                  <QrReader 
+                                  delay={150}
+                                  onError={this.handleError}
+                                  onScan={this.handleScan}
+                                  facingMode={'environment'}
+                                  style={{ width: 500, height: 500}}
+                                  /> :
+                                  null
+                              }
+                              
+                              {this.state.showComponent ?
+                                  <p class="font-weight-light"> {this.state.result}</p> :
+                                  null
+                              }
+
+                            <br/>
+                            <br/>
+
+                            <div>
+                              <PropertyTable />
+                            </div>
+                      </div> 
+                  </div> 
+
+              </React.Fragment>
+          )
+        } else {
+          return(
+            <div class = "container">
+              <h1 class="font-weight-light">Property Log</h1>
+              <p class="font-weight-light">Blaster: {this.state.prevBlasterID} and Bandana: {this.state.prevBandanaID} logged to {this.state.prevResult}</p>
+            </div>
+          )
+        }
+    } else {
+      return(
+        <div class="container">
+          <h1 class="font-weight-light">Property Log</h1>
+          <h1 class='font-weight-light'>Not an admin. Restricted.</h1>
+        </div>
+      )
+    }
+  }
 }
 
 

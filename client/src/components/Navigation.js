@@ -52,13 +52,17 @@ class Navigation extends React.Component {
   render () {
       return (
         <div className="navigation">
-          <nav class="navbar fixed-top navbar-expand navbar-dark bg-dark">
+          <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
             <div class="container">
               <Link class="navbar-brand" to="/">
                 Gator Humans versus Zombies
               </Link>
+        
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+              </button>
     
-              <div>
+              <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto stick">
                   <li
                     class={`nav-item  ${
