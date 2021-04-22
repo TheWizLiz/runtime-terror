@@ -5,7 +5,7 @@
 // Attribute  tokenSeed: { type: String, required: true, unique: true }
 
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 const userSchema = new mongoose.Schema({
   firstname: { type: String, required: true, default: '' },
