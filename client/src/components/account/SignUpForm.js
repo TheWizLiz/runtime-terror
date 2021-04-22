@@ -18,7 +18,7 @@ class SignUpForm extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault()
-    fetch('http://localhost:5000/api/account/signup', {
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

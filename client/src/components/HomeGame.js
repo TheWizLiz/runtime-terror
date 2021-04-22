@@ -11,7 +11,7 @@ class HomeGame extends React.Component {
   }
 
   componentDidMount () {
-    fetch('http://localhost:5000/api/games/getGames')
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/getGames')
       .then(res => res.json())
       .then(json => {
         if (json.success) {

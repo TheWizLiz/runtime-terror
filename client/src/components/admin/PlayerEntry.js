@@ -15,7 +15,7 @@ class PlayerEntry extends React.Component {
 
   handleDelete () {
     //e.preventDefault();
-    fetch('http://localhost:5000/api/account/deleteAccount', {
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/deleteAccount', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -40,7 +40,7 @@ class PlayerEntry extends React.Component {
     if (this.props.player.acctType ==='player') {
       // change player to admin
       
-      fetch('http://localhost:5000/api/account/updatePlayerAcc', {
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/updatePlayerAcc', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -60,7 +60,7 @@ class PlayerEntry extends React.Component {
 
     } else if (this.props.player.acctType === 'admin') {
       // change admin to player
-      fetch('http://localhost:5000/api/account/updateAdminAcc', {
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/updateAdminAcc', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

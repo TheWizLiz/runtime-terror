@@ -16,7 +16,7 @@ class LeaderboardTable extends Component {
   }
 
   componentDidMount () {
-    fetch('http://localhost:5000/api/games/currLeaderboard')
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/currLeaderboard')
       .then(res => res.json())
       .then(results => {
         if (results.success) {
