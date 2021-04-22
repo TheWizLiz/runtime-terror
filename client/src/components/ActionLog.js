@@ -42,7 +42,8 @@ class ActionLog extends Component{
               if(json.success){
                 this.setState({
                   isLoading: false,
-                  scanned: false
+                  scanned: false,
+                  playerLoaded: false
                 })
               }
             })
@@ -61,6 +62,7 @@ class ActionLog extends Component{
             if(json.success){
                 this.setState({
                 playerid: "",
+                playerLoaded: false
                 })
             }
             })
@@ -141,7 +143,6 @@ class ActionLog extends Component{
       .catch(err => console.error(err))
 
       }
-
     }
 
     render(){
