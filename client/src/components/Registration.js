@@ -38,7 +38,7 @@ class Registration extends React.Component {
       // console.log(token)
       if (storage && storage.token) {
         const { token } = storage
-        await fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+        await fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/getAcct/?acct=' + token)
           .then(res => res.json())
           .then(player => this.setState({
             userID: player.username,
@@ -47,7 +47,7 @@ class Registration extends React.Component {
           .catch((err) => console.log('An error Occured Loading the Player Data', err))
       }
 
-      fetch('http://localhost:5000/api/game/findGameInfo/?game_id=' + this.state.gameID) 
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/game/findGameInfo/?game_id=' + this.state.gameID) 
         .then(res => res.json())
           .then(requestedGame => this.setState({
             gameName: requestedGame.game_title
@@ -68,7 +68,7 @@ class Registration extends React.Component {
     handleSubmit (e) {
         e.preventDefault()
         // Call fetch function.
-        fetch('http://localhost:5000/api/account/registerUser', {
+        fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/registerUser', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

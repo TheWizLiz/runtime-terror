@@ -15,7 +15,7 @@ class RegisteredPlayers extends React.Component {
   }
 
   componentDidMount () {
-    fetch('http://localhost:5000/api/account/getRegisteredPlayers')
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/getRegisteredPlayers')
     .then(res => res.json())
     .then(json => {
       this.setState({

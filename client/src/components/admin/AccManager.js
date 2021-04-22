@@ -15,7 +15,7 @@ class AccManager extends React.Component {
   }
 
   componentDidMount () {
-    fetch('http://localhost:5000/api/account/')
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/')
       .then(res => res.json())
       .then(json => {
         this.setState({

@@ -18,7 +18,7 @@ class Navigation extends React.Component {
     // console.log(token)
     if (storage && storage.token) {
       const { token } = storage
-      fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/getAcct/?acct=' + token)
         .then(res => res.json())
         .then(player => this.validateAdmin(player))
         .catch((err) => console.log('An error Occured Loading the Player Data', err))

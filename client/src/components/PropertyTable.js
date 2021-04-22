@@ -15,7 +15,7 @@ class PropertyTable extends Component {
   }
 
   componentDidMount () {
-    fetch('http://localhost:5000/api/games/currPropBoard')
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/currPropBoard')
       .then(res => res.json())
       .then(results => {
         if (results.success) {

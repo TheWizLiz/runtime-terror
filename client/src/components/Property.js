@@ -30,7 +30,7 @@ class Property extends React.Component {
     console.log('ABOUT TO UPLOAD')
 
     try {
-      const res = await axios.post('http://localhost:5000/api/games/upload', formData, {
+      const res = await axios.post('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
 

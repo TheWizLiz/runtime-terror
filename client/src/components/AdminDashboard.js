@@ -37,7 +37,7 @@ class AdminDashboard extends React.Component {
     this.handleRemoveRegPlayers = this.handleRemoveRegPlayers.bind(this)
 
     this.handleDisplayAccounts = this.handleDisplayAccounts.bind(this)
-   // this.handleRemoveAccounts = this.handleRemoveAccounts.bind(this)
+    // this.handleRemoveAccounts = this.handleRemoveAccounts.bind(this)
   }
 
   async componentDidMount () {
@@ -45,13 +45,13 @@ class AdminDashboard extends React.Component {
     // console.log(token)
     if (storage && storage.token) {
       const { token } = storage
-      await fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+      await fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/getAcct/?acct=' + token)
         .then(res => res.json())
         .then(player => this.validateAdmin(player))
         .catch((err) => console.log('An error Occured Loading the Player Data', err))
     }
 
-    await fetch('http://localhost:5000/api/games/currentGames')
+    await fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/currentGames')
       .then(res => res.json())
       .then(results => {
         const games = results.games
@@ -103,7 +103,7 @@ class AdminDashboard extends React.Component {
 
     console.log(game_id)
     if (game_id) {
-      fetch('http://localhost:5000/api/games/gameStartTransfer', {
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/gameStartTransfer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -123,7 +123,7 @@ class AdminDashboard extends React.Component {
     const winner = 'Zombie'
 
     if (game_id) {
-      fetch('http://localhost:5000/api/games/gameEndTransfer', {
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/gameEndTransfer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

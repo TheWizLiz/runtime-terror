@@ -30,7 +30,7 @@ class ActionLog extends Component{
     handleSubmit (e) {
         e.preventDefault()
         if (this.state.playerLoaded && this.state.playerid !== "") {
-            fetch("http://localhost:5000/api/games/updateStats", {
+            fetch("http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/updateStats", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -49,7 +49,7 @@ class ActionLog extends Component{
             .catch(err => console.error(err))
         }
 
-        fetch("http://localhost:5000/api/games/addDeaths", {
+        fetch("http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/addDeaths", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -68,7 +68,7 @@ class ActionLog extends Component{
     }
 
     componentDidMount () {
-      fetch('http://localhost:5000/api/games/checkGameStatus')
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/checkGameStatus')
       .then(res => res.json())
       .then(status => {
         if (status.success) {
@@ -83,7 +83,7 @@ class ActionLog extends Component{
           const storage = getFromStorage('the_main_app')
           if (storage && storage.token) {
             const { token } = storage
-            fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+            fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/getAcct/?acct=' + token)
               .then(res => res.json())
               .then(player => this.setState({
                 username: player.username
@@ -94,7 +94,7 @@ class ActionLog extends Component{
     }
 
     getPlayerStats () {
-      fetch("http://localhost:5000/api/games/currentPlayerStats/?username=" + this.state.username)
+      fetch("http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/currentPlayerStats/?username=" + this.state.username)
       .then(res => res.json())
       .then(results => {
         if (results.success) {
@@ -122,7 +122,7 @@ class ActionLog extends Component{
 
     updateTeam () {
       if(this.state.lives == 0){
-        fetch("http://localhost:5000/api/games/changeTeam", {
+        fetch("http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/changeTeam", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

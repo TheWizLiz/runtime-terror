@@ -41,7 +41,7 @@ class LoginForm extends React.Component {
     e.preventDefault()
     // Grab state
     // Post request to back-end
-    fetch('http://localhost:5000/api/account/login', {
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

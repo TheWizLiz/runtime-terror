@@ -14,7 +14,7 @@ class RecoverForm extends React.Component {
   handleSubmit (e) {
     e.preventDefault()
     console.log(this.props.user)
-    fetch('http://localhost:5000/api/account/resetPassword', {
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/resetPassword', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

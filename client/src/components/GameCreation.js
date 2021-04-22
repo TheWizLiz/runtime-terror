@@ -75,7 +75,7 @@ class GameCreation extends React.Component {
     formData.append('file', this.state.gamePhoto)
     console.log('ABOUT TO UPLOAD')
 
-    await axios.post('http://localhost:5000/api/games/upload', formData, {
+    await axios.post('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
       .then(res => {
@@ -131,7 +131,7 @@ class GameCreation extends React.Component {
     console.log(gameDateFormatted)
     regEnd = this.state.regEndDate + 'T' + this.state.regEndTime + ':00'
     // Call fetch function.
-    fetch('http://localhost:5000/api/games/createGame', {
+    fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/createGame', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -169,7 +169,7 @@ class GameCreation extends React.Component {
     // console.log(token)
     if (storage && storage.token) {
       const { token } = storage
-      fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/getAcct/?acct=' + token)
         .then(res => res.json())
         .then(player => this.validateAdmin(player))
         .catch((err) => console.log('An error Occured Loading the Player Data', err))

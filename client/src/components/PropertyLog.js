@@ -53,7 +53,7 @@ class PropertyLog extends Component {
 
         e.preventDefault()
         
-        fetch("http://localhost:5000/api/games/updateBlasterBandana", {
+        fetch("http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/updateBlasterBandana", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({

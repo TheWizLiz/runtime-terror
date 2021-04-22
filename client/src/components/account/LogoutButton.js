@@ -19,7 +19,7 @@ class LogoutButton extends React.Component {
       const { token } = storage
       console.log(token)
       // Seperate into other file for organization
-      fetch('http://localhost:5000/api/account/logout?token=' + token)
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/logout?token=' + token)
         .then(res => res.json())
         .then(json => {
           console.log('logout json', json)

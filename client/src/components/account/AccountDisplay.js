@@ -33,7 +33,7 @@ class AccountDisplay extends React.Component {
     // console.log(token)
     if (storage && storage.token) {
       const { token } = storage
-      fetch('http://localhost:5000/api/account/getAcct/?acct=' + token)
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/account/getAcct/?acct=' + token)
         .then(res => res.json())
         .then(player => this.setState({
           username: player.username,
@@ -51,7 +51,7 @@ class AccountDisplay extends React.Component {
   // Currently only grabs first game since this.state.game = 1.
   componentDidUpdate () {
     if (this.state.playerLoaded) {
-      fetch('http://localhost:5000/api/games/getStats/?user=' + this.state.username)
+      fetch('http://Runtimeterror-env.eba-mqm5grtu.us-east-2.elasticbeanstalk.com/api/games/getStats/?user=' + this.state.username)
         .then(res => res.json())
         .then(res => {
           const game = res.games
