@@ -37,7 +37,7 @@ class AdminDashboard extends React.Component {
     this.handleRemoveRegPlayers = this.handleRemoveRegPlayers.bind(this)
 
     this.handleDisplayAccounts = this.handleDisplayAccounts.bind(this)
-   //this.handleRemoveAccounts = this.handleRemoveAccounts.bind(this)
+   // this.handleRemoveAccounts = this.handleRemoveAccounts.bind(this)
   }
 
   async componentDidMount () {
